@@ -1,149 +1,143 @@
+"""Parse EUR-Lex HTML (GDPR, AI Act) into structured units: recitals and articles.
+
+Output is JSONL, one unit per line, in document order:
+  {"doc": "gdpr", "kind": "recital", "number": "26", "title": "", "text": "..."}
+  {"doc": "gdpr", "kind": "article", "article": "33", "title": "Notification of ...", "text": "..."}
+
+Run from the repo root:   python extract_text.py
+"""
+
 import json
-import os
-import re 
-from bs4 import BeautifulSoup
+import re
+from collections import Counter
 from pathlib import Path
 
-# def extract_text(html_path, text_path):
-#     with open(html_path, 'r', encoding = 'utf-8') as f:
-#         soup = BeautifulSoup(f.read(), 'html.parser')
+from bs4 import BeautifulSoup
 
-#     for tag in soup(['script', 'style', 'nav', 'header', 'footer', 'aside']):
-#         tag.decompose()
+# Sanity-check targets. If one fails, first compare with the official text before changing the code.
+EXPECTED = {
+    "gdpr": {"recital": 173, "article": 99},
+    "ai_act": {"recital": 180, "article": 113},
+}
 
-#     text = soup.get_text(separator = '\n', strip = True)
-#     lines = [line.strip() for line in text.splitlines() if line.strip()]
-
-#     start_idx = 0
-#     for i, line in enumerate(lines):
-#         if line.startswith("REGULATION (EU)") or line.startswith("REGULATION (EU) 2016/679") or "Artificial Intelligence Act" in line:
-#             start_idx = i
-#             break
-
-#     lines = lines[start_idx:]
-
-#     cleaned = []
-#     buffer = ''
-    
-#     for line in lines:
-#         if "Official Journal of the European Union" in line:
-#             continue
-#         if re.match(r'^(L series|EN|L \d+/\d+|ELI:|ISSN )', line):
-#             continue
-#         if re.match(r'^\(\s*\d+\s*\)$', line):
-#             continue
-
-#         line = re.sub(r'\(\s*\d+\s*\)', '', line)
-#         line = re.sub(r'\s+', ' ', line).strip()
-
-#         if not line:
-#             continue
-#         if re.match(r'^(Whereas:|CHAPTER|Article \d+|ANNEX|Section )', line, re.I):
-#             if buffer:
-#                 cleaned.append(buffer.strip())
-#                 buffer = ""
-#             cleaned.append("")       
-#             cleaned.append(line)
-#         else:
-#             if buffer:
-#                 buffer += " " + line
-#             else:
-#                 buffer = line
+# An article's content stops when a sibling element with one of these classes starts.
+STOP_CLASSES = {"oj-ti-art", "oj-ti-section-1", "oj-ti-section-2", "oj-doc-end", "oj-signatory"}
 
 
-#     if buffer:
-#         cleaned.append(buffer.strip())
-
-#     while cleaned and cleaned[0] == "":
-#         cleaned.pop(0)
-
-#     text = "\n".join(cleaned)
-
-#     with open(text_path,'w', encoding = 'utf-8') as f:
-#         f.write(text)
-
-#     print(f'successfully generated: {text_path} ({len(cleaned)} lines)')
+def clean(text: str) -> str:
+    """Normalise whitespace left over from HTML (nbsp, line breaks, spaces before punctuation)."""
+    text = text.replace("\xa0", " ")
+    text = re.sub(r"\s+", " ", text).strip()
+    text = re.sub(r"\s+([,.;:)])", r"\1", text)  # "word ," -> "word,"
+    text = re.sub(r"\(\s+", "(", text)  # "( a" -> "(a"
+    return text
 
 
-# if __name__ == '__main__': 
-#     os.makedirs('data/raw', exist_ok = True)
-#     extract_text('data/raw/gdpr.html', 'data/raw/gdpr.txt')
-#     extract_text('data/raw/ai_act.html', 'data/raw/ai_act.txt')
+def extract_recitals(soup: BeautifulSoup, doc_name: str) -> list[dict]:
+    """Return recitals as {number: text}, without duplicates.
+
+    Why this is more careful than a plain "match text starting with (1)":
+    in EUR-Lex HTML the number "(1)" and the recital text sit in different table cells, inside one
+    wrapper <div>. A scan over every <div> and <p> then finds each recital twice: once as the
+    wrapper (full text) and once as the number-only <p> (empty text). We avoid that by keying on the
+    recital number and keeping one entry per number.
+    """
+    found: dict[int, str] = {}
+
+    # Preferred route: EUR-Lex marks each recital wrapper with id="rct_<n>".
+    wrappers = soup.find_all(id=re.compile(r"^rct_\d+$"))
+    if wrappers:
+        for w in wrappers:
+            num = int(w["id"].split("_")[1])
+            text = clean(w.get_text(" ", strip=True))
+            text = re.sub(r"^\(\s*\d+\s*\)\s*", "", text)  # drop the leading "(n)"
+            found[num] = text
+    else:
+        # Fallback when the ids are absent: scan the preamble, keep the SHORTEST non-empty body
+        # per number (a wrapper around many recitals would be longer, an empty <p> is skipped).
+        first_article = soup.find(class_="oj-ti-art")
+        whereas = soup.find(string=re.compile(r"Whereas"))
+        elements = whereas.find_parent().find_all_next(["div", "p"]) if whereas else soup.find_all(["div", "p"])
+        for el in elements:
+            if el is first_article:
+                break
+            m = re.match(r"^\((\d+)\)\s*(.*)", clean(el.get_text(" ", strip=True)))
+            if not m or not m.group(2):
+                continue
+            num, body = int(m.group(1)), m.group(2)
+            if num not in found or len(body) < len(found[num]):
+                found[num] = body
+
+    return [
+        {"doc": doc_name, "kind": "recital", "number": str(n), "title": "", "text": found[n]}
+        for n in sorted(found)
+    ]
 
 
-
-
-def extract_units(html_path: str, doc_name: str) -> list[dict]:
-    """Parse EUR-Lex HTML into structured units (articles + recitals)."""
-    with open(html_path, "r", encoding="utf-8") as f:
-        soup = BeautifulSoup(f.read(), "html.parser")
-
-    # delete footers
-    for note in soup.find_all(class_="oj-note"):
-        note.decompose()
-
+def extract_articles(soup: BeautifulSoup, doc_name: str) -> list[dict]:
     units = []
+    for art_tag in soup.find_all(class_="oj-ti-art"):
+        art_num = re.sub(r"^Article\s+", "", clean(art_tag.get_text(strip=True)))
 
-    # extract articles
-    article_tags = soup.find_all(class_="oj-ti-art")
-    for art_tag in article_tags:
-        # article number is usually in the text of the tag itself, e.g., "Article 1"
-        art_label = art_tag.get_text(strip=True)
-        art_num = re.sub(r"^Article\s+", "", art_label).strip()
-
-        # title is usually in the next sibling tag with class "eli-title" or "oj-sti-art"
+        # The element right after "Article N" is the title, if it carries a title class.
         title = ""
         next_el = art_tag.find_next_sibling()
-        if next_el and next_el.get("class"):
-            classes = " ".join(next_el.get("class", []))
+        is_title = False
+        if next_el is not None:
+            classes = " ".join(next_el.get("class") or [])
             if "eli-title" in classes or "oj-sti-art" in classes:
-                title = next_el.get_text(strip=True)
+                title = clean(next_el.get_text(" ", strip=True))
+                is_title = True
 
-        # collect all paragraphs under this article, until the next article
+        # Collect paragraphs until the next article / chapter / section / signature block.
+        cursor = next_el.find_next_sibling() if is_title else next_el
         paragraphs = []
-        cursor = next_el.find_next_sibling() if next_el else art_tag.find_next_sibling()
-        while cursor:
-            # stop if we reach the next article
-            if cursor.get("class") and "oj-ti-art" in cursor.get("class", []):
+        while cursor is not None:
+            if set(cursor.get("class") or []) & STOP_CLASSES:
                 break
-            text = cursor.get_text(" ", strip=True)
+            text = clean(cursor.get_text(" ", strip=True))
             if text:
                 paragraphs.append(text)
             cursor = cursor.find_next_sibling()
 
-        full_text = "\n".join(paragraphs)
-
-        units.append({
-            "doc": doc_name,
-            "kind": "article",
-            "article": art_num,
-            "title": title,
-            "text": full_text,
-        })
-
-    # recitals are usually in the preamble, before the first article, and are numbered (1), (2), etc.
-    whereas = soup.find(string=re.compile(r"Whereas", re.I))
-    if whereas:
-        # from the "Whereas" element, find the parent and then iterate over the next elements to collect recitals
-        start = whereas.find_parent()
-        for el in start.find_all_next(["div", "p"]):
-            text = el.get_text(" ", strip=True)
-            m = re.match(r"^\((\d+)\)\s*(.*)", text)
-            if m:
-                num = m.group(1)
-                body = m.group(2).strip()
-                units.append({
-                    "doc": doc_name,
-                    "kind": "recital",
-                    "number": num,
-                    "title": "",
-                    "text": body,
-                })
-            # stop collecting recitals if we reach the first article
-            if el.get("class") and "oj-ti-art" in el.get("class", []):
-                break
-
+        units.append(
+            {"doc": doc_name, "kind": "article", "article": art_num, "title": title, "text": "\n".join(paragraphs)}
+        )
     return units
+
+
+def extract_units(html_path: str, doc_name: str) -> list[dict]:
+    """Parse one EUR-Lex HTML file into recital units followed by article units."""
+    with open(html_path, "r", encoding="utf-8") as f:
+        soup = BeautifulSoup(f.read(), "html.parser")
+
+    for note in soup.find_all(class_="oj-note"):  # footnote bodies
+        note.decompose()
+
+    return extract_recitals(soup, doc_name) + extract_articles(soup, doc_name)
+
+
+def validate(units: list[dict], doc_name: str) -> None:
+    """Fail loudly on anything suspicious instead of passing silently."""
+    counts = Counter(u["kind"] for u in units)
+    for kind, expected in EXPECTED[doc_name].items():
+        assert counts[kind] == expected, (
+            f"{doc_name}: expected {expected} {kind}s, got {counts[kind]} (compare with the official text)"
+        )
+
+    empty = [u.get("number") or u.get("article") for u in units if not u["text"].strip()]
+    assert not empty, f"{doc_name}: empty units: {empty[:10]}"
+
+    rec = [int(u["number"]) for u in units if u["kind"] == "recital"]
+    assert rec == list(range(1, len(rec) + 1)), f"{doc_name}: recital numbers are not 1..N"
+    art = [int(u["article"]) for u in units if u["kind"] == "article"]
+    assert art == list(range(1, len(art) + 1)), f"{doc_name}: article numbers are not 1..N"
+
+    # Soft check (warning only): leftover footnote markers look like "Directive(1)".
+    marker = re.compile(r"[A-Za-z]\(\d+\)")
+    hits = [(u.get("number") or u.get("article"), m.group()) for u in units for m in marker.finditer(u["text"])]
+    if hits:
+        print(f"  warning: {len(hits)} possible footnote markers, e.g. {hits[:5]}")
 
 
 def main():
@@ -151,24 +145,29 @@ def main():
     out_dir = Path("data/processed")
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    jobs = [
-        (raw_dir / "gdpr.html", "gdpr", out_dir / "gdpr.jsonl"),
-        (raw_dir / "ai_act.html", "ai_act", out_dir / "ai_act.jsonl"),
-    ]
-
-    for html_path, doc_name, out_path in jobs:
+    for doc_name in ("gdpr", "ai_act"):
+        html_path = raw_dir / f"{doc_name}.html"
+        out_path = out_dir / f"{doc_name}.jsonl"
         if not html_path.exists():
-            print(f"the file does not exist: {html_path}")
+            print(f"file does not exist: {html_path}")
             continue
 
         units = extract_units(str(html_path), doc_name)
-        with open(out_path, "w", encoding="utf-8") as f:
+        with open(out_path, "w", encoding="utf-8") as f:  # write first, so you can inspect even if validation fails
             for u in units:
                 f.write(json.dumps(u, ensure_ascii=False) + "\n")
 
-        n_art = sum(1 for u in units if u["kind"] == "article")
-        n_rec = sum(1 for u in units if u["kind"] == "recital")
-        print(f"{doc_name}: {n_art} articles, {n_rec} recitals → {out_path}")
+        counts = Counter(u["kind"] for u in units)
+        print(f"{doc_name}: {counts['article']} articles, {counts['recital']} recitals -> {out_path}")
+
+        validate(units, doc_name)
+
+        # Eyeball samples: compare these with the official website.
+        first_rec = next(u for u in units if u["kind"] == "recital")
+        art33 = next((u for u in units if u["kind"] == "article" and u["article"] == "5"), None)
+        print("  recital 1 :", first_rec["text"][:150])
+        if art33:
+            print("  article 5 :", art33["title"], "|", art33["text"][:150].replace("\n", " / "))
 
 
 if __name__ == "__main__":

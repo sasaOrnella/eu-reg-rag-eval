@@ -1,0 +1,2 @@
+id,split,type,question,gold_answer,gold_evidence,notes
+EXAMPLE-001,dev,single_hop,"By when must a controller notify the supervisory authority of a personal data breach, where feasible?","Without undue delay and, where feasible, not later than 72 hours after becoming aware of it.",gdpr:art:33::not later than 72 hours after having become aware of it,EXAMPLE ROW - delete it. The quote must be copied from data/processed/gdpr.jsonl
