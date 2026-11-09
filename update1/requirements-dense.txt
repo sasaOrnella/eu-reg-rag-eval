@@ -1,2 +1,0 @@
-# Only needed for dense retrieval (heavy: pulls in PyTorch, roughly 2 GB). Tests do not need it.
-sentence-transformers
