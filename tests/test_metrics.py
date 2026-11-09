@@ -30,6 +30,13 @@ def test_rr_third_position():
 def test_rr_not_found():
     assert reciprocal_rank(["x", "y"], {"a"}) == 0.0
 
+def test_recall_invalid_k():
+    with pytest.raises(ValueError):
+        recall_at_k(["a", "b"], {"a"}, 0)
+
+    with pytest.raises(ValueError):
+        recall_at_k(["a", "b"], {"a"}, -1)
+
 
 @pytest.mark.skip(reason="Week 5-6: remove this line when you implement bootstrap_ci")
 def test_bootstrap_ci_contains_mean():
