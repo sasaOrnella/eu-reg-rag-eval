@@ -12,7 +12,13 @@ from pathlib import Path
 from src.corpus import load_units
 from src.evidence import resolve_evidence
 
-TYPES = {"single_hop", "multi_hop", "unanswerable", "conflicting_or_conditional", "numeric_or_table"}
+TYPES = {
+    "single_hop",
+    "multi_hop",
+    "unanswerable",
+    "conflicting_or_conditional",
+    "numeric_or_table",
+}
 SPLITS = {"dev", "test"}
 COLUMNS = ["id", "split", "type", "question", "gold_answer", "gold_evidence", "notes"]
 
@@ -33,7 +39,9 @@ def check_rows(rows: list[dict], units_by_id: dict[str, dict]) -> list[str]:
         evidence = r["gold_evidence"].strip()
         if r["type"] == "unanswerable":
             if evidence:
-                problems.append(f"{where}: unanswerable questions must have empty gold_evidence")
+                problems.append(
+                    f"{where}: unanswerable questions must have empty gold_evidence"
+                )
             continue
         if not evidence:
             problems.append(f"{where}: missing gold_evidence")
@@ -60,7 +68,9 @@ def main(csv_path: str = "eval/questions.csv") -> int:
         rows = list(reader)
 
     problems = check_rows(rows, units_by_id)
-    print(f"{len(rows)} questions | types: {dict(Counter(r['type'] for r in rows))} | splits: {dict(Counter(r['split'] for r in rows))}")
+    print(
+        f"{len(rows)} questions | types: {dict(Counter(r['type'] for r in rows))} | splits: {dict(Counter(r['split'] for r in rows))}"
+    )
     for p in problems:
         print("PROBLEM:", p)
     print("OK" if not problems else f"{len(problems)} problem(s)")

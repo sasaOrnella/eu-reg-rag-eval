@@ -10,7 +10,9 @@ def rrf(rankings: list[list[str]], rrf_k: int = 60) -> list[str]:
     for ranking in rankings:
         for rank, cid in enumerate(ranking, start=1):
             scores[cid] = scores.get(cid, 0.0) + 1.0 / (rrf_k + rank)
-    return sorted(scores, key=lambda c: (-scores[c], c))  # ties broken by id -> deterministic
+    return sorted(
+        scores, key=lambda c: (-scores[c], c)
+    )  # ties broken by id -> deterministic
 
 
 class HybridRetriever:

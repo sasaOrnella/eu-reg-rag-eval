@@ -11,7 +11,9 @@ from src.corpus import Chunk
 from src.evidence import Span, chunk_overlaps  # noqa: F401  (chunk_overlaps is what you need)
 
 
-def evidence_recall_at_k(retrieved: list[Chunk], gold_spans: list[Span], k: int) -> float:
+def evidence_recall_at_k(
+    retrieved: list[Chunk], gold_spans: list[Span], k: int
+) -> float:
     """Fraction of gold spans overlapped by at least one of the first k retrieved chunks.
 
     - `retrieved` is ordered best first.

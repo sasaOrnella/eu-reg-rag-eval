@@ -45,7 +45,9 @@ def load_units(*paths: str | Path) -> list[dict]:
     return units
 
 
-def build_chunks(units: list[dict], chunk_size: int | None, overlap: int = 0, chunker=chunk_text) -> list[Chunk]:
+def build_chunks(
+    units: list[dict], chunk_size: int | None, overlap: int = 0, chunker=chunk_text
+) -> list[Chunk]:
     """Chunk every unit. chunk_size=None means 'one chunk per whole unit' (structural baseline).
 
     `chunker` is injectable so this function can be tested without your chunk_text.
@@ -64,5 +66,13 @@ def build_chunks(units: list[dict], chunk_size: int | None, overlap: int = 0, ch
                 f"chunk {i} of {u['unit_id']} is not text[{start}:{start + len(piece)}]. "
                 "chunk_text must not strip or alter characters and must advance by chunk_size - overlap."
             )
-            chunks.append(Chunk(f"{u['unit_id']}#{i}", u["unit_id"], start, start + len(piece), piece))
+            chunks.append(
+                Chunk(
+                    f"{u['unit_id']}#{i}",
+                    u["unit_id"],
+                    start,
+                    start + len(piece),
+                    piece,
+                )
+            )
     return chunks

@@ -16,7 +16,10 @@ def test_both_spans_covered():
 
 
 def test_one_span_covered():
-    assert evidence_recall_at_k([chunk("u1", 0, 15), chunk("u3", 0, 9)], [S1, S2], k=2) == 0.5
+    assert (
+        evidence_recall_at_k([chunk("u1", 0, 15), chunk("u3", 0, 9)], [S1, S2], k=2)
+        == 0.5
+    )
 
 
 def test_k_cuts_the_list():

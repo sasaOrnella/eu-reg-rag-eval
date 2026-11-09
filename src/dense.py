@@ -20,12 +20,16 @@ BGE_QUERY_PREFIX = "Represent this sentence for searching relevant passages: "
 
 def load_sentence_transformer(model_name: str = "BAAI/bge-small-en-v1.5"):
     """Return embed(list[str]) -> np.ndarray (unit-length vectors). Needs `pip install sentence-transformers`."""
-    from sentence_transformers import SentenceTransformer  # imported lazily: it is a heavy dependency
+    from sentence_transformers import (
+        SentenceTransformer,
+    )  # imported lazily: it is a heavy dependency
 
     model = SentenceTransformer(model_name)
 
     def embed(texts: list[str]) -> np.ndarray:
-        return model.encode(texts, batch_size=64, normalize_embeddings=True, show_progress_bar=False)
+        return model.encode(
+            texts, batch_size=64, normalize_embeddings=True, show_progress_bar=False
+        )
 
     embed.max_seq_length = model.max_seq_length
     return embed
@@ -38,7 +42,9 @@ def _normalize(m: np.ndarray) -> np.ndarray:
 
 
 class DenseRetriever:
-    def __init__(self, chunk_ids: list[str], chunks: list[str], embed_fn, query_prefix: str = ""):
+    def __init__(
+        self, chunk_ids: list[str], chunks: list[str], embed_fn, query_prefix: str = ""
+    ):
         assert len(chunk_ids) == len(chunks)
         self.chunk_ids = chunk_ids
         self.embed_fn = embed_fn

@@ -16,11 +16,17 @@ class CostTracker:
 
     def add(self, model: str, input_tokens: int, output_tokens: int) -> float:
         if model not in self.prices:
-            raise KeyError(f"No price configured for model '{model}'. Edit src/config.py.")
+            raise KeyError(
+                f"No price configured for model '{model}'. Edit src/config.py."
+            )
         p = self.prices[model]
         cost = (input_tokens * p["input"] + output_tokens * p["output"]) / 1_000_000
         self.total_usd += cost
-        self.log.append({"model": model, "in": input_tokens, "out": output_tokens, "usd": cost})
+        self.log.append(
+            {"model": model, "in": input_tokens, "out": output_tokens, "usd": cost}
+        )
         if self.total_usd > self.cap_usd:
-            raise BudgetExceeded(f"Spent ${self.total_usd:.2f}, cap is ${self.cap_usd:.2f}")
+            raise BudgetExceeded(
+                f"Spent ${self.total_usd:.2f}, cap is ${self.cap_usd:.2f}"
+            )
         return cost

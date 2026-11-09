@@ -38,9 +38,13 @@ def resolve_evidence(field: str, units_by_id: dict[str, dict]) -> list[Span]:
         text = units_by_id[unit_id]["text"]
         n = text.count(quote)
         if n == 0:
-            raise ValueError(f"quote not found in {unit_id}: {quote[:60]!r} (copy it from the jsonl file)")
+            raise ValueError(
+                f"quote not found in {unit_id}: {quote[:60]!r} (copy it from the jsonl file)"
+            )
         if n > 1:
-            raise ValueError(f"quote appears {n} times in {unit_id}: make it longer/more specific")
+            raise ValueError(
+                f"quote appears {n} times in {unit_id}: make it longer/more specific"
+            )
         start = text.find(quote)
         spans.append(Span(unit_id, start, start + len(quote)))
     return spans
@@ -48,4 +52,8 @@ def resolve_evidence(field: str, units_by_id: dict[str, dict]) -> list[Span]:
 
 def chunk_overlaps(chunk: Chunk, span: Span) -> bool:
     """True when the chunk and the evidence span share at least one character of the same unit."""
-    return chunk.unit_id == span.unit_id and chunk.start < span.end and span.start < chunk.end
+    return (
+        chunk.unit_id == span.unit_id
+        and chunk.start < span.end
+        and span.start < chunk.end
+    )

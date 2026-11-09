@@ -11,7 +11,9 @@ def fake_embed(texts):
 
 
 def test_dense_ranks_by_cosine():
-    r = DenseRetriever(["a", "b", "c"], ["breach breach", "erasure", "risk"], fake_embed)
+    r = DenseRetriever(
+        ["a", "b", "c"], ["breach breach", "erasure", "risk"], fake_embed
+    )
     assert r.search("breach", k=2)[0] == "a"
     assert r.search("erasure", k=1) == ["b"]
 
@@ -34,9 +36,14 @@ def test_dense_query_prefix_is_applied():
 
 
 def test_rrf_rewards_agreement():
-    assert rrf([["a", "b", "c"], ["b", "a", "d"]])[:2] == ["a", "b"]  # exact tie, broken by id
+    assert rrf([["a", "b", "c"], ["b", "a", "d"]])[:2] == [
+        "a",
+        "b",
+    ]  # exact tie, broken by id
     fused = rrf([["x", "a"], ["y", "a"]])
-    assert fused[0] == "a"  # 'a' is second in both lists and beats the single first places
+    assert (
+        fused[0] == "a"
+    )  # 'a' is second in both lists and beats the single first places
 
 
 def test_rrf_is_deterministic_on_ties():
@@ -53,5 +60,7 @@ class Fixed:
 
 def test_hybrid_combines_two_retrievers():
     h = HybridRetriever([Fixed(["a", "b", "c"]), Fixed(["d", "b", "e"])], pool=3)
-    assert h.search("q", k=1) == ["b"]  # b is 2nd in both lists, beating the single first places
+    assert h.search("q", k=1) == [
+        "b"
+    ]  # b is 2nd in both lists, beating the single first places
     assert len(h.search("q", k=10)) == 5

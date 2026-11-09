@@ -32,9 +32,11 @@ def test_invalid_overlap():
     with pytest.raises(ValueError):
         chunk_text("abc", chunk_size=10, overlap=10)
 
+
 def test_no_redundant_tail_chunk():
     assert len(chunk_text("a" * 24, chunk_size=10, overlap=3)) == 3
     assert len(chunk_text("a" * 26, chunk_size=10, overlap=3)) == 4
+
 
 def test_invalid_overlap_checked_even_for_empty_text():
     with pytest.raises(ValueError):
