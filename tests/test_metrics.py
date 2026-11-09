@@ -30,6 +30,7 @@ def test_rr_third_position():
 def test_rr_not_found():
     assert reciprocal_rank(["x", "y"], {"a"}) == 0.0
 
+
 def test_recall_invalid_k():
     with pytest.raises(ValueError):
         recall_at_k(["a", "b"], {"a"}, 0)

@@ -24,16 +24,20 @@ WEEK1.md           week 1 task checklist and BM25 reading notes
 ```
 
 ## Quick start
-```bash
-# Activate your existing project environment, or create a new one:
-python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-python extract_text.py                 # generate data/processed/ from data/raw/ HTML
-python -m src.check_questions          # validate evaluation-question structure
-python -m pytest -q                   # unfinished TODO exercises may still fail
+
 ### Requirements
 
 - Python 3.10 or higher
+
+```bash
+# Activate your existing project environment, or create a new one:
+python -m venv .venv
+source .venv/bin/activate
+
+pip install -r requirements.txt
+python extract_text.py
+python -m src.check_questions
+python -m pytest -q
 ```
 
 ## Results

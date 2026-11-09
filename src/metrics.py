@@ -11,7 +11,7 @@ Terminology:
 def recall_at_k(retrieved_ids: list[str], relevant_ids: set[str], k: int) -> float:
 
     if k <= 0:
-        raise ValueError('k must be a positive integer!')
+        raise ValueError("k must be a positive integer!")
 
     if len(relevant_ids) == 0:
         return 0.0

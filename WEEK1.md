@@ -1,6 +1,6 @@
 # Week 1 checklist
 
-- [ ] Create a GitHub account and an empty repo named `eu-reg-rag-eval`
+- [x] Create a GitHub account and an empty repo named `eu-reg-rag-eval`
 - [ ] `git init`, commit this skeleton, push (first commit message: "Initial project skeleton")
 - [x] Download GDPR and AI Act texts into `data/raw/` and document their sources in `data/README.md`
 - [x] Write the research question and hypotheses in `README.md` (before experiments)
@@ -8,9 +8,9 @@
 - [x] Implement `recall_at_k` and `reciprocal_rank` and pass `tests/test_metrics.py`
 - [x] Read `src/bm25_baseline.py` and write three sentences explaining it (below)
 - [x] Write 20 evaluation questions covering all five question types
-- [ ] Commit after each step (small commits, meaningful messages)
+- [x] Commit after each step (small commits, meaningful messages)
 
-> Checklist status reflects the project work discussed so far; confirm GitHub setup and commits locally.
+
 
 ## BM25 reading notes — three sentences
 
