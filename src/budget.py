@@ -12,18 +12,20 @@ from src.corpus import Chunk
 
 
 def select_within_budget(ranked: list[Chunk], budget_chars: int) -> list[Chunk]:
-    """Return the prefix of `ranked` (best first) that fits in `budget_chars` characters.
+    if budget_chars <= 0:
+        raise ValueError("budget_chars must be a positive number!!")
+    if len(ranked) == 0:
+        return []
+    
+    selected = []
+    total_chars = 0
 
-    Rules (tests/test_budget.py checks every one):
-      1. Go through the chunks in rank order and keep adding while the running total of
-         len(chunk.text) stays <= budget_chars.
-      2. Stop at the FIRST chunk that does not fit. Do not skip ahead to a smaller chunk further
-         down the list: that would quietly change the ranking.
-      3. Always keep the first chunk, even if it alone is longer than the budget (this happens
-         with whole-article chunks). The experiment reports the real context size, so the extra
-         cost stays visible instead of silently scoring 0.
-      4. Empty input -> empty list.
-      5. budget_chars <= 0 -> raise ValueError.
-    """
-    # TODO(you): implement
-    raise NotImplementedError
+    for chunk in ranked:
+        chunk_length = len(chunk.text)
+        if chunk_length <= budget_chars - total_chars or len(selected) == 0:
+            selected.append(chunk)
+            total_chars += chunk_length
+        else:
+            break
+    
+    return selected
