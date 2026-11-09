@@ -31,6 +31,9 @@ pip install -r requirements.txt
 python extract_text.py                 # generate data/processed/ from data/raw/ HTML
 python -m src.check_questions          # validate evaluation-question structure
 python -m pytest -q                   # unfinished TODO exercises may still fail
+### Requirements
+
+- Python 3.10 or higher
 ```
 
 ## Results

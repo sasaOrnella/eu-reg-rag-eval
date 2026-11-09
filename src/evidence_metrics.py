@@ -11,16 +11,19 @@ from src.corpus import Chunk
 from src.evidence import Span, chunk_overlaps  # noqa: F401  (chunk_overlaps is what you need)
 
 
-def evidence_recall_at_k(
-    retrieved: list[Chunk], gold_spans: list[Span], k: int
+def evidence_recall_at_k(retrieved: list[Chunk], gold_spans: list[Span], k: int
 ) -> float:
-    """Fraction of gold spans overlapped by at least one of the first k retrieved chunks.
-
-    - `retrieved` is ordered best first.
-    - Unanswerable questions have no gold spans: return 0.0 (evaluate them separately, see annotation guide).
-    """
-    # TODO(you): implement; tests/test_evidence_metrics.py shows the expected behaviour
-    raise NotImplementedError
+    if  k <= 0:
+        raise ValueError
+    if len(gold_spans) == 0 :
+        return 0.0
+    
+    matched = 0
+    for s in gold_spans:
+        if any(chunk_overlaps(c, s) for c in retrieved[:k]):
+            matched += 1
+        
+    return matched / len(gold_spans)
 
 
 def first_hit_rank(retrieved: list[Chunk], gold_spans: list[Span]) -> int | None:

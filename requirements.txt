@@ -2,3 +2,4 @@ pytest
 numpy
 pandas
 rank_bm25
+beautifulsoup4
