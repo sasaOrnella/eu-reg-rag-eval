@@ -8,12 +8,13 @@ Evaluating retrieval strategies for question answering over public EU regulatory
 
 
 ## Research question
-On the English texts of the GDPR and the EU AI Act, how do retrieval method (BM25, dense, hybrid) and chunk size affect evidence recall under a fixed context-token budget, and does this effect differ by question type (single-hop, multi-hop, unanswerable)? 
-Answer faithfulness is evaluated as a secondary outcome with a fixed generation model.
+On the English texts of the GDPR and the EU AI Act, how do retrieval method (BM25, dense, hybrid) and chunk size affect evidence recall under a fixed context-token budget, and does this effect differ by question type (single-hop, multi-hop, conditional, numeric)? Unanswerable questions have no gold evidence, so they are analysed only at the generation stage (does the system correctly abstain?). Answer faithfulness is a secondary outcome with a fixed generation model.
 
 ## Hypotheses (write BEFORE running experiments)
-- H1 (chunk size): Under a fixed context-token budget, medium-sized chunks (approximately 200–400 words) yield higher evidence recall than both very small chunks (<100 words) and very large chunks (>800 words), producing an inverted-U relationship. Very small chunks split multi-sentence provisions; very large chunks dilute relevant content and waste the budget. A monotonic relationship between chunk size and recall would falsify this hypothesis.
-- H2 (retrieval method): Because regulatory text uses fixed terminology and explicit article numbering, BM25 is not weaker than dense retrieval on single-hop questions that contain clear terms. On paraphrased or multi-hop questions, dense or hybrid retrieval performs better. Hybrid retrieval is never worse than the best single method across question types.
+- H1: Holding the total retrieved context fixed (about 2,000 tokens, so k = budget / chunk size), evidence recall is an inverted U in chunk size: chunks of roughly 800–1,200 characters outperform both small (≤ 400 characters) and large chunks (≥ 2,000 characters). Sizes stay within the embedding model's input limit, except a whole-article baseline evaluated with BM25 only. A monotonic trend falsifies H1.
+  
+- H2: (a) On questions with high lexical overlap with their evidence, BM25's recall is at most 0.05 below dense retrieval's (margin fixed in advance). (b) On low-overlap questions and multi-hop questions, dense or hybrid retrieval has higher recall than BM25. (c) Hybrid is not significantly worse than the better single method on any question type (95% bootstrap CI).
+
 - H3 (recall vs. answer quality): On multi-hop questions, gains in recall translate into smaller gains in answer correctness than on single-hop questions (“retrieved does not equal answered correctly”). This hypothesis can be tested only after the generation stage and is stated in advance.
 
 ## Repository layout
