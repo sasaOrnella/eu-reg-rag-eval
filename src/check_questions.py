@@ -1,7 +1,8 @@
 """Validate eval/questions.csv against the extracted corpus.  Run:  python -m src.check_questions
 
 Catches the annotation mistakes that silently ruin an evaluation: quotes that do not exist,
-wrong question types, unanswerable questions that have evidence, missing dev/test split, duplicate ids.
+wrong question types, unanswerable questions that have evidence, missing dev/test split, duplicate ids,
+and the same article/recital being used as evidence in both dev and test (leakage).
 """
 
 import csv
@@ -12,19 +13,14 @@ from pathlib import Path
 from src.corpus import load_units
 from src.evidence import resolve_evidence
 
-TYPES = {
-    "single_hop",
-    "multi_hop",
-    "unanswerable",
-    "conflicting_or_conditional",
-    "numeric_or_table",
-}
+TYPES = {"single_hop", "multi_hop", "unanswerable", "conflicting_or_conditional", "numeric_or_table"}
 SPLITS = {"dev", "test"}
 COLUMNS = ["id", "split", "type", "question", "gold_answer", "gold_evidence", "notes"]
 
 
 def check_rows(rows: list[dict], units_by_id: dict[str, dict]) -> list[str]:
     problems, seen = [], set()
+    unit_splits: dict[str, set[str]] = {}  # evidence unit -> the splits that use it
     for line_no, r in enumerate(rows, start=2):  # line 1 is the header
         where = f"line {line_no} ({r.get('id', '?')})"
         if r["id"] in seen:
@@ -39,9 +35,7 @@ def check_rows(rows: list[dict], units_by_id: dict[str, dict]) -> list[str]:
         evidence = r["gold_evidence"].strip()
         if r["type"] == "unanswerable":
             if evidence:
-                problems.append(
-                    f"{where}: unanswerable questions must have empty gold_evidence"
-                )
+                problems.append(f"{where}: unanswerable questions must have empty gold_evidence")
             continue
         if not evidence:
             problems.append(f"{where}: missing gold_evidence")
@@ -53,6 +47,12 @@ def check_rows(rows: list[dict], units_by_id: dict[str, dict]) -> list[str]:
             continue
         if r["type"] == "multi_hop" and len(spans) < 2:
             problems.append(f"{where}: multi_hop needs at least 2 evidence pieces")
+        for s in spans:
+            unit_splits.setdefault(s.unit_id, set()).add(r["split"])
+
+    for unit_id, splits in sorted(unit_splits.items()):
+        if len(splits) > 1:
+            problems.append(f"unit {unit_id} is evidence in both dev and test (leakage): keep each unit in one split")
     return problems
 
 
@@ -68,9 +68,7 @@ def main(csv_path: str = "eval/questions.csv") -> int:
         rows = list(reader)
 
     problems = check_rows(rows, units_by_id)
-    print(
-        f"{len(rows)} questions | types: {dict(Counter(r['type'] for r in rows))} | splits: {dict(Counter(r['split'] for r in rows))}"
-    )
+    print(f"{len(rows)} questions | types: {dict(Counter(r['type'] for r in rows))} | splits: {dict(Counter(r['split'] for r in rows))}")
     for p in problems:
         print("PROBLEM:", p)
     print("OK" if not problems else f"{len(problems)} problem(s)")
