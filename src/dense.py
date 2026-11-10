@@ -7,9 +7,9 @@ Real use:
     r = DenseRetriever(ids, texts, embed, query_prefix=BGE_QUERY_PREFIX)
 
 Notes
-  * Small embedding models cap the input length (often 512 tokens, roughly 2000 characters).
+  * Small embedding models cap the input length (512 tokens for bge-small, roughly 2000 characters).
     Longer chunks are silently truncated, which would make big-chunk results look worse than they are.
-    Check `model.max_seq_length` and keep chunk sizes within it.
+    `truncation_rate` measures how many chunks are affected, and the runner prints it.
   * bge models expect an instruction prefix on QUERIES (not on documents).
 """
 
@@ -19,20 +19,36 @@ BGE_QUERY_PREFIX = "Represent this sentence for searching relevant passages: "
 
 
 def load_sentence_transformer(model_name: str = "BAAI/bge-small-en-v1.5"):
-    """Return embed(list[str]) -> np.ndarray (unit-length vectors). Needs `pip install sentence-transformers`."""
-    from sentence_transformers import (
-        SentenceTransformer,
-    )  # imported lazily: it is a heavy dependency
+    """Return embed(list[str]) -> np.ndarray (unit-length vectors). Needs `pip install sentence-transformers`.
+
+    The returned function also carries `max_seq_length` and, when the model exposes its tokenizer,
+    `count_tokens(texts) -> list[int]` (token counts without truncation).
+    """
+    from sentence_transformers import SentenceTransformer  # imported lazily: it is a heavy dependency
 
     model = SentenceTransformer(model_name)
 
     def embed(texts: list[str]) -> np.ndarray:
-        return model.encode(
-            texts, batch_size=64, normalize_embeddings=True, show_progress_bar=False
-        )
+        return model.encode(texts, batch_size=64, normalize_embeddings=True, show_progress_bar=False)
 
+    embed.model_name = model_name
     embed.max_seq_length = model.max_seq_length
+    tokenizer = getattr(model, "tokenizer", None)
+    if tokenizer is not None:
+        embed.count_tokens = lambda texts: [len(ids) for ids in tokenizer(list(texts), truncation=False)["input_ids"]]
     return embed
+
+
+def truncation_rate(texts: list[str], embed_fn) -> float | None:
+    """Fraction of texts longer than the embedder's input limit, or None if it cannot be measured."""
+    count, limit = getattr(embed_fn, "count_tokens", None), getattr(embed_fn, "max_seq_length", None)
+    if count is None or limit is None or not texts:
+        return None
+    try:
+        lengths = count(texts)
+    except Exception:  # measuring is a courtesy; it must never break an experiment run
+        return None
+    return sum(n > limit for n in lengths) / len(lengths)
 
 
 def _normalize(m: np.ndarray) -> np.ndarray:
@@ -42,9 +58,7 @@ def _normalize(m: np.ndarray) -> np.ndarray:
 
 
 class DenseRetriever:
-    def __init__(
-        self, chunk_ids: list[str], chunks: list[str], embed_fn, query_prefix: str = ""
-    ):
+    def __init__(self, chunk_ids: list[str], chunks: list[str], embed_fn, query_prefix: str = ""):
         assert len(chunk_ids) == len(chunks)
         self.chunk_ids = chunk_ids
         self.embed_fn = embed_fn
