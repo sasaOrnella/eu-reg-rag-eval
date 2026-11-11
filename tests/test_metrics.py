@@ -38,8 +38,6 @@ def test_recall_invalid_k():
     with pytest.raises(ValueError):
         recall_at_k(["a", "b"], {"a"}, -1)
 
-
-@pytest.mark.skip(reason="Week 5-6: remove this line when you implement bootstrap_ci")
 def test_bootstrap_ci_contains_mean():
     mean, lo, hi = bootstrap_ci([0.1, 0.5, 0.9, 0.4, 0.6], n_boot=2000)
     assert lo <= mean <= hi

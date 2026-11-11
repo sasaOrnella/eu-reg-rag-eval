@@ -34,12 +34,33 @@ def reciprocal_rank(retrieved_ids: list[str], relevant_ids: set[str]) -> float:
     return rr
 
 
-def bootstrap_ci(
-    values: list[float], n_boot: int = 10000, alpha: float = 0.05, seed: int = 0
-):
-    """Return (mean, lower, upper) of a percentile bootstrap confidence interval.
+import numpy as np
+import random
 
-    Used later in the project: every reported number needs an interval.
-    """
-    # TODO(you): implement in week 5-6
-    raise NotImplementedError
+def bootstrap_ci(
+values: list[float], n_boot: int = 10000, alpha: float = 0.05, seed: int = 0
+):
+    if len(values) == 0:
+        raise ValueError('values must not be empty!!')
+
+    if n_boot == 0:
+        raise ValueError('n_boot must be positive!!')
+
+    if not 0 < alpha < 1:
+        raise ValueError('alpha must be between 0 and 1!!')
+
+    
+    rng = random.Random(seed)
+    boot_m = []
+
+    for i in range(n_boot):
+        sampling = rng.choices(values, k = len(values))
+        avg = sum(sampling) / len(sampling)
+        boot_m.append(avg)
+
+    mean = sum(values) / len(values)
+
+    lower = np.quantile(boot_m, alpha / 2)
+    upper = np.quantile(boot_m, 1 - alpha / 2)
+
+    return mean, lower, upper
