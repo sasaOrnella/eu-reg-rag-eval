@@ -63,7 +63,7 @@ def main() -> None:
     by_id = {c.chunk_id: c for c in chunks}
     retriever = build_retrievers(chunks, [args.method], embed_fn, POOL)[args.method]
     ranked = [by_id[cid] for cid in retriever.search(q["question"], k=POOL)]
-    context = select_within_budget(ranked, args.budget)
+    context = select_within_budget(ranked, args.budget, allow_oversized_first=chunk_size is None)
 
     print(f"{q['id']} [{q['split']}, {q['type']}]  {q['question']}")
     print(f"gold answer: {q['gold_answer']}")
@@ -71,6 +71,7 @@ def main() -> None:
     for s in q["spans"]:
         print(f"gold evidence: {s.unit_id} [{s.start}:{s.end}] {by_unit[s.unit_id]['text'][s.start : s.end][:100]}")
     print(f"\n{args.method}, chunk size {args.chunk_size}, budget {args.budget}: {len(context)} chunks in context, "
+          f"{sum(len(c.text) for c in context)} actual characters, "
           f"first hit at rank {first_hit_rank(ranked, q['spans'])} (of {POOL})\n")  # fmt: skip
     print(format_ranking(ranked, q["spans"], {c.chunk_id for c in context}, args.top))
 

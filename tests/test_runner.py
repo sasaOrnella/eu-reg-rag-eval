@@ -104,3 +104,13 @@ def test_lexical_overlap():
     assert lexical_overlap("breach notification", "unrelated words here") == 0.0
     assert lexical_overlap("the of and", "anything") == 0.0  # only stopwords
     assert 0 < lexical_overlap("breach deadline", "the breach occurred") < 1
+
+
+def test_strict_context_and_whole_unit_baseline_score_actual_context():
+    qs = [question("q", "breach", "d:art:1::within 72 hours")]
+    whole = run_chunking(UNITS, qs, None, [1])[0]
+    strict = run_chunking(UNITS, qs, 40, [1])[0]
+    assert (strict["budget_policy"], strict["n_chunks"], strict["recall"], strict["excess_chars"]) == ("strict", 0, 0, 0)
+    assert whole["budget_policy"] == "whole_unit_baseline"
+    assert whole["n_chunks"] == 1
+    assert whole["excess_chars"] == whole["ctx_chars"] - 1 > 0

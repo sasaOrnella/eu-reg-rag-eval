@@ -11,21 +11,20 @@ Experimental idea (hypothesis H1):
 from src.corpus import Chunk
 
 
-def select_within_budget(ranked: list[Chunk], budget_chars: int) -> list[Chunk]:
+def select_within_budget(ranked: list[Chunk], budget_chars: int, *, allow_oversized_first: bool = False) -> list[Chunk]:
+    """Take a ranked prefix. Only the whole-unit baseline permits an oversized first result."""
     if budget_chars <= 0:
         raise ValueError("budget_chars must be a positive number!!")
-    if len(ranked) == 0:
-        return []
-    
+
     selected = []
     total_chars = 0
 
     for chunk in ranked:
         chunk_length = len(chunk.text)
-        if chunk_length <= budget_chars - total_chars or len(selected) == 0:
+        if chunk_length <= budget_chars - total_chars or (allow_oversized_first and not selected):
             selected.append(chunk)
             total_chars += chunk_length
         else:
             break
-    
+
     return selected

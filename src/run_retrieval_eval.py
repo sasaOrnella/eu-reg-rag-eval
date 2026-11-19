@@ -48,14 +48,18 @@ def load_questions(path: str, units_by_id: dict, splits: set[str]) -> list[dict]
     return questions
 
 
-def score_questions(retriever, method, by_id, questions, chunk_size, budget_chars, pool=POOL, selector=select_within_budget):
+def score_questions(retriever, method, by_id, questions, chunk_size, budget_chars, pool=POOL, selector=None):
     """One retriever, one budget -> one result row per answerable question."""
     rows = []
     for q in questions:
         if q["type"] == "unanswerable":
             continue
         ranked = [by_id[cid] for cid in retriever.search(q["question"], k=pool)]
-        context = selector(ranked, budget_chars)
+        if selector is None:
+            context = select_within_budget(ranked, budget_chars, allow_oversized_first=chunk_size is None)
+        else:
+            context = selector(ranked, budget_chars)
+        used_chars = sum(len(c.text) for c in context)
         rank = first_hit_rank(ranked, q["spans"])
         rows.append(
             {
@@ -70,7 +74,9 @@ def score_questions(retriever, method, by_id, questions, chunk_size, budget_char
                 "recall": evidence_recall_at_k(context, q["spans"], k=max(len(context), 1)),
                 "rr": 1 / rank if rank else 0.0,
                 "n_chunks": len(context),
-                "ctx_chars": sum(len(c.text) for c in context),
+                "ctx_chars": used_chars,
+                "budget_policy": "whole_unit_baseline" if chunk_size is None else "strict",
+                "excess_chars": max(0, used_chars - budget_chars),
             }
         )
     return rows
@@ -78,7 +84,7 @@ def score_questions(retriever, method, by_id, questions, chunk_size, budget_char
 
 def run_chunking(
     units, questions, chunk_size, budgets, methods=("bm25",), embed_fn=None,
-    overlap_ratio=OVERLAP_RATIO, pool=POOL, selector=select_within_budget,
+    overlap_ratio=OVERLAP_RATIO, pool=POOL, selector=None,
 ) -> list[dict]:  # fmt: skip
     """Chunk once, build the retrievers once, then score every requested method and budget."""
     overlap = 0 if chunk_size is None else int(chunk_size * overlap_ratio)
@@ -144,12 +150,20 @@ def main() -> None:
     print(f"\n{args.split}: {n_answerable} answerable questions, {len(df)} result rows -> {out}")
     if n_answerable < 100:
         print(f"WARNING: n={n_answerable} is a pilot. Differences are within noise; do not draw conclusions yet.")
+    strict = df[df["budget_policy"] == "strict"]
+    baseline = df[df["budget_policy"] == "whole_unit_baseline"]
+    if not baseline.empty:
+        print("\nWhole-unit BM25 structural baseline (oversized first unit allowed):")
+        print(baseline.groupby("budget_chars").agg(
+            n=("qid", "size"), mean_recall=("recall", "mean"), mean_chars=("ctx_chars", "mean"),
+            over_budget=("excess_chars", lambda x: (x > 0).sum()), max_excess=("excess_chars", "max"),
+        ).to_string())
     for budget in BUDGETS:
-        sub = df[df["budget_chars"] == budget]
+        sub = strict[strict["budget_chars"] == budget]
         print(f"\nMean evidence recall, budget = {budget} characters (rows: chunk size, columns: method):")
         print(sub.pivot_table(index="chunk_size", columns="method", values="recall", aggfunc="mean", sort=False).round(3).to_string())
     if args.by_type:
-        big = df[df["budget_chars"] == max(BUDGETS)]
+        big = strict[strict["budget_chars"] == max(BUDGETS)]
         print(f"\nMean recall by question type, budget = {max(BUDGETS)}:")
         print(big.pivot_table(index=["method", "chunk_size"], columns="type", values="recall", aggfunc="mean", sort=False).round(2).to_string())
 

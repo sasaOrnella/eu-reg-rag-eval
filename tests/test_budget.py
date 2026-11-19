@@ -25,8 +25,12 @@ def test_stops_at_first_chunk_that_does_not_fit():
     assert ids(select_within_budget(make(100, 300, 50), 200)) == ["c0"]
 
 
-def test_first_chunk_is_kept_even_if_over_budget():
-    assert ids(select_within_budget(make(500, 10), 100)) == ["c0"]
+def test_strict_budget_stops_on_oversized_first_chunk():
+    assert select_within_budget(make(500, 10), 100) == []
+
+
+def test_whole_unit_baseline_keeps_oversized_first_chunk():
+    assert ids(select_within_budget(make(500, 10), 100, allow_oversized_first=True)) == ["c0"]
 
 
 def test_empty_input():

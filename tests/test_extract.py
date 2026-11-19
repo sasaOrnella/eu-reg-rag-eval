@@ -93,3 +93,15 @@ def test_chapter_heading_and_signature_do_not_leak(tmp_path):
     a1, a2 = articles(run(tmp_path, HTML_FLAT))
     assert "CHAPTER" not in a1["text"]
     assert "Brussels" not in a2["text"]
+
+
+def test_numeric_superscripts_preserve_powers_but_not_footnote_numbers(tmp_path):
+    html = """
+    <div id="rct_1">(1) More than 10<span class="oj-super">25</span> operations.</div>
+    <p class="oj-ti-art">Article 1</p>
+    <p>Scale 2<sup>−3</sup>. See 42<a href="#n"><sup>1</sup></a>.
+    Preserve the literal numbers 10 25.</p>
+    """
+    units = run(tmp_path, html)
+    assert recitals(units)[0]["text"] == "More than 10^25 operations."
+    assert articles(units)[0]["text"] == "Scale 2^-3. See 42 1. Preserve the literal numbers 10 25."

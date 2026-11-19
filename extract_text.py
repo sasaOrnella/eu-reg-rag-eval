@@ -12,7 +12,7 @@ import re
 from collections import Counter
 from pathlib import Path
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString
 
 # Sanity-check targets. If one fails, first compare with the official text before changing the code.
 EXPECTED = {
@@ -113,6 +113,22 @@ def extract_units(html_path: str, doc_name: str) -> list[dict]:
 
     for note in soup.find_all(class_="oj-note"):  # footnote bodies
         note.decompose()
+
+    # get_text(" ") inserts a separator between adjacent HTML nodes. Join
+    # numeric powers first, preserving unrelated numbers and footnote markers.
+    for tag in soup.select("sup, .oj-super"):
+        base = tag.previous_sibling
+        exponent = tag.get_text(strip=True)
+        if (
+            isinstance(base, NavigableString)
+            and re.search(r"\d$", str(base))
+            and re.fullmatch(r"[+−-]?\d+", exponent)
+            and "oj-note-tag" not in tag.get("class", [])
+            and tag.find_parent("a") is None
+            and tag.find("a") is None
+        ):
+            base.replace_with(str(base) + "^" + exponent.replace("−", "-"))
+            tag.decompose()
 
     return extract_recitals(soup, doc_name) + extract_articles(soup, doc_name)
 
