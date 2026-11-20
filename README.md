@@ -57,6 +57,8 @@ python -m pytest -q
 ```
 
 ## Results
+[Dev Pilot P1 analysis and reproducibility files](eval/dev_pilot_p1/README.md) cover paired inference, sensitivity checks, and the Hybrid diagnosis.
+
 TODO: add tables with 95% bootstrap confidence intervals after experiments.
 
 ## Limitations
