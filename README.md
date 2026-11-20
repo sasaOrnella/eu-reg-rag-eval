@@ -12,6 +12,22 @@ On the English texts of the GDPR and the EU AI Act, how do retrieval method (BM2
 - H2: (a) On questions with high lexical overlap with their evidence, BM25's recall is at most 0.05 below dense retrieval's (margin fixed in advance). (b) On low-overlap questions and multi-hop questions, dense or hybrid retrieval has higher recall than BM25. (c) Hybrid is not significantly worse than the better single method on any question type (95% bootstrap CI).
 - H3 (recall vs. answer quality): On multi-hop questions, gains in recall translate into smaller gains in answer correctness than on single-hop questions (“retrieved does not equal answered correctly”). This hypothesis can be tested only after the generation stage and is stated in advance.
 
+## Dataset freeze
+
+`eval/questions.csv` was frozen on **2026-11-20** (Asia/Shanghai). The data snapshot is Git commit `983bd2b85d1aaf1d56d68d67978dd0c227539296`.
+
+SHA-256 of the exact CSV bytes: `a998781a7eeac836b131a30b53188a184440d6a30f37ff81a872e4fef507675e`.
+
+Record every future question change in the [dataset changelog](eval/CHANGELOG.md), including its QID, affected fields, reason and any prior inspection of retrieval output. Renew the recorded hash and snapshot reference when freezing a revised dataset. The [Dev Pilot metadata](eval/dev_pilot_metadata.json) records prior inspections separately from the CSV.
+
+## Deviations / Pilot Analysis Decisions
+
+1. For H2(a), Dev Pilot grouped lexical overlap scores below 0.30 as Low and scores of 0.30 or higher as High. The cutoff comes from the [question-writing rules (R-Q3)](eval/question_rules.md) and was adopted for this analysis without an explicit preregistered H2 threshold.
+2. H2(a) retains its original 0.05 recall difference margin. The Dev Pilot has yet to establish the predicted margin result.
+3. H2(c) had no prespecified non-inferiority margin. A nonsignificant difference cannot establish non-inferiority.
+4. All H1 and H2 analyses to date are exploratory Dev Pilot analyses. A confirmatory evaluation remains pending.
+5. Of the 33 answerable Dev questions, 25 were AI-drafted. Human review is pending, with no complete verification record for those 25 questions.
+
 ## Repository layout
 ```
 data/raw/          official EUR-Lex HTML source files (see data/README.md)

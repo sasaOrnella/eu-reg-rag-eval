@@ -1,0 +1,84 @@
+{
+  "dataset_path": "eval/questions.csv",
+  "dataset_commit": "983bd2b85d1aaf1d56d68d67978dd0c227539296",
+  "dataset_sha256": "a998781a7eeac836b131a30b53188a184440d6a30f37ff81a872e4fef507675e",
+  "inspection_source": {
+    "path": "eval/error_notes_dev.md",
+    "git_commit": "7bc2620c154d836c043a5f98614ccd8f22b8b687"
+  },
+  "inspection_records": {
+    "Q001": {
+      "split": "dev",
+      "tags": [
+        "inspected:dev-pilot"
+      ]
+    },
+    "Q003": {
+      "split": "dev",
+      "tags": [
+        "inspected:dev-pilot"
+      ]
+    },
+    "Q005": {
+      "split": "dev",
+      "tags": [
+        "inspected:dev-pilot"
+      ]
+    },
+    "Q007": {
+      "split": "dev",
+      "tags": [
+        "inspected:dev-pilot"
+      ]
+    },
+    "Q013": {
+      "split": "dev",
+      "tags": [
+        "inspected:dev-pilot"
+      ]
+    },
+    "Q016": {
+      "split": "dev",
+      "tags": [
+        "inspected:dev-pilot"
+      ]
+    },
+    "Q019": {
+      "split": "dev",
+      "tags": [
+        "inspected:dev-pilot"
+      ]
+    }
+  },
+  "dev_answerable_human_review": {
+    "status": "pending human review",
+    "answerable_count": 33,
+    "ai_drafted_qids": [
+      "Q021",
+      "Q022",
+      "Q023",
+      "Q024",
+      "Q025",
+      "Q026",
+      "Q027",
+      "Q028",
+      "Q029",
+      "Q030",
+      "Q031",
+      "Q032",
+      "Q033",
+      "Q051",
+      "Q052",
+      "Q053",
+      "Q054",
+      "Q055",
+      "Q056",
+      "Q057",
+      "Q058",
+      "Q059",
+      "Q060",
+      "Q061",
+      "Q062"
+    ]
+  }
+}
