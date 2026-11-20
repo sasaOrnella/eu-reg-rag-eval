@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 
 from src.metrics import bootstrap_ci
+from src.pilot_inference import dev_annotations, exact_sign_flip, extreme_count, primary_dev
 from src.retrievers import METHODS
 from src.run_retrieval_eval import BUDGETS, CHUNK_SIZES
 
@@ -60,11 +61,7 @@ def bootstrap_test(values, null, alternative, n_boot, seed):
     # Bootstrap whole question differences. Center to impose the tested null mean.
     rng = np.random.default_rng(seed)
     centered = v[rng.integers(len(v), size=(n_boot, len(v)))].mean(axis=1) - v.mean()
-    if alternative == "greater":
-        extreme = centered >= observed - 1e-12
-    else:
-        extreme = np.abs(centered) >= abs(observed) - 1e-12
-    return (extreme.sum() + 1) / (n_boot + 1)
+    return (extreme_count(centered, observed, alternative) + 1) / (n_boot + 1)
 
 
 def analyze(frame, metric, inspected, n_boot=10000, seed=0):
@@ -82,7 +79,8 @@ def analyze(frame, metric, inspected, n_boot=10000, seed=0):
             row = dict(context, family=family, contrast=contrast, budget_chars=budget,
                        subgroup=group, chunk_size=size, overlap_threshold=threshold,
                        null_effect=null, alternative=alternative, n=len(values),
-                       n_boot=n_boot, seed=seed, **detail)
+                       n_boot=n_boot, seed=seed, p_raw=np.nan, p_bootstrap_floor=1 / (n_boot + 1),
+                       p_signflip_exact=np.nan, **detail)
             if len(values) >= 2:
                 effect, low, high = bootstrap_ci(values, n_boot=n_boot, seed=seed)
                 row.update(effect=effect, ci_low=low, ci_high=high,
@@ -90,6 +88,9 @@ def analyze(frame, metric, inspected, n_boot=10000, seed=0):
                            status="estimated")
             else:
                 row.update(effect=values[0] if values else np.nan, status="insufficient_pairs")
+            if 2 <= len(values) <= 20:
+                row["p_signflip_exact"] = exact_sign_flip(values, null, alternative)
+            row["bootstrap_at_floor"] = row["p_raw"] == row["p_bootstrap_floor"]
             tests.append(row)
 
         for budget in BUDGETS:
@@ -156,6 +157,8 @@ def main():
     parser.add_argument("--results", type=Path, default=Path("results/retrieval_dev.csv"))
     parser.add_argument("--coverage", type=Path, help="Optional Dev replay CSV from src.replay_dev")
     parser.add_argument("--metadata", type=Path, default=Path("eval/dev_pilot_metadata.json"))
+    parser.add_argument("--questions", type=Path, default=Path("eval/questions.csv"),
+                        help="Frozen annotations for the Dev protocol preview")
     parser.add_argument("--out-dir", type=Path, default=Path("results/dev_analysis"))
     parser.add_argument("--n-boot", type=int, default=10000)
     parser.add_argument("--seed", type=int, default=0)
@@ -178,6 +181,8 @@ def main():
         if not paired["recall"].between(0, 1).all() or (paired["recall_coverage50"] > paired["recall"]).any():
             parser.error("Replay coverage is inconsistent with its any-overlap recall")
         inputs.extend([(replay, "recall_replayed"), (replay, "recall_coverage50")])
+    overlaps, clusters = dev_annotations(args.questions, set(frame.qid))
+    preview = primary_dev(frame, overlaps, clusters, args.n_boot, args.seed, holm)
     all_means, all_tests = [], []
     for data, label in inputs:
         if label == "recall_replayed":
@@ -188,6 +193,7 @@ def main():
     args.out_dir.mkdir(parents=True, exist_ok=True)
     pd.concat(all_means, ignore_index=True).to_csv(args.out_dir / "means.csv", index=False)
     pd.concat(all_tests, ignore_index=True).to_csv(args.out_dir / "contrasts.csv", index=False)
+    preview.to_csv(args.out_dir / "primary_protocol_dev.csv", index=False)
 
 
 if __name__ == "__main__":

@@ -64,3 +64,20 @@ def test_hybrid_combines_two_retrievers():
         "b"
     ]  # b is 2nd in both lists, beating the single first places
     assert len(h.search("q", k=10)) == 5
+
+
+def test_rrf_matches_hand_calculation_and_chunk_id_tie_break():
+    from src.hybrid import rrf_scores
+    from src.replay_dev import tie_statistics
+
+    ai, gdpr, common = "ai_act:art:1#0", "gdpr:art:1#0", "gdpr:rec:2#0"
+    rankings = [[ai, common, gdpr], [gdpr, common, ai]]
+    expected = {ai: 1 / 61 + 1 / 63, gdpr: 1 / 61 + 1 / 63, common: 2 / 62}
+    assert rrf_scores(rankings) == expected
+    assert rrf(rankings) == [ai, gdpr, common]
+    top_two = next(tie_statistics(rankings, 60, (2,)))
+    assert top_two["tied_slots"] == 2
+    assert not top_two["cutoff_tie"]
+    top_one = next(tie_statistics(rankings, 60, (1,)))
+    assert top_one["cutoff_tie"] and top_one["changed_members"] == 1
+    assert top_one["ai_act_slots"] == 1 and top_one["ai_act_slots_reverse"] == 0

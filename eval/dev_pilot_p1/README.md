@@ -2,6 +2,8 @@
 
 日期 **2026-11-20**。所有比较均为探索性。原预注册假设见项目 README。[扩样与 amendment 草案](expansion_protocol.md)
 
+收尾更新 **2026-11-20**。前瞻性检验定义见 [扩样与确认性评测协议](expansion_protocol.md)。本页原有比较继续作为探索性复现，新增主检验表为在 Dev 上试算该协议的输出。[收尾核查结果](closeout.md)
+
 ## 分析口径
 
 - 观测单位为题。按 QID 对齐方法和配置，重复或不完整的配置矩阵会报错。四档固定切块 400、800、1200、2000 字符。8000 字符是与原假设对应的近似主预算，4000 是另一分析预算。整单元 BM25 保存在原始快照中。
@@ -20,12 +22,14 @@
 | [coverage_replay.csv](coverage_replay.csv) | 同口径和50%覆盖重算，以及两档 Hybrid 诊断。rank 数组按 gold span 顺序排列，null 表示候选池内未命中。 |
 | [means.csv](means.csv) | 按方法、尺寸、预算、队列和指标输出均值及置信区间。 |
 | [contrasts.csv](contrasts.csv) | 全部配对对比，含效应量、有效 n、原始及 Holm 校正 p 值。 |
+| [primary_protocol_dev.csv](primary_protocol_dev.csv) | 预定主族与次要界值族在 Dev 上的试算。一个交并声明保留两条分量，共享其声明级 Holm p。 |
+| [rrf_ties.csv](rrf_ties.csv) | Dev 每题每尺寸的 top-5、10、50 精确同分与反转 tie-break 对照。 |
 | [findings.md](findings.md) | 实测统计与 Hybrid 诊断。 |
 
 从项目根目录运行，依赖为项目 eu-rag 环境。MODEL 指向本地 BAAI/bge-small-en-v1.5 快照 5c38ec7c405ec4b44b94cc5a9bb96e735b38267a。
 
 ```bash
-HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 OMP_NUM_THREADS=4 python -m src.replay_dev --model "$MODEL" --out results/coverage_replay.csv
+HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 OMP_NUM_THREADS=4 python -m src.replay_dev --model "$MODEL" --out results/coverage_replay.csv --rrf-ties results/rrf_ties.csv
 python -m src.analyze_dev --results eval/dev_pilot_p1/pilot_input.csv --coverage results/coverage_replay.csv --out-dir results/dev_analysis
 python -m pytest -q
 ```

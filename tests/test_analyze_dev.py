@@ -68,3 +68,37 @@ def test_span_coverage_is_union_in_the_same_unit():
     assert covered_fraction(gold, chunks) == .5
     assert covered_fraction(gold, chunks[:1]) == .3
     assert covered_fraction(gold, chunks[2:]) == 0
+
+
+def test_exact_sign_flip_includes_ties_and_margin_shift():
+    from src.pilot_inference import exact_sign_flip
+
+    assert exact_sign_flip([1, 2, 0], 0, "greater") == .25
+    assert exact_sign_flip([1, 2, 0], 0, "less") == 1
+    assert exact_sign_flip([1, 2, 0], 0, "two-sided") == .5
+    assert exact_sign_flip([0, .05], -.05, "greater") == .25
+    assert exact_sign_flip([1] * 20, 0, "greater") == 1 / (2 ** 20)
+    with pytest.raises(ValueError):
+        exact_sign_flip([1] * 21, 0, "greater")
+
+
+def test_cluster_grouping_is_transitive_and_primary_family_is_distinct(tmp_path):
+    from src.analyze_dev import holm
+    from src.pilot_inference import dev_annotations, primary_dev
+
+    path = tmp_path / "questions.csv"
+    path.write_text(
+        "id,split,type,question,gold_evidence\n"
+        "Q001,dev,single_hop,what happens breach,a::breach\n"
+        "Q002,dev,multi_hop,what happens breach,a::breach || b::report\n"
+        "Q003,dev,single_hop,what happens report,b::report\n"
+    )
+    _, clusters = dev_annotations(path, {"Q003", "Q001", "Q002"})
+    assert len(set(clusters.values())) == 1
+    frame = sample_grid()
+    overlap = pd.Series({"Q001": .5, "Q002": .5, "Q003": .5})
+    table = primary_dev(frame, overlap, clusters, n_boot=20, seed=0, holm=holm)
+    assert table[table.family.eq("primary")].hypothesis.nunique() == 8
+    assert table[table.family.eq("secondary_margin")].hypothesis.nunique() == 2
+    assert table.claim_p_holm.isna().all()
+    assert table[table.hypothesis.str.startswith("H2b")].n.eq(0).all()
