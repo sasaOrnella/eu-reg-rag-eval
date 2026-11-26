@@ -1,0 +1,668 @@
+{
+  "batch": "EU AI Act Dev Q101–Q120",
+  "canonical_candidate_file": "outputs/ai_act_dev_candidates_v2.csv",
+  "validated_on": "2026-11-26",
+  "repo_baseline": "bccfa06",
+  "candidate_status": "accepted_independent_batch",
+  "human_review": "pending",
+  "independent_acceptance": "User reports independent acceptance of all 20 candidates.",
+  "source_archive": "gemini_blind_generation/outputs.zip",
+  "source_archive_sha256": "fb16990dbacb9b6b132d7104002f4d3f7f448e86d3d492909af840bf7fd8a9c3",
+  "frozen_questions_sha256": "a998781a7eeac836b131a30b53188a184440d6a30f37ff81a872e4fef507675e",
+  "gdpr_v2_sha256": "6beddd9acc015b7eac0df34e0326543b2cb0caaf306aa514f054011665cb3af7",
+  "member_sha256": {
+    "ai_act_dev_check_report_v2.md": "b21e0c89186737e905a3aa854ef13fcf4f7945560ed976b34f6aa2ed0c38def3",
+    "ai_act_dev_check_report.md": "dd877ffa8216a04b4f60d25dc1c07fb056d7d15a53e24846866c4f80c8bd4331",
+    "ai_act_dev_changelog_v2.md": "fb9f88e3daf7f571fd8733f3ed7fc1fec3c6d9a9b7d3e9ae036cc971fb00355d",
+    "ai_act_dev_generation_metadata_v2.json": "8fc472e8214663d56b39fc8ddf21ff10b0cbf1a0cc73d44fc37d48de8c4f4a95",
+    "ai_act_dev_candidates.csv": "8aa8e804d7b364f56da4dfbf58dbebc2cde530d567efb300c792ff4f4707f8a4",
+    "generation_metadata.json": "bce67d0fd333a712e9460b054e479ad153133df2bb6ef4de3d66f728274ee161",
+    "ai_act_dev_candidates_v2.csv": "24629721006055e26873cc308c6179449d654c93122307dfcf5315530be2b14d",
+    "ai_act_dev_generation_metadata.json": "f7facfb2edf97b3a1b5a316c015237e68d1b91dfed67500d357e69f22f2e44b7"
+  },
+  "automated_audit": {
+    "errors": 0,
+    "warnings": [
+      {
+        "severity": "WARN",
+        "rule": "R-E2",
+        "qid": "Q110",
+        "message": "quote of 448 characters in ai_act:art:54 (target 40-300)"
+      }
+    ],
+    "warning_disposition": "Non-blocking. The verbatim Article 54(6) sentence preserves licensing conditions, public disclosure requirements and the systemic-risk carve-out. It is within the 600-character maximum."
+  },
+  "quota_scope": "Both completed Dev strata. Future locked cohorts are absent and unevaluated.",
+  "dev_joint_quotas": [
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "single_hop",
+      "evidence": "article_only",
+      "high": 2,
+      "low": 2,
+      "total": 4,
+      "target": 4,
+      "high_floor": 2
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "single_hop",
+      "evidence": "recital_only",
+      "high": 0,
+      "low": 1,
+      "total": 1,
+      "target": 1,
+      "high_floor": 0
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "single_hop",
+      "evidence": "mixed",
+      "high": 0,
+      "low": 0,
+      "total": 0,
+      "target": 0,
+      "high_floor": 0
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "multi_hop",
+      "evidence": "article_only",
+      "high": 2,
+      "low": 1,
+      "total": 3,
+      "target": 3,
+      "high_floor": 1
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "multi_hop",
+      "evidence": "recital_only",
+      "high": 0,
+      "low": 0,
+      "total": 0,
+      "target": 0,
+      "high_floor": 0
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "multi_hop",
+      "evidence": "mixed",
+      "high": 1,
+      "low": 1,
+      "total": 2,
+      "target": 2,
+      "high_floor": 1
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "conflicting_or_conditional",
+      "evidence": "article_only",
+      "high": 2,
+      "low": 1,
+      "total": 3,
+      "target": 3,
+      "high_floor": 1
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "conflicting_or_conditional",
+      "evidence": "recital_only",
+      "high": 0,
+      "low": 1,
+      "total": 1,
+      "target": 1,
+      "high_floor": 0
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "conflicting_or_conditional",
+      "evidence": "mixed",
+      "high": 0,
+      "low": 0,
+      "total": 0,
+      "target": 0,
+      "high_floor": 0
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "numeric_or_table",
+      "evidence": "article_only",
+      "high": 1,
+      "low": 2,
+      "total": 3,
+      "target": 3,
+      "high_floor": 1
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "numeric_or_table",
+      "evidence": "recital_only",
+      "high": 1,
+      "low": 0,
+      "total": 1,
+      "target": 1,
+      "high_floor": 1
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "numeric_or_table",
+      "evidence": "mixed",
+      "high": 0,
+      "low": 0,
+      "total": 0,
+      "target": 0,
+      "high_floor": 0
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "unanswerable",
+      "evidence": "none",
+      "high": "",
+      "low": "",
+      "total": 2,
+      "target": 2,
+      "high_floor": ""
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "merged_all",
+      "evidence": "all",
+      "high": 14,
+      "low": 21,
+      "total": 40,
+      "target": 40,
+      "high_floor": 14
+    },
+    {
+      "doc": "ai_act",
+      "split": "dev",
+      "type": "single_hop",
+      "evidence": "article_only",
+      "high": 2,
+      "low": 2,
+      "total": 4,
+      "target": 4,
+      "high_floor": 2
+    },
+    {
+      "doc": "ai_act",
+      "split": "dev",
+      "type": "single_hop",
+      "evidence": "recital_only",
+      "high": 0,
+      "low": 1,
+      "total": 1,
+      "target": 1,
+      "high_floor": 0
+    },
+    {
+      "doc": "ai_act",
+      "split": "dev",
+      "type": "single_hop",
+      "evidence": "mixed",
+      "high": 0,
+      "low": 0,
+      "total": 0,
+      "target": 0,
+      "high_floor": 0
+    },
+    {
+      "doc": "ai_act",
+      "split": "dev",
+      "type": "multi_hop",
+      "evidence": "article_only",
+      "high": 2,
+      "low": 1,
+      "total": 3,
+      "target": 3,
+      "high_floor": 1
+    },
+    {
+      "doc": "ai_act",
+      "split": "dev",
+      "type": "multi_hop",
+      "evidence": "recital_only",
+      "high": 0,
+      "low": 0,
+      "total": 0,
+      "target": 0,
+      "high_floor": 0
+    },
+    {
+      "doc": "ai_act",
+      "split": "dev",
+      "type": "multi_hop",
+      "evidence": "mixed",
+      "high": 1,
+      "low": 1,
+      "total": 2,
+      "target": 2,
+      "high_floor": 1
+    },
+    {
+      "doc": "ai_act",
+      "split": "dev",
+      "type": "conflicting_or_conditional",
+      "evidence": "article_only",
+      "high": 2,
+      "low": 1,
+      "total": 3,
+      "target": 3,
+      "high_floor": 1
+    },
+    {
+      "doc": "ai_act",
+      "split": "dev",
+      "type": "conflicting_or_conditional",
+      "evidence": "recital_only",
+      "high": 1,
+      "low": 0,
+      "total": 1,
+      "target": 1,
+      "high_floor": 0
+    },
+    {
+      "doc": "ai_act",
+      "split": "dev",
+      "type": "conflicting_or_conditional",
+      "evidence": "mixed",
+      "high": 0,
+      "low": 0,
+      "total": 0,
+      "target": 0,
+      "high_floor": 0
+    },
+    {
+      "doc": "ai_act",
+      "split": "dev",
+      "type": "numeric_or_table",
+      "evidence": "article_only",
+      "high": 1,
+      "low": 2,
+      "total": 3,
+      "target": 3,
+      "high_floor": 1
+    },
+    {
+      "doc": "ai_act",
+      "split": "dev",
+      "type": "numeric_or_table",
+      "evidence": "recital_only",
+      "high": 1,
+      "low": 0,
+      "total": 1,
+      "target": 1,
+      "high_floor": 1
+    },
+    {
+      "doc": "ai_act",
+      "split": "dev",
+      "type": "numeric_or_table",
+      "evidence": "mixed",
+      "high": 0,
+      "low": 0,
+      "total": 0,
+      "target": 0,
+      "high_floor": 0
+    },
+    {
+      "doc": "ai_act",
+      "split": "dev",
+      "type": "unanswerable",
+      "evidence": "none",
+      "high": "",
+      "low": "",
+      "total": 2,
+      "target": 2,
+      "high_floor": ""
+    },
+    {
+      "doc": "ai_act",
+      "split": "dev",
+      "type": "merged_all",
+      "evidence": "all",
+      "high": 15,
+      "low": 19,
+      "total": 40,
+      "target": 40,
+      "high_floor": 14
+    }
+  ],
+  "overlap_counts": {
+    "high": 10,
+    "low": 8,
+    "na": 2
+  },
+  "distinct_positive_units": 23,
+  "gold_spans": 28,
+  "max_questions_per_unit": 1,
+  "frozen_or_gdpr_evidence_intersection": 0,
+  "max_content_word_jaccard": {
+    "frozen": [
+      0.2608695652173913,
+      "Q113",
+      "Q073"
+    ],
+    "gdpr_dev": [
+      0.2777777777777778,
+      "Q118",
+      "Q082"
+    ],
+    "within_batch": [
+      0.35294117647058826,
+      "Q120",
+      "Q115"
+    ]
+  },
+  "v1_to_v2_changed_fields": {
+    "Q103": [
+      "question"
+    ],
+    "Q105": [
+      "question"
+    ],
+    "Q108": [
+      "question"
+    ],
+    "Q109": [
+      "question",
+      "gold_answer",
+      "gold_evidence"
+    ],
+    "Q110": [
+      "question",
+      "gold_answer",
+      "gold_evidence"
+    ],
+    "Q112": [
+      "question",
+      "gold_answer"
+    ],
+    "Q114": [
+      "question"
+    ],
+    "Q119": [
+      "question",
+      "gold_answer",
+      "notes"
+    ]
+  },
+  "byte_identical_unchanged_rows": 12,
+  "candidate_evidence_coordinates": {
+    "Q101": {
+      "spans": [
+        {
+          "unit_id": "ai_act:art:64",
+          "start": 0,
+          "end": 106
+        }
+      ],
+      "overlap_group": "high",
+      "lexical_overlap": 0.5833333333333334
+    },
+    "Q102": {
+      "spans": [
+        {
+          "unit_id": "ai_act:art:84",
+          "start": 178,
+          "end": 421
+        }
+      ],
+      "overlap_group": "high",
+      "lexical_overlap": 0.38461538461538464
+    },
+    "Q103": {
+      "spans": [
+        {
+          "unit_id": "ai_act:art:35",
+          "start": 0,
+          "end": 145
+        }
+      ],
+      "overlap_group": "low",
+      "lexical_overlap": 0.13333333333333333
+    },
+    "Q104": {
+      "spans": [
+        {
+          "unit_id": "ai_act:art:61",
+          "start": 1288,
+          "end": 1425
+        }
+      ],
+      "overlap_group": "low",
+      "lexical_overlap": 0.0
+    },
+    "Q105": {
+      "spans": [
+        {
+          "unit_id": "ai_act:rec:97",
+          "start": 743,
+          "end": 963
+        }
+      ],
+      "overlap_group": "low",
+      "lexical_overlap": 0.08333333333333333
+    },
+    "Q106": {
+      "spans": [
+        {
+          "unit_id": "ai_act:art:68",
+          "start": 627,
+          "end": 889
+        },
+        {
+          "unit_id": "ai_act:art:90",
+          "start": 0,
+          "end": 269
+        }
+      ],
+      "overlap_group": "high",
+      "lexical_overlap": 0.5384615384615384
+    },
+    "Q107": {
+      "spans": [
+        {
+          "unit_id": "ai_act:art:11",
+          "start": 0,
+          "end": 166
+        },
+        {
+          "unit_id": "ai_act:art:18",
+          "start": 0,
+          "end": 251
+        }
+      ],
+      "overlap_group": "high",
+      "lexical_overlap": 0.375
+    },
+    "Q108": {
+      "spans": [
+        {
+          "unit_id": "ai_act:art:88",
+          "start": 0,
+          "end": 383
+        },
+        {
+          "unit_id": "ai_act:art:92",
+          "start": 746,
+          "end": 943
+        }
+      ],
+      "overlap_group": "low",
+      "lexical_overlap": 0.2777777777777778
+    },
+    "Q109": {
+      "spans": [
+        {
+          "unit_id": "ai_act:art:111",
+          "start": 638,
+          "end": 1038
+        },
+        {
+          "unit_id": "ai_act:rec:177",
+          "start": 475,
+          "end": 735
+        }
+      ],
+      "overlap_group": "high",
+      "lexical_overlap": 0.46153846153846156
+    },
+    "Q110": {
+      "spans": [
+        {
+          "unit_id": "ai_act:art:54",
+          "start": 0,
+          "end": 207
+        },
+        {
+          "unit_id": "ai_act:art:54",
+          "start": 2251,
+          "end": 2699
+        },
+        {
+          "unit_id": "ai_act:rec:109",
+          "start": 658,
+          "end": 977
+        }
+      ],
+      "overlap_group": "low",
+      "lexical_overlap": 0.2222222222222222
+    },
+    "Q111": {
+      "spans": [
+        {
+          "unit_id": "ai_act:art:57",
+          "start": 0,
+          "end": 171
+        },
+        {
+          "unit_id": "ai_act:art:57",
+          "start": 399,
+          "end": 623
+        }
+      ],
+      "overlap_group": "high",
+      "lexical_overlap": 0.4666666666666667
+    },
+    "Q112": {
+      "spans": [
+        {
+          "unit_id": "ai_act:art:72",
+          "start": 190,
+          "end": 453
+        },
+        {
+          "unit_id": "ai_act:art:72",
+          "start": 700,
+          "end": 810
+        }
+      ],
+      "overlap_group": "high",
+      "lexical_overlap": 0.5555555555555556
+    },
+    "Q113": {
+      "spans": [
+        {
+          "unit_id": "ai_act:art:83",
+          "start": 0,
+          "end": 322
+        },
+        {
+          "unit_id": "ai_act:art:83",
+          "start": 714,
+          "end": 1052
+        }
+      ],
+      "overlap_group": "low",
+      "lexical_overlap": 0.2
+    },
+    "Q114": {
+      "spans": [
+        {
+          "unit_id": "ai_act:rec:78",
+          "start": 0,
+          "end": 376
+        },
+        {
+          "unit_id": "ai_act:rec:78",
+          "start": 377,
+          "end": 649
+        }
+      ],
+      "overlap_group": "high",
+      "lexical_overlap": 0.5
+    },
+    "Q115": {
+      "spans": [
+        {
+          "unit_id": "ai_act:art:44",
+          "start": 225,
+          "end": 406
+        }
+      ],
+      "overlap_group": "high",
+      "lexical_overlap": 0.36363636363636365
+    },
+    "Q116": {
+      "spans": [
+        {
+          "unit_id": "ai_act:art:33",
+          "start": 582,
+          "end": 882
+        }
+      ],
+      "overlap_group": "low",
+      "lexical_overlap": 0.125
+    },
+    "Q117": {
+      "spans": [
+        {
+          "unit_id": "ai_act:art:81",
+          "start": 624,
+          "end": 937
+        }
+      ],
+      "overlap_group": "low",
+      "lexical_overlap": 0.1875
+    },
+    "Q118": {
+      "spans": [
+        {
+          "unit_id": "ai_act:rec:180",
+          "start": 0,
+          "end": 214
+        }
+      ],
+      "overlap_group": "high",
+      "lexical_overlap": 0.42857142857142855
+    },
+    "Q119": {
+      "spans": [],
+      "overlap_group": "na",
+      "lexical_overlap": null
+    },
+    "Q120": {
+      "spans": [],
+      "overlap_group": "na",
+      "lexical_overlap": null
+    }
+  },
+  "provenance_note": "Input and output hashes, revision records and archived references match. Exact Gemini checkpoint and seed are unavailable. Blind-mode statements are self-reported.",
+  "limits": "Annotation checks only. No locked evaluation. Automated lexical and evidence checks complement the reported independent review."
+}

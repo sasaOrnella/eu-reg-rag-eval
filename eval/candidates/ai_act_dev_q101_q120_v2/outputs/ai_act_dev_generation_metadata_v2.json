@@ -1,0 +1,83 @@
+{
+  "batch": "EU AI Act Dev — second batch (revision v2)",
+  "regulation": "AI_ACT",
+  "split": "dev",
+  "candidate_ids": [
+    "Q101",
+    "Q102",
+    "Q103",
+    "Q104",
+    "Q105",
+    "Q106",
+    "Q107",
+    "Q108",
+    "Q109",
+    "Q110",
+    "Q111",
+    "Q112",
+    "Q113",
+    "Q114",
+    "Q115",
+    "Q116",
+    "Q117",
+    "Q118",
+    "Q119",
+    "Q120"
+  ],
+  "revision_of": {
+    "previous_candidates_csv": "outputs/ai_act_dev_candidates.csv",
+    "previous_candidates_csv_sha256": "8aa8e804d7b364f56da4dfbf58dbebc2cde530d567efb300c792ff4f4707f8a4",
+    "changed_candidate_ids": [
+      "Q103",
+      "Q105",
+      "Q108",
+      "Q109",
+      "Q110",
+      "Q112",
+      "Q114",
+      "Q119"
+    ],
+    "unchanged_candidate_ids": [
+      "Q101",
+      "Q102",
+      "Q104",
+      "Q106",
+      "Q107",
+      "Q111",
+      "Q113",
+      "Q115",
+      "Q116",
+      "Q117",
+      "Q118",
+      "Q120"
+    ]
+  },
+  "provider": "Google",
+  "model_version": "Gemini (Gemini macOS app task mode; exact internal checkpoint/build identifier is not exposed to the agent runtime environment — not fabricated)",
+  "prompt": {
+    "reference": "Batch 2 EU AI Act Dev targeted revision prompt (8 items: Q103, Q105, Q108, Q109, Q110, Q112, Q114, Q119) + blind_generation_spec.md + eval/question_rules.md",
+    "blind_generation_spec_sha256": "da6dd8a269c70debb23db351f6f1892353ced96b62061831b07ec673727c61af",
+    "question_rules_sha256": "2f7fc02a4a69715d6f5c455330cee885c17d7ea7c9f0721f5de314d3387ca85c"
+  },
+  "seed": null,
+  "generated_at": "2026-11-26T14:16:09.569057+08:00",
+  "generation_parameters": {
+    "temperature": null,
+    "top_p": null,
+    "top_k": null,
+    "blind_mode": true,
+    "retrieval_scores_accessed": false,
+    "corpus_used": "data/processed/ai_act.jsonl",
+    "corpus_sha256": "c4a5b3999f5af5e37f301ceb7f9b1ab2ec311b96583d53044871a9e7089dfa8f",
+    "excluded_units_file": "eval/excluded_evidence_units.csv",
+    "excluded_units_sha256": "b24684a3549a1eac790c33178199b06c1cd6e1a36a98df99f43a084e393eded8"
+  },
+  "output_files": {
+    "candidates_csv": "outputs/ai_act_dev_candidates_v2.csv",
+    "candidates_csv_sha256": "24629721006055e26873cc308c6179449d654c93122307dfcf5315530be2b14d",
+    "changelog": "outputs/ai_act_dev_changelog_v2.md",
+    "check_report": "outputs/ai_act_dev_check_report_v2.md",
+    "standalone_metadata": "outputs/ai_act_dev_generation_metadata_v2.json"
+  },
+  "human_verification_status": "pending"
+}

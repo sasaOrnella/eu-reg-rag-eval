@@ -1,0 +1,497 @@
+{
+  "batch": "GDPR Dev Q081–Q100",
+  "candidate_status": "accepted_independent_batch",
+  "human_review": "pending",
+  "validated_on": "2026-11-26",
+  "repo_baseline": "bccfa06",
+  "source_archive": "gemini_blind_generation/outputs.zip",
+  "source_archive_sha256": "277acb1fff7088a47223cec0be5f7d6e377fa9c9c9d406f439ae78a1dc9d448c",
+  "canonical_candidate_file": "outputs/gdpr_dev_candidates_v2.csv",
+  "member_sha256": {
+    "gdpr_dev_check_report.md": "efe40a930dd93bcebd8da4cdc9023e42cb0989790ab3fde46304dbd3359e8474",
+    "gdpr_dev_candidates_v2.csv": "6beddd9acc015b7eac0df34e0326543b2cb0caaf306aa514f054011665cb3af7",
+    "gdpr_dev_changelog_v2.md": "12a9a28357a6fd572265819834daed09e41329fc9fadb59b62f6e3330da05c6c",
+    "generation_metadata_v2.json": "d22c2a8b431e446b78662bd03f07f08571a4112e53039a6caa0e6eb0e7917e9a",
+    "generation_metadata.json": "7637b77cd7b72e8015d357f0fad8294fab5f357c37443aef26e7a037c625d313",
+    "gdpr_dev_candidates.csv": "bbf3f339f37b5a6cfbfead592d5483e7adea0ac5258d80f87d0ec0bd517db852",
+    "gdpr_dev_check_report_v2.md": "31d7a115a902e3865cbf25ada62da0c2149f0bdb706c109357be5ea405bdbbf1"
+  },
+  "frozen_questions_sha256": "a998781a7eeac836b131a30b53188a184440d6a30f37ff81a872e4fef507675e",
+  "automated_audit": {
+    "errors": 0,
+    "warnings": 0,
+    "info": [
+      {
+        "rule": "R-U1",
+        "qid": "Q099",
+        "message": "nearest units by word overlap: gdpr:art:68 (0.56), ai_act:art:65 (0.56), gdpr:rec:72 (0.44)"
+      },
+      {
+        "rule": "R-U1",
+        "qid": "Q100",
+        "message": "nearest units by word overlap: gdpr:art:70 (0.50), gdpr:rec:150 (0.40), gdpr:art:83 (0.30)"
+      }
+    ]
+  },
+  "quota_scope": "GDPR dev only; the other three cohorts are absent and unevaluated",
+  "gdpr_dev_joint_quotas": [
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "single_hop",
+      "evidence": "article_only",
+      "high": 2,
+      "low": 2,
+      "total": 4,
+      "target": 4,
+      "high_floor": 2
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "single_hop",
+      "evidence": "recital_only",
+      "high": 0,
+      "low": 1,
+      "total": 1,
+      "target": 1,
+      "high_floor": 0
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "single_hop",
+      "evidence": "mixed",
+      "high": 0,
+      "low": 0,
+      "total": 0,
+      "target": 0,
+      "high_floor": 0
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "multi_hop",
+      "evidence": "article_only",
+      "high": 2,
+      "low": 1,
+      "total": 3,
+      "target": 3,
+      "high_floor": 1
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "multi_hop",
+      "evidence": "recital_only",
+      "high": 0,
+      "low": 0,
+      "total": 0,
+      "target": 0,
+      "high_floor": 0
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "multi_hop",
+      "evidence": "mixed",
+      "high": 1,
+      "low": 1,
+      "total": 2,
+      "target": 2,
+      "high_floor": 1
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "conflicting_or_conditional",
+      "evidence": "article_only",
+      "high": 2,
+      "low": 1,
+      "total": 3,
+      "target": 3,
+      "high_floor": 1
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "conflicting_or_conditional",
+      "evidence": "recital_only",
+      "high": 0,
+      "low": 1,
+      "total": 1,
+      "target": 1,
+      "high_floor": 0
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "conflicting_or_conditional",
+      "evidence": "mixed",
+      "high": 0,
+      "low": 0,
+      "total": 0,
+      "target": 0,
+      "high_floor": 0
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "numeric_or_table",
+      "evidence": "article_only",
+      "high": 1,
+      "low": 2,
+      "total": 3,
+      "target": 3,
+      "high_floor": 1
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "numeric_or_table",
+      "evidence": "recital_only",
+      "high": 1,
+      "low": 0,
+      "total": 1,
+      "target": 1,
+      "high_floor": 1
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "numeric_or_table",
+      "evidence": "mixed",
+      "high": 0,
+      "low": 0,
+      "total": 0,
+      "target": 0,
+      "high_floor": 0
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "unanswerable",
+      "evidence": "none",
+      "high": "",
+      "low": "",
+      "total": 2,
+      "target": 2,
+      "high_floor": ""
+    },
+    {
+      "doc": "gdpr",
+      "split": "dev",
+      "type": "merged_all",
+      "evidence": "all",
+      "high": 14,
+      "low": 21,
+      "total": 40,
+      "target": 40,
+      "high_floor": 14
+    }
+  ],
+  "candidate_type_counts": {
+    "single_hop": 5,
+    "multi_hop": 5,
+    "conflicting_or_conditional": 4,
+    "numeric_or_table": 4,
+    "unanswerable": 2
+  },
+  "overlap_counts": {
+    "high": 9,
+    "low": 9,
+    "na": 2
+  },
+  "distinct_positive_units": 23,
+  "gold_spans": 27,
+  "old_positive_unit_intersection": 0,
+  "cross_split_evidence_overlap": 0,
+  "max_content_word_jaccard": {
+    "new_vs_old": [
+      0.3076923076923077,
+      "Q082",
+      "Q048"
+    ],
+    "within_batch": [
+      0.4,
+      "Q096",
+      "Q083"
+    ]
+  },
+  "v1_to_v2_changed_fields": {
+    "Q082": [
+      "question"
+    ],
+    "Q087": [
+      "question",
+      "gold_answer"
+    ],
+    "Q097": [
+      "question"
+    ],
+    "Q100": [
+      "question",
+      "gold_answer",
+      "notes"
+    ]
+  },
+  "unchanged_rows": 16,
+  "candidate_evidence_coordinates": {
+    "Q081": {
+      "evidence": [
+        {
+          "unit_id": "gdpr:art:59",
+          "start": 198,
+          "end": 412
+        }
+      ],
+      "overlap_group": "high",
+      "lexical_overlap": 0.38461538461538464
+    },
+    "Q082": {
+      "evidence": [
+        {
+          "unit_id": "gdpr:art:75",
+          "start": 0,
+          "end": 106
+        }
+      ],
+      "overlap_group": "high",
+      "lexical_overlap": 0.5555555555555556
+    },
+    "Q083": {
+      "evidence": [
+        {
+          "unit_id": "gdpr:art:53",
+          "start": 0,
+          "end": 278
+        }
+      ],
+      "overlap_group": "low",
+      "lexical_overlap": 0.0
+    },
+    "Q084": {
+      "evidence": [
+        {
+          "unit_id": "gdpr:art:7",
+          "start": 663,
+          "end": 774
+        }
+      ],
+      "overlap_group": "low",
+      "lexical_overlap": 0.0
+    },
+    "Q085": {
+      "evidence": [
+        {
+          "unit_id": "gdpr:rec:32",
+          "start": 589,
+          "end": 669
+        }
+      ],
+      "overlap_group": "low",
+      "lexical_overlap": 0.0
+    },
+    "Q086": {
+      "evidence": [
+        {
+          "unit_id": "gdpr:art:68",
+          "start": 131,
+          "end": 178
+        },
+        {
+          "unit_id": "gdpr:art:73",
+          "start": 100,
+          "end": 202
+        }
+      ],
+      "overlap_group": "high",
+      "lexical_overlap": 0.375
+    },
+    "Q087": {
+      "evidence": [
+        {
+          "unit_id": "gdpr:art:56",
+          "start": 36,
+          "end": 281
+        },
+        {
+          "unit_id": "gdpr:art:60",
+          "start": 829,
+          "end": 977
+        }
+      ],
+      "overlap_group": "high",
+      "lexical_overlap": 0.5
+    },
+    "Q088": {
+      "evidence": [
+        {
+          "unit_id": "gdpr:art:38",
+          "start": 731,
+          "end": 848
+        },
+        {
+          "unit_id": "gdpr:art:39",
+          "start": 638,
+          "end": 776
+        }
+      ],
+      "overlap_group": "low",
+      "lexical_overlap": 0.1
+    },
+    "Q089": {
+      "evidence": [
+        {
+          "unit_id": "gdpr:rec:47",
+          "start": 1376,
+          "end": 1536
+        },
+        {
+          "unit_id": "gdpr:art:6",
+          "start": 794,
+          "end": 1120
+        }
+      ],
+      "overlap_group": "high",
+      "lexical_overlap": 0.38461538461538464
+    },
+    "Q090": {
+      "evidence": [
+        {
+          "unit_id": "gdpr:art:11",
+          "start": 0,
+          "end": 337
+        },
+        {
+          "unit_id": "gdpr:rec:26",
+          "start": 582,
+          "end": 909
+        }
+      ],
+      "overlap_group": "low",
+      "lexical_overlap": 0.1875
+    },
+    "Q091": {
+      "evidence": [
+        {
+          "unit_id": "gdpr:art:2",
+          "start": 0,
+          "end": 250
+        },
+        {
+          "unit_id": "gdpr:art:2",
+          "start": 251,
+          "end": 597
+        }
+      ],
+      "overlap_group": "high",
+      "lexical_overlap": 0.5454545454545454
+    },
+    "Q092": {
+      "evidence": [
+        {
+          "unit_id": "gdpr:art:65",
+          "start": 1045,
+          "end": 1311
+        },
+        {
+          "unit_id": "gdpr:art:65",
+          "start": 1485,
+          "end": 1851
+        }
+      ],
+      "overlap_group": "high",
+      "lexical_overlap": 0.36363636363636365
+    },
+    "Q093": {
+      "evidence": [
+        {
+          "unit_id": "gdpr:art:61",
+          "start": 1845,
+          "end": 1975
+        },
+        {
+          "unit_id": "gdpr:art:61",
+          "start": 1976,
+          "end": 2145
+        }
+      ],
+      "overlap_group": "low",
+      "lexical_overlap": 0.07692307692307693
+    },
+    "Q094": {
+      "evidence": [
+        {
+          "unit_id": "gdpr:rec:50",
+          "start": 2398,
+          "end": 2734
+        },
+        {
+          "unit_id": "gdpr:rec:50",
+          "start": 2735,
+          "end": 2969
+        }
+      ],
+      "overlap_group": "low",
+      "lexical_overlap": 0.21428571428571427
+    },
+    "Q095": {
+      "evidence": [
+        {
+          "unit_id": "gdpr:art:43",
+          "start": 2755,
+          "end": 2950
+        }
+      ],
+      "overlap_group": "high",
+      "lexical_overlap": 0.3333333333333333
+    },
+    "Q096": {
+      "evidence": [
+        {
+          "unit_id": "gdpr:art:54",
+          "start": 342,
+          "end": 683
+        }
+      ],
+      "overlap_group": "low",
+      "lexical_overlap": 0.1
+    },
+    "Q097": {
+      "evidence": [
+        {
+          "unit_id": "gdpr:art:64",
+          "start": 1394,
+          "end": 1785
+        }
+      ],
+      "overlap_group": "low",
+      "lexical_overlap": 0.07142857142857142
+    },
+    "Q098": {
+      "evidence": [
+        {
+          "unit_id": "gdpr:rec:143",
+          "start": 184,
+          "end": 386
+        }
+      ],
+      "overlap_group": "high",
+      "lexical_overlap": 0.5
+    },
+    "Q099": {
+      "evidence": [],
+      "overlap_group": "na",
+      "lexical_overlap": null
+    },
+    "Q100": {
+      "evidence": [],
+      "overlap_group": "na",
+      "lexical_overlap": null
+    }
+  },
+  "provenance_note": "Source metadata describes Gemini task mode. Exact internal model revision and seed are unavailable. Prompt document hashes match the supplied files. Blind-mode statements are self-reported.",
+  "limits": "Lexical similarity and exact-span validation do not replace semantic or human review. User independent acceptance is recorded separately from formal human verification.",
+  "independent_acceptance": "User reports independent acceptance of all 20 candidates."
+}

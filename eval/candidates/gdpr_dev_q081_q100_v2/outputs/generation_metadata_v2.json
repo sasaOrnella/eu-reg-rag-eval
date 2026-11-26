@@ -1,0 +1,80 @@
+{
+  "batch": "GDPR Dev — first batch (revision v2)",
+  "regulation": "GDPR",
+  "split": "dev",
+  "candidate_ids": [
+    "Q081",
+    "Q082",
+    "Q083",
+    "Q084",
+    "Q085",
+    "Q086",
+    "Q087",
+    "Q088",
+    "Q089",
+    "Q090",
+    "Q091",
+    "Q092",
+    "Q093",
+    "Q094",
+    "Q095",
+    "Q096",
+    "Q097",
+    "Q098",
+    "Q099",
+    "Q100"
+  ],
+  "revision_of": {
+    "previous_candidates_csv": "outputs/gdpr_dev_candidates.csv",
+    "previous_candidates_csv_sha256": "bbf3f339f37b5a6cfbfead592d5483e7adea0ac5258d80f87d0ec0bd517db852",
+    "changed_candidate_ids": [
+      "Q082",
+      "Q087",
+      "Q097",
+      "Q100"
+    ],
+    "unchanged_candidate_ids": [
+      "Q081",
+      "Q083",
+      "Q084",
+      "Q085",
+      "Q086",
+      "Q088",
+      "Q089",
+      "Q090",
+      "Q091",
+      "Q092",
+      "Q093",
+      "Q094",
+      "Q095",
+      "Q096",
+      "Q098",
+      "Q099"
+    ]
+  },
+  "provider": "Google",
+  "model_version": "Gemini (Gemini macOS app task mode; exact internal checkpoint/build identifier is not exposed to the agent runtime environment — not fabricated)",
+  "prompt": {
+    "reference": "Blind-generation Batch 1 revision prompt (4 targeted legal/unanswerability fixes only) + blind_generation_spec.md + eval/question_rules.md",
+    "blind_generation_spec_sha256": "da6dd8a269c70debb23db351f6f1892353ced96b62061831b07ec673727c61af",
+    "question_rules_sha256": "2f7fc02a4a69715d6f5c455330cee885c17d7ea7c9f0721f5de314d3387ca85c"
+  },
+  "seed": null,
+  "generated_at": "2026-11-26T10:05:59.794303+08:00",
+  "generation_parameters": {
+    "temperature": null,
+    "top_p": null,
+    "top_k": null,
+    "blind_mode": true,
+    "retrieval_scores_accessed": false,
+    "corpus_used": "data/processed/gdpr.jsonl",
+    "excluded_units_file": "eval/excluded_evidence_units.csv"
+  },
+  "output_files": {
+    "candidates_csv": "outputs/gdpr_dev_candidates_v2.csv",
+    "candidates_csv_sha256": "6beddd9acc015b7eac0df34e0326543b2cb0caaf306aa514f054011665cb3af7",
+    "changelog": "outputs/gdpr_dev_changelog_v2.md",
+    "check_report": "outputs/gdpr_dev_check_report_v2.md"
+  },
+  "human_verification_status": "pending"
+}
