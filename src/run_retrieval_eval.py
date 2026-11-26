@@ -16,6 +16,8 @@ Rules built into this script
 
 import argparse
 import csv
+import json
+import re
 from pathlib import Path
 
 import pandas as pd
@@ -23,7 +25,7 @@ import pandas as pd
 from src.analysis_utils import lexical_overlap
 from src.budget import select_within_budget
 from src.corpus import build_chunks, load_units
-from src.dense import truncation_rate
+from src.dense import describe_snapshot, file_sha256, load_sentence_transformer, truncation_rate
 from src.evidence import resolve_evidence
 from src.evidence_metrics import evidence_recall_at_k, first_hit_rank
 from src.retrievers import METHODS, build_retrievers
@@ -118,19 +120,39 @@ def main() -> None:
     ap.add_argument("--questions", default="eval/questions.csv")
     ap.add_argument("--out", default=None, help="default: results/retrieval_<split>.csv")
     ap.add_argument("--by-type", action="store_true", help="also print recall broken down by question type")
+    ap.add_argument("--embedding-snapshot", type=Path, help="Local SentenceTransformer snapshot directory")
+    ap.add_argument("--embedding-sha256", help="Expected SHA-256 of the snapshot file manifest")
     args = ap.parse_args()
 
     if args.split == "test" and not args.final:
         raise SystemExit("The test split is reserved for final numbers. Use --final only when configs are frozen.")
 
-    embed_fn = None
-    if set(args.methods) & {"dense", "hybrid"}:
-        try:
-            from src.dense import load_sentence_transformer
+    uses_embeddings = bool(set(args.methods) & {"dense", "hybrid"})
+    if not uses_embeddings and (args.embedding_snapshot is not None or args.embedding_sha256 is not None):
+        ap.error("Embedding arguments require dense or hybrid retrieval.")
+    if args.embedding_sha256 is not None and (
+        args.embedding_snapshot is None or not re.fullmatch(r"[0-9a-fA-F]{64}", args.embedding_sha256)
+    ):
+        ap.error("--embedding-sha256 requires a local snapshot and a 64-digit hexadecimal digest.")
+    if uses_embeddings and args.final and not args.embedding_sha256:
+        ap.error("Final dense/hybrid evaluation requires --embedding-snapshot and --embedding-sha256.")
 
-            embed_fn = load_sentence_transformer()
+    embed_fn = None
+    snapshot = None
+    if args.embedding_snapshot is not None:
+        try:
+            snapshot = describe_snapshot(args.embedding_snapshot)
+        except (OSError, ValueError) as error:
+            ap.error(str(error))
+        if args.embedding_sha256 and snapshot["snapshot_sha256"] != args.embedding_sha256.lower():
+            ap.error(f"Embedding snapshot SHA-256 mismatch. Observed {snapshot['snapshot_sha256']}.")
+        print(f"Embedding snapshot {snapshot['revision']} SHA-256 {snapshot['snapshot_sha256']}", flush=True)
+    if uses_embeddings:
+        try:
+            embed_fn = (load_sentence_transformer(snapshot["path"], local_files_only=True)
+                        if snapshot else load_sentence_transformer())
         except ImportError:
-            raise SystemExit("dense/hybrid need the embedding library: pip install -r requirements-dense.txt")
+            raise SystemExit("dense/hybrid need the embedding library: pip install -r eval/requirements-dense.txt")
         print(f"embedding model: {embed_fn.model_name} (input limit {embed_fn.max_seq_length} tokens)")
 
     units = load_units(*sorted(Path("data/processed").glob("*.jsonl")))
@@ -142,10 +164,23 @@ def main() -> None:
     for chunk_size in CHUNK_SIZES:
         rows += run_chunking(units, questions, chunk_size, BUDGETS, args.methods, embed_fn)
 
+    if snapshot and describe_snapshot(args.embedding_snapshot) != snapshot:
+        raise SystemExit("Embedding snapshot changed during evaluation. Results were not saved.")
+
     out = Path(args.out or f"results/retrieval_{args.split}.csv")
     out.parent.mkdir(parents=True, exist_ok=True)
     df = pd.DataFrame(rows)
     df.to_csv(out, index=False)
+    model_metadata = snapshot
+    if embed_fn is not None:
+        model_metadata = dict(snapshot or {"mode": "unpinned", "model_name": embed_fn.model_name},
+                              sentence_transformers_version=embed_fn.library_version,
+                              max_seq_length=embed_fn.max_seq_length)
+    metadata = dict(split=args.split, methods=args.methods, results_sha256=file_sha256(out),
+                    embedding_model=model_metadata)
+    metadata_path = out.with_name(out.name + ".metadata.json")
+    metadata_path.write_text(json.dumps(metadata, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    print(f"Run metadata -> {metadata_path}")
 
     print(f"\n{args.split}: {n_answerable} answerable questions, {len(df)} result rows -> {out}")
     if n_answerable < 100:

@@ -13,6 +13,12 @@ Notes
   * bge models expect an instruction prefix on QUERIES (not on documents).
 """
 
+from hashlib import sha256
+from importlib.metadata import version
+import json
+from pathlib import Path
+import re
+
 import numpy as np
 
 from src.tie_breaks import rank_scores
@@ -20,7 +26,38 @@ from src.tie_breaks import rank_scores
 BGE_QUERY_PREFIX = "Represent this sentence for searching relevant passages: "
 
 
-def load_sentence_transformer(model_name: str = "BAAI/bge-small-en-v1.5"):
+def file_sha256(path: Path) -> str:
+    digest = sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def describe_snapshot(path: Path) -> dict:
+    """Fingerprint relative paths and file bytes, including weights and tokenizer."""
+    path = path.resolve()
+    if not path.is_dir():
+        raise ValueError(f"Embedding snapshot must be a local directory: {path}")
+    files = {}
+    for entry in sorted(path.rglob("*")):
+        if entry.is_symlink() and entry.is_dir():
+            raise ValueError(f"Embedding snapshot contains a symlinked directory: {entry}")
+        if entry.is_file():
+            files[entry.relative_to(path).as_posix()] = file_sha256(entry)
+        elif not entry.is_dir():
+            raise ValueError(f"Embedding snapshot contains an unreadable entry: {entry}")
+    if not files:
+        raise ValueError(f"Embedding snapshot is empty: {path}")
+    manifest = json.dumps(files, sort_keys=True, separators=(",", ":"), ensure_ascii=True)
+    digest = sha256(manifest.encode("utf-8")).hexdigest()
+    revision = (path.name if path.parent.name == "snapshots" and re.fullmatch(r"[0-9a-f]{40}", path.name)
+                else f"sha256:{digest}")
+    return dict(mode="local_snapshot", path=str(path), revision=revision,
+                snapshot_sha256=digest, file_sha256=files)
+
+
+def load_sentence_transformer(model_name: str = "BAAI/bge-small-en-v1.5", *, local_files_only=False):
     """Return embed(list[str]) -> np.ndarray (unit-length vectors). Needs `pip install sentence-transformers`.
 
     The returned function also carries `max_seq_length` and, when the model exposes its tokenizer,
@@ -28,11 +65,12 @@ def load_sentence_transformer(model_name: str = "BAAI/bge-small-en-v1.5"):
     """
     from sentence_transformers import SentenceTransformer  # imported lazily: it is a heavy dependency
 
-    model = SentenceTransformer(model_name)
+    model = SentenceTransformer(model_name, local_files_only=local_files_only)
 
     def embed(texts: list[str]) -> np.ndarray:
         return model.encode(texts, batch_size=64, normalize_embeddings=True, show_progress_bar=False)
 
+    embed.library_version = version("sentence-transformers")
     embed.model_name = model_name
     embed.max_seq_length = model.max_seq_length
     tokenizer = getattr(model, "tokenizer", None)

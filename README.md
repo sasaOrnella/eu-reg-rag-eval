@@ -24,9 +24,11 @@ Record every future question change in the [dataset changelog](eval/CHANGELOG.md
 
 1. For H2(a), Dev Pilot grouped lexical overlap scores below 0.30 as Low and scores of 0.30 or higher as High. The cutoff comes from the [question-writing rules (R-Q3)](eval/question_rules.md) and was adopted for this analysis without an explicit preregistered H2 threshold.
 2. H2(a) retains its original 0.05 recall difference margin. The Dev Pilot has yet to establish the predicted margin result.
-3. H2(c) had no prespecified non-inferiority margin. A nonsignificant difference cannot establish non-inferiority.
+3. The original preregistration specified no H2(c) non-inferiority margin. A nonsignificant difference cannot establish non-inferiority.
 4. All H1 and H2 analyses to date are exploratory Dev Pilot analyses. A confirmatory evaluation remains pending.
 5. Of the 33 answerable Dev questions, 25 were AI-drafted. Human review is pending, with no complete verification record for those 25 questions.
+6. After the Dev Pilot, the multi-hop portion of H2(b) moved from the primary family to exploratory analysis. The primary family tests the two Low Overlap comparisons.
+7. After the Dev Pilot, H2(c) moved from per-question-type tests to one overall test across answerable questions. Hybrid must meet the fixed 0.10 non-inferiority margin against both BM25 and Dense. Question-type results are descriptive. These decisions are prospective for the confirmatory evaluation. [Expansion protocol](eval/dev_pilot_p1/expansion_protocol.md)
 
 ## Repository layout
 ```
@@ -55,6 +57,20 @@ python extract_text.py
 python -m src.check_questions
 python -m pytest -q
 ```
+
+### Frozen embedding snapshot
+
+For reproducible Dense or Hybrid runs, point `--embedding-snapshot` at a local SentenceTransformer snapshot. Use `--embedding-sha256` to check it against the frozen manifest digest before loading. Final Dense and Hybrid evaluation requires both arguments.
+
+```bash
+python -m src.run_retrieval_eval --split dev \
+  --embedding-snapshot "$MODEL_SNAPSHOT" --embedding-sha256 "$MODEL_SNAPSHOT_SHA256" \
+  --out results/frozen_dev_validation.csv
+```
+
+The manifest digest is the SHA-256 of the UTF-8 JSON map from relative filenames to file SHA-256 digests, serialized with sorted keys, ASCII escapes and no extra whitespace. It covers weights, tokenizer and configuration. The runner writes a companion `<results.csv>.metadata.json` with the snapshot revision, manifest digest, individual file hashes, SentenceTransformers version and results CSV hash. A Hugging Face cache snapshot uses its revision directory name. Other local snapshots use the manifest digest as their version identifier.
+
+The reference BGE snapshot used for Dev validation has revision `5c38ec7c405ec4b44b94cc5a9bb96e735b38267a`, manifest SHA-256 `d07b955e88fe2b07e3b40b7b117a43e75cabe4159cb20df2839eed0336134d5b`, and weights SHA-256 `3c9f31665447c8911517620762200d2245a2518d6e7208acc78cd9db317e21ad`.
 
 ## Results
 [Dev Pilot P1 analysis and reproducibility files](eval/dev_pilot_p1/README.md) cover paired inference, sensitivity checks, and the Hybrid diagnosis.
