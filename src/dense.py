@@ -15,6 +15,8 @@ Notes
 
 import numpy as np
 
+from src.tie_breaks import rank_scores
+
 BGE_QUERY_PREFIX = "Represent this sentence for searching relevant passages: "
 
 
@@ -58,15 +60,20 @@ def _normalize(m: np.ndarray) -> np.ndarray:
 
 
 class DenseRetriever:
-    def __init__(self, chunk_ids: list[str], chunks: list[str], embed_fn, query_prefix: str = ""):
+    def __init__(self, chunk_ids: list[str], chunks: list[str], embed_fn, query_prefix: str = "", *, tie_order=None):
         assert len(chunk_ids) == len(chunks)
         self.chunk_ids = chunk_ids
+        self.tie_order = tie_order
         self.embed_fn = embed_fn
         self.query_prefix = query_prefix
         self.matrix = _normalize(embed_fn(chunks))
 
-    def search(self, query: str, k: int = 5) -> list[str]:
+    def scores(self, query: str):
         q = _normalize(self.embed_fn([self.query_prefix + query]))[0]
-        scores = self.matrix @ q  # cosine similarity, since both sides are unit length
-        order = np.argsort(-scores, kind="stable")[:k]
-        return [self.chunk_ids[i] for i in order]
+        return self.matrix @ q  # cosine similarity, since both sides are unit length
+
+    def search(self, query: str, k: int = 5) -> list[str]:
+        scores = self.scores(query)
+        if self.tie_order is None:
+            return [self.chunk_ids[i] for i in np.argsort(-scores, kind="stable")[:k]]
+        return rank_scores(self.chunk_ids, scores, k, self.tie_order)

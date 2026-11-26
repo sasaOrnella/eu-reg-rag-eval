@@ -1,0 +1,2 @@
+analysis,budget_chars,contrast,n,n_clusters,effect,ci_low,ci_high,bootstrap_draws,defined_draws,seed
+exploratory_H2a_continuous,8000,BM25 minus Dense per +0.10 overlap,33,31,0.10199704123159989,0.004937512978904044,0.2006099871157021,200000,200000,0

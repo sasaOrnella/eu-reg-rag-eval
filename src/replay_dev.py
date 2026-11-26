@@ -71,7 +71,7 @@ def replay(units, questions, embed, tie_rows=None):
     for size in (s for s in CHUNK_SIZES if s is not None):
         chunks = build_chunks(units, size, int(size * OVERLAP_RATIO))
         by_id = {chunk.chunk_id: chunk for chunk in chunks}
-        models = build_retrievers(chunks, METHODS, embed, POOL)
+        models = build_retrievers(chunks, METHODS, embed, POOL, legacy_ties=True)
         for q in questions:
             query, spans = q["question"], q["spans"]
             # One search per base ranker. RRF consumes the same prefix as HybridRetriever.

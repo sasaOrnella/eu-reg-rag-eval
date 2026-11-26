@@ -8,7 +8,9 @@ import numpy as np
 import pandas as pd
 
 from src.metrics import bootstrap_ci
-from src.pilot_inference import dev_annotations, exact_sign_flip, extreme_count, primary_dev
+from src.pilot_inference import (
+    PRIMARY_BOOTSTRAPS, continuous_overlap_dev, dev_annotations, exact_sign_flip, extreme_count, primary_dev,
+)
 from src.retrievers import METHODS
 from src.run_retrieval_eval import BUDGETS, CHUNK_SIZES
 
@@ -160,7 +162,7 @@ def main():
     parser.add_argument("--questions", type=Path, default=Path("eval/questions.csv"),
                         help="Frozen annotations for the Dev protocol preview")
     parser.add_argument("--out-dir", type=Path, default=Path("results/dev_analysis"))
-    parser.add_argument("--n-boot", type=int, default=10000)
+    parser.add_argument("--n-boot", type=int, default=10000, help="Bootstrap iterations for exploratory comparisons")
     parser.add_argument("--seed", type=int, default=0)
     args = parser.parse_args()
     if args.n_boot < 1 or args.seed < 0:
@@ -182,7 +184,8 @@ def main():
             parser.error("Replay coverage is inconsistent with its any-overlap recall")
         inputs.extend([(replay, "recall_replayed"), (replay, "recall_coverage50")])
     overlaps, clusters = dev_annotations(args.questions, set(frame.qid))
-    preview = primary_dev(frame, overlaps, clusters, args.n_boot, args.seed, holm)
+    preview = primary_dev(frame, overlaps, clusters, PRIMARY_BOOTSTRAPS, 0, holm)
+    continuous = continuous_overlap_dev(frame, overlaps, clusters)
     all_means, all_tests = [], []
     for data, label in inputs:
         if label == "recall_replayed":
@@ -194,6 +197,7 @@ def main():
     pd.concat(all_means, ignore_index=True).to_csv(args.out_dir / "means.csv", index=False)
     pd.concat(all_tests, ignore_index=True).to_csv(args.out_dir / "contrasts.csv", index=False)
     preview.to_csv(args.out_dir / "primary_protocol_dev.csv", index=False)
+    pd.DataFrame([continuous]).to_csv(args.out_dir / "continuous_overlap_dev.csv", index=False)
 
 
 if __name__ == "__main__":

@@ -9,7 +9,8 @@ Design decision (important for the experiment):
 """
 
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from hashlib import sha256
 from pathlib import Path
 
 from src.chunking import chunk_text
@@ -22,6 +23,7 @@ class Chunk:
     start: int
     end: int
     text: str
+    unit_digest: bytes = field(default=b"", compare=False, repr=False)
 
 
 def make_unit_id(unit: dict) -> str:
@@ -56,6 +58,7 @@ def build_chunks(
     chunks = []
     for u in units:
         text = u["text"]
+        unit_digest = sha256(text.encode()).digest()
         if chunk_size is None:
             pieces, step = [text], 0
         else:
@@ -73,6 +76,7 @@ def build_chunks(
                     start,
                     start + len(piece),
                     piece,
+                    unit_digest,
                 )
             )
     return chunks

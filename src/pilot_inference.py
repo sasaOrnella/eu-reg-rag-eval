@@ -9,6 +9,7 @@ from src.analysis_utils import lexical_overlap
 from src.metrics import bootstrap_ci
 
 PRIMARY_BUDGET = 8000
+PRIMARY_BOOTSTRAPS = 200_000
 HIGH_CUTOFF = .30
 
 
@@ -74,8 +75,11 @@ def cluster_statistics(values, clusters, null, alternative, n_boot, seed):
               "cluster_ci_low": np.nan, "cluster_ci_high": np.nan, "p_raw": np.nan}
     if len(sizes) >= 2:
         rng = np.random.default_rng(seed)
-        draws = rng.integers(len(sizes), size=(n_boot, len(sizes)))
-        means = sums[draws].sum(axis=1) / sizes[draws].sum(axis=1)
+        means = np.empty(n_boot)
+        for start in range(0, n_boot, 10_000):
+            stop = min(start + 10_000, n_boot)
+            draws = rng.integers(len(sizes), size=(stop - start, len(sizes)))
+            means[start:stop] = sums[draws].sum(axis=1) / sizes[draws].sum(axis=1)
         low, high = np.quantile(means, [.025, .975])
         count = extreme_count(means - values.mean(), values.mean() - null, alternative)
         result.update(cluster_ci_low=low, cluster_ci_high=high, p_raw=(count + 1) / (n_boot + 1))
@@ -146,3 +150,36 @@ def primary_dev(frame, overlaps, clusters, n_boot, seed, holm):
     table["p_bootstrap_floor"] = 1 / (n_boot + 1)
     table["bootstrap_at_floor"] = table.p_raw.eq(table.p_bootstrap_floor)
     return table
+
+
+
+def continuous_overlap_dev(frame, overlaps, clusters, n_boot=PRIMARY_BOOTSTRAPS, seed=0):
+    """Exploratory OLS slope of BM25 − Dense per +0.10 overlap, with cluster resampling."""
+    selected = frame[frame.budget_chars.eq(PRIMARY_BUDGET)]
+    scores = selected.groupby(["qid", "method"]).recall.mean().unstack()
+    delta = scores.bm25 - scores.dense
+    x = overlaps.loc[delta.index] * 10
+    labels = [clusters[qid] for qid in delta.index]
+    moments = pd.DataFrame(dict(n=1, x=x, y=delta, xx=x*x, xy=x*delta)).groupby(labels).sum().to_numpy()
+
+    def slopes(totals):
+        n, x_sum, y_sum, xx, xy = totals.T
+        denominator = n * xx - x_sum * x_sum
+        return np.divide(n * xy - x_sum * y_sum, denominator,
+                         out=np.full_like(denominator, np.nan), where=denominator > 1e-12)
+
+    effect = slopes(moments.sum(axis=0, keepdims=True))[0]
+    estimates = np.empty(0)
+    if len(moments) >= 2 and np.isfinite(effect):
+        rng = np.random.default_rng(seed)
+        estimates = np.empty(n_boot)
+        for start in range(0, n_boot, 5_000):
+            stop = min(start + 5_000, n_boot)
+            draws = rng.integers(len(moments), size=(stop - start, len(moments)))
+            estimates[start:stop] = slopes(moments[draws].sum(axis=1))
+        estimates = estimates[np.isfinite(estimates)]
+    low, high = np.quantile(estimates, [.025, .975]) if len(estimates) else (np.nan, np.nan)
+    return dict(analysis="exploratory_H2a_continuous", budget_chars=PRIMARY_BUDGET,
+                contrast="BM25 minus Dense per +0.10 overlap", n=len(delta),
+                n_clusters=len(moments), effect=effect, ci_low=low, ci_high=high,
+                bootstrap_draws=n_boot, defined_draws=len(estimates), seed=seed)
