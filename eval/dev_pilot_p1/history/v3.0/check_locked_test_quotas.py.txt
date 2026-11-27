@@ -1,0 +1,132 @@
+"""Check accepted Test candidate annotations against the v3 protocol without retrieval."""
+import argparse
+from collections import Counter
+import csv
+from itertools import combinations
+import json
+from pathlib import Path
+
+from src.check_expansion_quotas import classify
+from src.check_questions import COLUMNS, check_rows
+from src.corpus import load_units
+from src.evidence import resolve_evidence
+
+PROTOCOL = "eval/dev_pilot_p1/locked_test_quotas_v3.json"
+CANDIDATES = Path("eval/candidates")
+SOURCES = (
+    "eval/questions.csv",
+    CANDIDATES / "gdpr_dev_q081_q100_v2/outputs/gdpr_dev_candidates_v2.csv",
+    CANDIDATES / "ai_act_dev_q101_q120_v2/outputs/ai_act_dev_candidates_v2.csv",
+)
+
+
+def read_rows(path):
+    with open(path, encoding="utf-8-sig", newline="") as stream:
+        reader = csv.DictReader(stream, strict=True)
+        if reader.fieldnames != COLUMNS:
+            raise ValueError(f"Unexpected header: {path}")
+        rows = list(reader)
+    if any(None in row or any(value is None for value in row.values()) for row in rows):
+        raise ValueError(f"Malformed CSV rows: {path}")
+    return rows
+
+
+def evidence_units(rows, units):
+    return {span.unit_id for row in rows for span in resolve_evidence(row["gold_evidence"], units)}
+
+
+def quota_table(spec, rows, documents):
+    expected = Counter({
+        (doc, spec["split"], kind, evidence, overlap): n
+        for doc in documents for kind, types in spec["per_regulation"].items()
+        for evidence, bands in types.items() for overlap, n in bands.items()
+    })
+    observed = Counter(map(classify, rows))
+    return [
+        dict(regulation=doc, split=split, type=kind, evidence_type=evidence,
+             overlap=overlap, expected=expected[key], actual=observed[key])
+        for key in sorted(expected.keys() | observed.keys())
+        for doc, split, kind, evidence, overlap in (key,)
+    ]
+
+
+def validate(spec, old, new_dev, proposed, units, documents):
+    groups = {
+        "original_dev": [r for r in old if r["split"] == "dev"],
+        "original_test": [r for r in old if r["split"] == "test"],
+        "new_dev": new_dev, "new_test": proposed,
+    }
+    if len(old) != 80 or len(groups["original_dev"]) != 40 or len(groups["original_test"]) != 40:
+        raise ValueError("Expected frozen 40 Dev and 40 Test annotations")
+    if len(new_dev) != 40 or any(r["split"] != "dev" for r in new_dev):
+        raise ValueError("Expected 40 accepted new Dev annotations")
+    errors = check_rows(old + new_dev + proposed, units)
+    if errors:
+        return [], errors
+    expected_ids = {f"Q{n:03d}" for doc in documents
+                    for n in range(spec["regulations"][doc]["first_id"], spec["regulations"][doc]["last_id"] + 1)}
+    if {r["id"] for r in proposed} != expected_ids:
+        errors.append("Proposed IDs do not match the selected regulation ranges")
+    usage_sets = {group: evidence_units(rows, units) for group,rows in groups.items()}
+    for left, right in combinations(usage_sets, 2):
+        shared = usage_sets[left] & usage_sets[right]
+        if shared:
+            errors.append(f"{left} / {right} share positive units: {', '.join(sorted(shared))}")
+    used = Counter(uid for r in proposed for uid in evidence_units([r], units))
+    errors.extend(f"{uid} used by {n} new Test questions" for uid,n in sorted(used.items())
+                  if n > spec["max_questions_per_evidence_unit"])
+    table = quota_table(spec, proposed, documents)
+    errors.extend(f"Quota mismatch: {row}" for row in table if row["expected"] != row["actual"])
+    later, missing_quantity = Counter(), Counter()
+    for row in proposed:
+        doc, _, kind, _, _ = classify(row)
+        assigned = spec["regulations"][doc]
+        if not assigned["first_id"] <= int(row["id"][1:]) <= assigned["last_id"]:
+            errors.append(f"{row['id']}: ID outside the {doc} range")
+        spans = resolve_evidence(row["gold_evidence"], units)
+        if kind == "multi_hop" and len({s.unit_id for s in spans}) < 2:
+            errors.append(f"{row['id']}: multi-hop requires distinct evidence units")
+        if kind == "conflicting_or_conditional" and len(set(spans)) < 2:
+            errors.append(f"{row['id']}: conditional requires separate rule and condition or exception spans")
+        threshold = 50 if doc == "gdpr" else 56
+        later[doc] += any(":art:" in s.unit_id and int(s.unit_id.rsplit(":",1)[-1]) >= threshold for s in spans)
+        tags = {tag.strip() for tag in row["notes"].split("|")}
+        if kind == "unanswerable":
+            missing_quantity[doc] += bool(tags & {"kind:d", "absence_kind:d"})
+    for doc in documents:
+        if later[doc] < 6:
+            errors.append(f"{doc}: at least six questions must cite later articles")
+        if missing_quantity[doc] > 1:
+            errors.append(f"{doc}: at most one unanswerable question may ask for an unspecified quantity")
+    return table, errors
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--new", type=Path, required=True)
+    parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--regulation", choices=("gdpr", "ai_act", "both"), default="both")
+    args = parser.parse_args()
+    if args.out.resolve() in {Path(p).resolve() for p in (*SOURCES,args.new)}:
+        parser.error("--out must not overwrite input files")
+    spec = json.loads(Path(PROTOCOL).read_text())
+    documents = tuple(spec["regulations"]) if args.regulation == "both" else (args.regulation,)
+    try:
+        old, gdpr_dev, ai_dev = map(read_rows,SOURCES)
+        proposed = read_rows(args.new)
+        units = {u["unit_id"]:u for u in load_units(*sorted(Path("data/processed").glob("*.jsonl")))}
+        table, errors = validate(spec, old, gdpr_dev+ai_dev, proposed, units, documents)
+    except (KeyError, ValueError) as error:
+        parser.error(str(error))
+    if table:
+        with args.out.open("w", encoding="utf-8", newline="") as stream:
+            writer = csv.DictWriter(stream, fieldnames=table[0])
+            writer.writeheader()
+            writer.writerows(table)
+    for error in errors:
+        print(error)
+    return bool(errors)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

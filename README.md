@@ -30,6 +30,8 @@ Record every future question change in the [dataset changelog](eval/CHANGELOG.md
 6. After the Dev Pilot, the multi-hop portion of H2(b) moved from the primary family to exploratory analysis. The primary family tests the two Low Overlap comparisons.
 7. After the Dev Pilot, H2(c) moved from per-question-type tests to one overall test across answerable questions. Hybrid must meet the fixed 0.10 non-inferiority margin against both BM25 and Dense. Question-type results are descriptive. These decisions are prospective for the confirmatory evaluation. [Expansion protocol](eval/dev_pilot_p1/expansion_protocol.md)
 
+8. On 2026-11-27, following independent review of Dev80, the study fixed a total of 300 questions. Dev remains at 80. The locked evaluation comprises 220 questions, retaining the original 40 and adding 90 each for GDPR and the EU AI Act. The earlier 200-question protocol and the 300-question 100/200 planning scenario are retained in the study history. H2(b) uses a minimum meaningful Recall gain of +0.10 for planning and interpretation. Planning uses the Dev80 SD upper bounds and a design effect of 1.10. These are prospective post-Pilot decisions. [Current protocol](eval/dev_pilot_p1/expansion_protocol_v3.md) · [Previous protocol](eval/dev_pilot_p1/expansion_protocol.md)
+
 ## Repository layout
 ```
 data/raw/          official EUR-Lex HTML source files (see data/README.md)

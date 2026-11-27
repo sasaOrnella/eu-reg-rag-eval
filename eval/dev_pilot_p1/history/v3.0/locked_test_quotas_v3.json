@@ -1,0 +1,17 @@
+{
+  "protocol_version": "v3-2026-11-27",
+  "split": "test",
+  "regulations": {
+    "gdpr": {"notes_prefix": "GDPR", "first_id": 121, "last_id": 210},
+    "ai_act": {"notes_prefix": "AI_ACT", "first_id": 211, "last_id": 300}
+  },
+  "per_regulation": {
+    "single_hop": {"article_only": {"high": 9, "low": 12}, "recital_only": {"high": 2, "low": 4}},
+    "multi_hop": {"article_only": {"high": 5, "low": 7}, "mixed": {"high": 5, "low": 7}},
+    "conflicting_or_conditional": {"article_only": {"high": 4, "low": 6}, "recital_only": {"high": 1, "low": 2}},
+    "numeric_or_table": {"article_only": {"high": 6, "low": 4}, "recital_only": {"high": 1, "low": 2}},
+    "unanswerable": {"none": {"na": 13}}
+  },
+  "high_cutoff": 0.30,
+  "max_questions_per_evidence_unit": 2
+}
