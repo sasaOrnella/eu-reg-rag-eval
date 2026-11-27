@@ -1,0 +1,109 @@
+{
+  "batch_id": "gdpr-03",
+  "version": "v3",
+  "regulation": "gdpr",
+  "split": "test",
+  "protocol_version": "v3.1-2026-11-27",
+  "provider": "Google",
+  "model_version": "Gemini (task mode; exact internal checkpoint/version string not exposed by runtime)",
+  "generated_at": "2026-11-27T19:47:39+11:00",
+  "v1_generated_at": "2026-11-27T17:41:35+11:00",
+  "v2_generated_at": "2026-11-27T19:19:35+11:00",
+  "seed": null,
+  "settings": {
+    "temperature": "unavailable_in_runtime",
+    "top_p": "unavailable_in_runtime",
+    "top_k": "unavailable_in_runtime",
+    "max_output_tokens": "unavailable_in_runtime",
+    "blind_generation": true,
+    "locked_test_retrieval_or_scoring_run": false,
+    "next_batch_started": false,
+    "protocol_modified_or_archived": false,
+    "excluded_evidence_units_count": 166,
+    "excluded_gdpr_units_count": 105
+  },
+  "candidate_ids": [
+    "Q157",
+    "Q158",
+    "Q159",
+    "Q160",
+    "Q161",
+    "Q162",
+    "Q163",
+    "Q164",
+    "Q165",
+    "Q166",
+    "Q167",
+    "Q168",
+    "Q169",
+    "Q170",
+    "Q171",
+    "Q172",
+    "Q173",
+    "Q174"
+  ],
+  "v2_to_v3_replaced_ids": [
+    "Q163"
+  ],
+  "v2_to_v3_unchanged_ids": [
+    "Q157",
+    "Q158",
+    "Q159",
+    "Q160",
+    "Q161",
+    "Q162",
+    "Q164",
+    "Q165",
+    "Q166",
+    "Q167",
+    "Q168",
+    "Q169",
+    "Q170",
+    "Q171",
+    "Q172",
+    "Q173",
+    "Q174"
+  ],
+  "quota_summary": {
+    "high": 5,
+    "low": 10,
+    "unanswerable": 3
+  },
+  "v1_prompt_text_verbatim": "现在启动 GDPR Locked Test 第三批盲生成。\n\n**Batch ID：gdpr-03**\n**Question IDs：Q157–Q174**\n**Total：18 questions**\n\n请严格以本次上传的 `gemini_gdpr-03_blind_v3_1.zip` 为唯一生成规范，使用其中冻结的 GDPR 原文、v3.1 配额及166个证据排除单元。\n\n必须精确满足 `gdpr-03` 全部题型 × 证据类型 × High/Low 联合配额，而非只满足总数。\n\n本批合计：High 5、Low 10、Unanswerable 3。\n\n**特别要求：**\n\n1. 每段 Gold Evidence 必须充分、最小、逐字一致；不能为凑 High 重合度加入无关引文。\n2. Multi-hop 必须是真正的多证据推理。删除任何一个必要证据单元后，完整答案应无法得出。\n3. Conditional 题必须准确保留适用条件、前提与例外，不得将必要条件表述为充分条件。\n4. Unanswerable 题必须检索完整冻结法规语料，记录真实缺失、hard negative、检索变体及实际查看的单元，避免不自然的虚假前提。\n5. 禁止使用166个排除单元作为新增正证据。\n6. 严格保持盲生成，不参考任何 Dev/Test 检索成绩、历史错例或已有问题题面。\n7. 完整保存实际提示词原文、生成元数据及输入输出 SHA-256，不得用提示词摘要冒充完整原文。\n\n请在输出前集中检查全部18题的法律语义、证据必要性、精确联合配额及历史证据隔离。\n\n交付完整18题 CSV、生成元数据、全批校验报告和需独立审阅的候选题清单。\n\n全部标记 `author:ai | human_review:pending`。\n\n只完成 gdpr-03，完成后立即停止。不得生成下一批，也不得运行任何 Locked Test 检索或评分。",
+  "v1_prompt_sha256": "a244fe09fb67c3782158982fd9045dc8cbf6a1347b7744cd4f4d1e3a52739254",
+  "v2_prompt_text_verbatim": "gdpr-03（Q157–Q174）v1 已完成独立审阅。\n\n结构及13个联合配额格通过，但发现5道实质问题，需要集中修订。\n\n**仅修改 Q162、Q163、Q168、Q170、Q172。其余13题所有字段保持与v1一致。**\n\n### Q162：地域范围与证据最小性\n\n- 将题面的 “inside Europe” 准确限定为欧盟内部（within the EU）。\n- Article 1(3) 仅说明在欧盟内部不得基于个人数据保护理由限制或禁止数据自由流动。\n- Article 44 说明向第三国或国际组织传输必须满足第五章条件。\n- 当前 Article 44 的503字符引文包含后续传输细节。若题目不考查 onward transfers，请删除答案中的额外内容并精简引文。\n- 保持 `multi_hop × article_only × high`，核查两个证据单元均必要。\n\n### Q163：真实多跳及与同批题目的独立性\n\n目前问题重点是旧协议为什么仍然有效，Article 96 已能回答，Article 48 的必要性不足。\n\n请修改为一个自然的联合法律问题，同时考查：\n\n1. 第三国法院裁决要依靠什么样的有效国际协议才可能被认可或执行——Article 48。\n2. 成员国在2016年5月24日前订立的国际数据传输协议，满足什么条件才继续有效——Article 96。\n\n注意：\n- Article 48 的条件是必要条件，不得误写成足以自动保证裁决可执行。\n- 保留第五章其他合法传输依据不受影响的限定。\n- 与同批 Q168、Q169 区分：Q163 必须真正考查两项规则的结合，而非简单重复其中某一题的答案。\n- 保持 `multi_hop × article_only × low`。\n- 逐段做删除测试，确保两条文确实不可替代。\n\n### Q168：法律行为类型不能扩大\n\n题面中的 “foreign agency's demand” 可包括非正式请求，而 Article 48 处理的是第三国法院或法庭的裁决，以及行政机关的正式决定。\n\n请明确法律行为类型，询问该裁决或决定在何种条件下可能被认可或执行。\n\n答案必须准确区分：\n- 国际协议有效存在这一必要条件。\n- 具备必要条件不等于裁决自动具有执行力。\n- 第五章规定的其他传输依据不受此规则排除。\n\n保持 `conflicting_or_conditional × article_only × low`，且金证据必要。\n\n### Q170：其他处罚不等于非罚款处罚\n\nArticle 84 规定的是 other penalties，尤其涉及不受 GDPR 行政罚款机制约束的违法情形。\n\n当前 “non-fine sanction laws” 可能错误排除其他性质的罚款。\n\n请准确改写为国家其他处罚规则的通知期限问题，明确接收机关为欧洲委员会。不得在题面泄露条文编号。\n\n保持 `numeric_or_table × article_only × low`，保留2018年5月25日及后续修订须及时通知的条件。\n\n### Q172：历史题库语义重复，必须换题\n\n独立审阅发现，当前网络责任保险义务问题与历史 Q047 考查的是同一缺失事实。\n\n必须完全更换考点，不得通过改变措辞、主体或赔偿类型继续询问同一个保险事实。\n\n要求：\n- 保持 `unanswerable` 和 `absence_kind:a`。\n- 选择 GDPR 真正没有涉及的另一项自然、现实的合规问题。\n- 不得使用明显暗示不可回答的词。\n- 全语料检索至少3个关键词变体，实际阅读最相关条文并记录。\n- 更新 hard negative、Gold Answer 和完整 search 记录。\n- 另列2个备选缺失事实供后续语义去重参考，但正式CSV只保留一题。\n\n### 整批复验\n\n1. 输出完整 Q157–Q174 共18题 v2 CSV。\n2. 只允许上述5题变动，其余13题逐字段一致。\n3. 必须精确维持全部联合配额：High 5 / Low 10 / N/A 3。\n4. 166个历史排除单元零违规。\n5. 重新验证引文逐字唯一性、充分性、最小必要性及多跳真实成立。\n6. 完整保存原始v1、v2提示词及各版本输入输出哈希。\n7. 所有题保持 `author:ai | human_review:pending`。\n8. 输出 v2 CSV、完整元数据、v1→v2差异报告、全批验证报告、未解决问题清单。\n\n**不得运行任何 Locked Test 检索或评分，不得启动 gdpr-04，不得归档或修改研究协议。**\n\n完成后立即停止，等待独立审阅。",
+  "v2_prompt_sha256": "3c4578106c40c1e1d2ea362d87a594dd5d2ec57120de03c1cc3a2d564b90d6c8",
+  "v3_prompt_text_verbatim": "gdpr-03 v2 的最终项目校验发现一处实质性重复，暂未归档。\n\n**唯一阻断题：Q163。**\n\n目前 Q163 将 Q168 的 Article 48 裁决认可/执行条件，与 Q169 的 Article 96 旧协议日期及存续条件组合成一道多跳题。\n\n虽然两个证据单元的使用次数均合规，但这实际上重复了另外两道题的核心答案，违反考点独立性要求。\n\n**请完全替换 Q163，不要继续润色原题。**\n\n要求：\n\n1. 保持 Q163 的 ID、test split 和 `multi_hop × article_only × low` 配额格。\n2. 选择一个新的、自然的法律问题，必须真正需要至少两个不同 Article 单元共同回答。\n3. 不得继续组合 Q168、Q169 已经考查的法律结论，也不得简单拼接本批其他题目的答案。\n4. 新证据必须避开166个历史排除单元；同一新增 Test 正证据单元累计最多服务两题。\n5. 对拟选证据执行双向删除测试：分别删除每个单元，完整答案必须都无法成立。\n6. 先提出三个不同考点的候选方案，逐一解释其法律依据、证据最小必要性、与本批其余17题的区别，以及是否满足 Low（未舍入 overlap < 0.30）。选出质量最高的一项写入正式CSV。\n7. 保持其余17题全部字段与 v2 完全一致。\n8. 重新核验18题完整编号、12个非零联合配额格、High 5 / Low 10 / N/A 3，以及证据唯一性和隔离要求。\n9. 输出完整 v3 CSV、完整生成元数据、v2→v3差异报告、验证报告及未解决问题清单。保留 v1、v2 原始文件与全部 `human_review:pending`。\n\n若没有真正独立且合法的多跳考点，不得强行生成，请明确报告。\n\n不得运行 Locked Test 检索或评分，不得修改研究协议，不得启动 gdpr-04。\n\n完成后立即停止，等待独立审阅。",
+  "v3_prompt_sha256": "187713dfa860f5b55d639473f56aa38ddcfb1350adf9effdbb78ca6ada54fe71",
+  "input_hashes_sha256": {
+    "blind_generation_spec.md": "acaa19db40db5cbb8ba65e3d1b86cc807e700bc9f1cf023f360376c012489ccd",
+    "data/processed/ai_act.jsonl": "c4a5b3999f5af5e37f301ceb7f9b1ab2ec311b96583d53044871a9e7089dfa8f",
+    "data/processed/gdpr.jsonl": "e8bbb70c2be3890d8f8307ad26cf583c9b41b17b291094851913806ac3de0df6",
+    "data/raw/ai_act.html": "26482ecee82f549262c1b259120b2b03d3e0addb86584c056b145aa4997e2fba",
+    "data/raw/gdpr.html": "fde27ea4627c51465d51a45268c18f05ed772ab0163382ca34ed3e83d9f98126",
+    "excluded_evidence_units.csv": "e81403b63a5db45939c1ca407554713a75b45a67537fafa26e11aa5c2bd4cffc",
+    "locked_test_batch_schedule_v3_1.csv": "e698303c4fbe3621c599cc1b5c936ce3a3918e43456d52f62ddc0f1c87490ad5",
+    "locked_test_quotas_v3.json": "e8f2fde72b36298e030c416bc090e86d95db1afbdde7fcf6616b1f9ba0c2cc4c",
+    "question_rules.md": "7381a76b2bc6957d8b74f374f178a81d61b00a3e6f2fd44e3d30c0515b77b606"
+  },
+  "v1_output_files_sha256": {
+    "gdpr-03_candidates.csv": "7c181cdde9c7e215b2e4a9032494aa5acb058298b10d957f3c4ee9bf35fcd254",
+    "gdpr-03_prompt_verbatim.txt": "a244fe09fb67c3782158982fd9045dc8cbf6a1347b7744cd4f4d1e3a52739254",
+    "gdpr-03_validation_report.md": "6613777fc9aba77cbd4bb328f02deb12a7439f8d65b4d0a99213eb0a2c8e8e11",
+    "gdpr-03_independent_review_candidates.md": "1c009753c77f30018b0977d9c8744a7a665bd485dc0ca0bd828ac75761524198"
+  },
+  "v2_output_files_sha256": {
+    "gdpr-03_candidates_v2.csv": "e20088a66d28578940f852d4f5ede7666f57b3a1575c530ea2a44f307eb75cb5",
+    "gdpr-03_v2_prompt_verbatim.txt": "3c4578106c40c1e1d2ea362d87a594dd5d2ec57120de03c1cc3a2d564b90d6c8",
+    "gdpr-03_v1_to_v2_diff_report.md": "8522f442daee3277f98df3f31efb44bc49991d6a488c866ab9c93a87b6fc543d",
+    "gdpr-03_validation_report_v2.md": "a9d5ed05193aced9bff661b425f80b7e2a6cced70bd501ef8b4fba20337bd141",
+    "gdpr-03_open_issues_and_review_v2.md": "de9f2abae090f59fc93b93709918baea363fa43cb1853d38adbd18fb595856d0"
+  },
+  "v3_output_files_sha256": {
+    "gdpr-03_candidates_v3.csv": "0c1200e70d19a38dad33f5321560996c3ec189eb411c3059e7028b4f3f839174",
+    "gdpr-03_v3_prompt_verbatim.txt": "187713dfa860f5b55d639473f56aa38ddcfb1350adf9effdbb78ca6ada54fe71",
+    "gdpr-03_v2_to_v3_diff_report.md": "9c8e55967a08a28352abff494f8de8f94ef6351b6da1ee2052641d03d906de2e",
+    "gdpr-03_validation_report_v3.md": "2b922f423d6a557b4ce8799f7f9086d5cc7d9dec0f3e52922b369f0cc8a5aba2",
+    "gdpr-03_open_issues_and_review_v3.md": "3cfa05ecc9fb2291e532310cc8b18d78cad02006a22dbff60d24bd66242a6931"
+  }
+}

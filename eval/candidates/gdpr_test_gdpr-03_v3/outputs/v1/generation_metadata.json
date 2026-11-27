@@ -1,0 +1,65 @@
+{
+  "batch_id": "gdpr-03",
+  "regulation": "gdpr",
+  "split": "test",
+  "protocol_version": "v3.1-2026-11-27",
+  "provider": "Google",
+  "model_version": "Gemini (task mode; exact internal checkpoint/version string not exposed by runtime)",
+  "generated_at": "2026-11-27T17:41:35+11:00",
+  "seed": null,
+  "settings": {
+    "temperature": "unavailable_in_runtime",
+    "top_p": "unavailable_in_runtime",
+    "top_k": "unavailable_in_runtime",
+    "max_output_tokens": "unavailable_in_runtime",
+    "blind_generation": true,
+    "locked_test_retrieval_or_scoring_run": false,
+    "excluded_evidence_units_count": 166,
+    "excluded_gdpr_units_count": 105
+  },
+  "candidate_ids": [
+    "Q157",
+    "Q158",
+    "Q159",
+    "Q160",
+    "Q161",
+    "Q162",
+    "Q163",
+    "Q164",
+    "Q165",
+    "Q166",
+    "Q167",
+    "Q168",
+    "Q169",
+    "Q170",
+    "Q171",
+    "Q172",
+    "Q173",
+    "Q174"
+  ],
+  "total_candidates": 18,
+  "quota_summary": {
+    "high": 5,
+    "low": 10,
+    "unanswerable": 3
+  },
+  "prompt_text_verbatim": "现在启动 GDPR Locked Test 第三批盲生成。\n\n**Batch ID：gdpr-03**\n**Question IDs：Q157–Q174**\n**Total：18 questions**\n\n请严格以本次上传的 `gemini_gdpr-03_blind_v3_1.zip` 为唯一生成规范，使用其中冻结的 GDPR 原文、v3.1 配额及166个证据排除单元。\n\n必须精确满足 `gdpr-03` 全部题型 × 证据类型 × High/Low 联合配额，而非只满足总数。\n\n本批合计：High 5、Low 10、Unanswerable 3。\n\n**特别要求：**\n\n1. 每段 Gold Evidence 必须充分、最小、逐字一致；不能为凑 High 重合度加入无关引文。\n2. Multi-hop 必须是真正的多证据推理。删除任何一个必要证据单元后，完整答案应无法得出。\n3. Conditional 题必须准确保留适用条件、前提与例外，不得将必要条件表述为充分条件。\n4. Unanswerable 题必须检索完整冻结法规语料，记录真实缺失、hard negative、检索变体及实际查看的单元，避免不自然的虚假前提。\n5. 禁止使用166个排除单元作为新增正证据。\n6. 严格保持盲生成，不参考任何 Dev/Test 检索成绩、历史错例或已有问题题面。\n7. 完整保存实际提示词原文、生成元数据及输入输出 SHA-256，不得用提示词摘要冒充完整原文。\n\n请在输出前集中检查全部18题的法律语义、证据必要性、精确联合配额及历史证据隔离。\n\n交付完整18题 CSV、生成元数据、全批校验报告和需独立审阅的候选题清单。\n\n全部标记 `author:ai | human_review:pending`。\n\n只完成 gdpr-03，完成后立即停止。不得生成下一批，也不得运行任何 Locked Test 检索或评分。",
+  "prompt_sha256": "a244fe09fb67c3782158982fd9045dc8cbf6a1347b7744cd4f4d1e3a52739254",
+  "input_hashes_sha256": {
+    "blind_generation_spec.md": "acaa19db40db5cbb8ba65e3d1b86cc807e700bc9f1cf023f360376c012489ccd",
+    "data/processed/ai_act.jsonl": "c4a5b3999f5af5e37f301ceb7f9b1ab2ec311b96583d53044871a9e7089dfa8f",
+    "data/processed/gdpr.jsonl": "e8bbb70c2be3890d8f8307ad26cf583c9b41b17b291094851913806ac3de0df6",
+    "data/raw/ai_act.html": "26482ecee82f549262c1b259120b2b03d3e0addb86584c056b145aa4997e2fba",
+    "data/raw/gdpr.html": "fde27ea4627c51465d51a45268c18f05ed772ab0163382ca34ed3e83d9f98126",
+    "excluded_evidence_units.csv": "e81403b63a5db45939c1ca407554713a75b45a67537fafa26e11aa5c2bd4cffc",
+    "locked_test_batch_schedule_v3_1.csv": "e698303c4fbe3621c599cc1b5c936ce3a3918e43456d52f62ddc0f1c87490ad5",
+    "locked_test_quotas_v3.json": "e8f2fde72b36298e030c416bc090e86d95db1afbdde7fcf6616b1f9ba0c2cc4c",
+    "question_rules.md": "7381a76b2bc6957d8b74f374f178a81d61b00a3e6f2fd44e3d30c0515b77b606"
+  },
+  "output_files_sha256": {
+    "gdpr-03_candidates.csv": "7c181cdde9c7e215b2e4a9032494aa5acb058298b10d957f3c4ee9bf35fcd254",
+    "gdpr-03_prompt_verbatim.txt": "a244fe09fb67c3782158982fd9045dc8cbf6a1347b7744cd4f4d1e3a52739254",
+    "gdpr-03_validation_report.md": "6613777fc9aba77cbd4bb328f02deb12a7439f8d65b4d0a99213eb0a2c8e8e11",
+    "gdpr-03_independent_review_candidates.md": "1c009753c77f30018b0977d9c8744a7a665bd485dc0ca0bd828ac75761524198"
+  }
+}

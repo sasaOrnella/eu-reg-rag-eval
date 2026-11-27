@@ -1,0 +1,13 @@
+regulation,split,type,evidence_type,overlap,expected,actual
+gdpr,test,conflicting_or_conditional,article_only,high,1,1
+gdpr,test,conflicting_or_conditional,article_only,low,2,2
+gdpr,test,multi_hop,article_only,high,1,1
+gdpr,test,multi_hop,article_only,low,2,2
+gdpr,test,multi_hop,mixed,low,1,1
+gdpr,test,numeric_or_table,article_only,high,1,1
+gdpr,test,numeric_or_table,article_only,low,2,2
+gdpr,test,single_hop,article_only,high,1,1
+gdpr,test,single_hop,article_only,low,2,2
+gdpr,test,single_hop,recital_only,high,1,1
+gdpr,test,single_hop,recital_only,low,1,1
+gdpr,test,unanswerable,none,na,3,3
