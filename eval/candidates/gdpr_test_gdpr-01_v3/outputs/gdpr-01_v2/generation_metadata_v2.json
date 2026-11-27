@@ -1,0 +1,106 @@
+{
+  "batch_id": "gdpr-01",
+  "version": "v2",
+  "supersedes_version": "v1 (preserved untouched in outputs/gdpr-01/)",
+  "regulation": "gdpr",
+  "protocol_version": "v3.1-2026-11-27",
+  "split": "test",
+  "provider": "Google (Gemini)",
+  "model_version": "unavailable_in_runtime_environment",
+  "generated_at": "2026-11-27T13:31:21.057594+11:00",
+  "seed": "unavailable_in_runtime_environment",
+  "settings": {
+    "temperature": "unavailable_in_runtime_environment",
+    "top_p": "unavailable_in_runtime_environment",
+    "top_k": "unavailable_in_runtime_environment",
+    "blind_mode": true,
+    "dev_retrieval_or_rankings_consulted": false,
+    "test_scoring_or_retrieval_eval_run": false
+  },
+  "prompt_hash_note": "In v1 generation_metadata.json, prompt_sha256 (54771ebcc5c34d2460af0316e0451e3a8b607b3449d9836b0aa0564a73fff6ca) hashed only a one-line prompt summary. In v2, full verbatim user prompts for both v1 and v2 are recorded and hashed below.",
+  "v1_full_prompt_verbatim": "现在正式启动 Locked Test 盲生成。\n\n请严格按照上传的 v3.1 文件包执行第一批：\n\n**Batch ID：gdpr-01**\n**Regulation：GDPR**\n**Question IDs：Q121–Q138**\n**Total：18 questions**\n\n必须使用 `locked_test_batch_schedule_v3_1.csv` 中 gdpr-01 的精确联合配额，不能只满足题型总数。\n\n仅使用文件包内 GDPR 法规语料及编题规范，不查看或推测 Dev 检索结果、模型排名、失败案例或任何 Test 评分。\n\n每道题须包含准确的英文问题、答案、最小且必要的逐字 Gold Evidence，以及完整 notes。\n\n特别关注 Multi-hop 的证据必要性、Conditional 的规则与例外，以及 Unanswerable 是否确实无法从完整法规语料回答。\n\n遵守所有排除单元限制，尽量使用不同证据来源，避免重复事实。\n\n所有题目标记 `author:ai | human_review:pending`。\n\n交付：\n- 本批完整 18 题 CSV\n- generation_metadata.json\n- 配额与证据检查报告\n- 有疑问或无法满足约束的候选题清单\n\n保留输入及输出哈希。如果无法在不编造法律事实的情况下满足某个配额，请明确报告缺口，不要强行凑数。\n只完成 gdpr-01，完成后立即停止。不得继续第二批，不得运行任何检索评估。",
+  "v1_full_prompt_sha256": "8397fccc96e0eaf0471f5d51088fad814f32035e1042b380f59d9b378ed3da53",
+  "v2_full_prompt_verbatim": "gdpr-01（Q121–Q138）的独立法律语义审阅已完成。\n\n结构、联合配额、原文引文唯一性与证据单元隔离均通过，但有 8 道题需要定向修订。\n\n请只修改 Q128、Q131、Q132、Q133、Q135、Q136、Q137、Q138。\n\n具体要求：\n\n1. Q128：GDPR Article 26 的引用缺少 joint controllers 的主语背景，还遗漏职责已由欧盟或成员国法律确定时的例外。请补全法律适用条件，确保题目、答案与 Gold Evidence 一致。\n2. Q131：将问题准确限定为 GDPR 下的 accredited code-of-conduct monitoring mechanism，不要误写为所有外部监督行为都被禁止。\n3. Q132：明确平行诉讼涉及同一 controller/processor 的相同处理事项。保留 Article 81 对暂停诉讼和拒绝管辖的不同条件。\n4. Q133：区分拒绝提供全部信息与因商业秘密等权利适当限制部分披露，避免绝对化。\n5. Q135：确保 Gold Evidence 本身足以解释参与联合行动的邀请及回应义务和一个月期限；必要时简化题目。\n6. Q136：严格区分 GDPR 的 entry into force 与 date of application，修正过渡期限的提问与答案。\n\n7. Q137：与已有题目考查相同的 GDPR 强制购买责任保险问题。请完全更换为新的、自然的 absence_kind:a 不可回答题，不允许仅改写措辞。\n8. Q138：与已有题目重复使用虚构的 European Data Protection Tribunal。请完全更换为新的 absence_kind:b 不可回答题，不得继续使用这一虚构机构。\n\n这是盲生成任务，不提供旧题全文，也不得查看任何旧题检索表现。新增不可回答题必须独立核查完整法规语料，并提供缺失检索记录。\n\n其余 10 道题的全部字段保持不变。\n\n修订后：\n- 重新核对所有修改题的法律答案与 Gold Evidence。\n- 执行逐字唯一匹配、联合配额及未舍入 Lexical Overlap 检查。\n- 确保整批仍为18题，High 6、Low 10、不可回答2，并满足原先13个联合配额格。\n- 对 Q137、Q138 检查明显重复事实与不自然的虚假前提。\n- 输出完整 v2 CSV、生成元数据、修改前后对照记录、重新计算的验收报告。\n- 保留 v1 全部文件，保留 human_review:pending。\n- 补充实际完整提示词或如实说明现有哈希仅对应提示词摘要。\n\n完成后停止，不要启动 gdpr-02，不要运行任何检索评估。",
+  "v2_full_prompt_sha256": "276995cbd6b3fcc68a8674b08ea22dd3b4feca883ca3547df6c971a4cee5913d",
+  "input_sha256": {
+    "blind_generation_spec.md": "0026a2fdeb96f9b9446c3252f6f70d9afb24464e6744cc99b7c9a41a8f083026",
+    "question_rules.md": "7381a76b2bc6957d8b74f374f178a81d61b00a3e6f2fd44e3d30c0515b77b606",
+    "locked_test_batch_schedule_v3_1.csv": "e698303c4fbe3621c599cc1b5c936ce3a3918e43456d52f62ddc0f1c87490ad5",
+    "locked_test_quotas_v3.json": "e8f2fde72b36298e030c416bc090e86d95db1afbdde7fcf6616b1f9ba0c2cc4c",
+    "excluded_evidence_units.csv": "3fcf07f78552030cf4c30775ea6b97cd6100dda1e6d879a51051143bce059d26",
+    "data/processed/gdpr.jsonl": "e8bbb70c2be3890d8f8307ad26cf583c9b41b17b291094851913806ac3de0df6",
+    "data/raw/gdpr.html": "fde27ea4627c51465d51a45268c18f05ed772ab0163382ca34ed3e83d9f98126",
+    "SHA256SUMS.txt": "5040c043365b7eb38ce9cc242e8596d097f5be66fef8f2c99ac1a47c45ceba9c",
+    "outputs/gdpr-01/gdpr-01_candidates.csv": "f5195a8123d70a79edc435c81dfa0d798477e584a872b8aacf3fa12288851888"
+  },
+  "candidate_ids": [
+    "Q121",
+    "Q122",
+    "Q123",
+    "Q124",
+    "Q125",
+    "Q126",
+    "Q127",
+    "Q128",
+    "Q129",
+    "Q130",
+    "Q131",
+    "Q132",
+    "Q133",
+    "Q134",
+    "Q135",
+    "Q136",
+    "Q137",
+    "Q138"
+  ],
+  "modified_candidate_ids": [
+    "Q128",
+    "Q131",
+    "Q132",
+    "Q133",
+    "Q135",
+    "Q136",
+    "Q137",
+    "Q138"
+  ],
+  "unchanged_candidate_ids": [
+    "Q121",
+    "Q122",
+    "Q123",
+    "Q124",
+    "Q125",
+    "Q126",
+    "Q127",
+    "Q129",
+    "Q130",
+    "Q134"
+  ],
+  "candidate_count": 18,
+  "output_files": {
+    "candidates_csv_v2": {
+      "filename": "gdpr-01_candidates_v2.csv",
+      "sha256": "c8ce60e3e798f5bf93b2b28c824f0288acf2ec41b5502b8c0528b52ca43b81d8"
+    },
+    "v1_vs_v2_diff": {
+      "filename": "gdpr-01_v1_vs_v2_diff.md",
+      "sha256": "93d383177b4d3860ca6a621a726fb5e18a0d00052ff28d92ed2730835fd8c17d"
+    },
+    "verification_report_v2": {
+      "filename": "gdpr-01_verification_report_v2.md",
+      "sha256": "58a784289359e126c7579f505f3cea68ad8a5eaeceffa0c63f65d69495dba8a8"
+    }
+  },
+  "validation_summary": {
+    "exact_joint_quota_match": true,
+    "unchanged_10_rows_byte_identical_to_v1": true,
+    "errors_count": 0,
+    "warnings_count": 1,
+    "warnings": [
+      "Q128: Quote len 500 in gdpr:art:26 outside [25, 400] (hard cap 600)"
+    ],
+    "unique_positive_units_used": 20,
+    "max_positive_unit_reuse": 1,
+    "later_articles_ge_70_count": 8,
+    "max_pairwise_question_jaccard": 0.3333
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "batch_id": "gdpr-01",
+  "version": "v3",
+  "supersedes_versions": [
+    "v1 (preserved untouched in outputs/gdpr-01/)",
+    "v2 (preserved untouched in outputs/gdpr-01_v2/)"
+  ],
+  "regulation": "gdpr",
+  "protocol_version": "v3.1-2026-11-27",
+  "split": "test",
+  "provider": "Google (Gemini)",
+  "model_version": "unavailable_in_runtime_environment",
+  "generated_at": "2026-11-27T14:21:46.066713+11:00",
+  "seed": "unavailable_in_runtime_environment",
+  "settings": {
+    "temperature": "unavailable_in_runtime_environment",
+    "top_p": "unavailable_in_runtime_environment",
+    "top_k": "unavailable_in_runtime_environment",
+    "blind_mode": true,
+    "dev_retrieval_or_rankings_consulted": false,
+    "test_scoring_or_retrieval_eval_run": false
+  },
+  "v3_full_prompt_verbatim": "gdpr-01 v2 已完成独立复核。18 题的结构、证据定位和联合配额均通过，17 道题可以保留。\n\n仅 Q138 存在跨旧题库的语义重复风险：\n\n旧题 Q048 已考查 GDPR 不存在强制数据经纪业务经营许可制度；新版 Q138 考查年度数据处理许可续期。二者都依赖 GDPR 未设立相关强制经营许可这一缺失事实，并使用 Article 42 作为 hard negative。\n\n请只替换 Q138，仍保持 `unanswerable`、`absence_kind:b`，但改为另一项独立的、自然可信的虚假法律前提。\n\n不得继续使用经营许可、年度续期、数据经纪商许可或同一缺失事实。\n\n请依据完整 GDPR 语料验证真实不可回答性，更新 hard_negative 和不少于三个检索变体及核查记录。\n\n其他 Q121–Q137 共 17 道题全部字段保持不变。\n\n输出完整 v3 CSV、更新元数据、Q138 的修改记录及本批配额检查报告。保留 v1、v2 文件，不运行任何检索评估，也不启动 gdpr-02。\n\n完成后停止。",
+  "v3_full_prompt_sha256": "53278e4e84253bf19236e0500c642a7a51f8c3319df739d42103a2e8429dc8e0",
+  "input_sha256": {
+    "blind_generation_spec.md": "0026a2fdeb96f9b9446c3252f6f70d9afb24464e6744cc99b7c9a41a8f083026",
+    "question_rules.md": "7381a76b2bc6957d8b74f374f178a81d61b00a3e6f2fd44e3d30c0515b77b606",
+    "locked_test_batch_schedule_v3_1.csv": "e698303c4fbe3621c599cc1b5c936ce3a3918e43456d52f62ddc0f1c87490ad5",
+    "locked_test_quotas_v3.json": "e8f2fde72b36298e030c416bc090e86d95db1afbdde7fcf6616b1f9ba0c2cc4c",
+    "excluded_evidence_units.csv": "3fcf07f78552030cf4c30775ea6b97cd6100dda1e6d879a51051143bce059d26",
+    "data/processed/gdpr.jsonl": "e8bbb70c2be3890d8f8307ad26cf583c9b41b17b291094851913806ac3de0df6",
+    "data/raw/gdpr.html": "fde27ea4627c51465d51a45268c18f05ed772ab0163382ca34ed3e83d9f98126",
+    "SHA256SUMS.txt": "5040c043365b7eb38ce9cc242e8596d097f5be66fef8f2c99ac1a47c45ceba9c",
+    "outputs/gdpr-01/gdpr-01_candidates.csv": "f5195a8123d70a79edc435c81dfa0d798477e584a872b8aacf3fa12288851888",
+    "outputs/gdpr-01_v2/gdpr-01_candidates_v2.csv": "c8ce60e3e798f5bf93b2b28c824f0288acf2ec41b5502b8c0528b52ca43b81d8"
+  },
+  "candidate_ids": [
+    "Q121",
+    "Q122",
+    "Q123",
+    "Q124",
+    "Q125",
+    "Q126",
+    "Q127",
+    "Q128",
+    "Q129",
+    "Q130",
+    "Q131",
+    "Q132",
+    "Q133",
+    "Q134",
+    "Q135",
+    "Q136",
+    "Q137",
+    "Q138"
+  ],
+  "modified_candidate_ids_from_v2": [
+    "Q138"
+  ],
+  "unchanged_candidate_ids_from_v2": [
+    "Q121",
+    "Q122",
+    "Q123",
+    "Q124",
+    "Q125",
+    "Q126",
+    "Q127",
+    "Q128",
+    "Q129",
+    "Q130",
+    "Q131",
+    "Q132",
+    "Q133",
+    "Q134",
+    "Q135",
+    "Q136",
+    "Q137"
+  ],
+  "candidate_count": 18,
+  "output_files": {
+    "candidates_csv_v3": {
+      "filename": "gdpr-01_candidates_v3.csv",
+      "sha256": "62fe32585eccc92a6666cb9a7682b6e2113d87aba1d9f19d0d45bd95a0639952"
+    },
+    "q138_v2_vs_v3_diff": {
+      "filename": "gdpr-01_q138_v2_vs_v3_diff.md",
+      "sha256": "677614e4d95d9b8797719f25aae24f5aa724665750fca14a7ce1087bb7f9a646"
+    },
+    "verification_report_v3": {
+      "filename": "gdpr-01_verification_report_v3.md",
+      "sha256": "fcda1f57f12403bfab050425ba2ac876ffd3f56215be9dc3de562818b1b64450"
+    }
+  },
+  "validation_summary": {
+    "exact_joint_quota_match": true,
+    "unchanged_17_rows_byte_identical_to_v2": true,
+    "errors_count": 0,
+    "warnings_count": 1,
+    "warnings": [
+      "Q128: Quote len 500 in gdpr:art:26 outside [25, 400] (hard cap 600)"
+    ],
+    "unique_positive_units_used": 20,
+    "max_positive_unit_reuse": 1,
+    "later_articles_ge_70_count": 8,
+    "max_pairwise_question_jaccard": 0.3333
+  }
+}

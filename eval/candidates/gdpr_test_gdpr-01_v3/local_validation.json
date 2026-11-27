@@ -1,0 +1,219 @@
+{
+  "batch": "gdpr-01",
+  "accepted_csv": "outputs/gdpr-01_v3/gdpr-01_candidates_v3.csv",
+  "status": "accepted_candidate_batch",
+  "human_review": "pending",
+  "verified_on": "2026-11-27",
+  "repo_baseline": "ab5aabb9a6c71c460cc05c7be40b2e722cfb5408",
+  "source_zip_sha256": {
+    "v1": "a74b30eb5a003bc496990a3d822437d491147fb6dbc15d8194a28cbe6d281d7b",
+    "v2": "152e75580f4c1527339678f31e2181c663569f4b049433718d5d6ce5a2a8d943",
+    "v3": "8f653d61b9bb2e987a8fc6d54e8e60fc72dad9d2028a9e465a2287c30f14b89e"
+  },
+  "original_file_sha256": {
+    "outputs/gdpr-01/gdpr-01_candidates.csv": "f5195a8123d70a79edc435c81dfa0d798477e584a872b8aacf3fa12288851888",
+    "outputs/gdpr-01/gdpr-01_verification_report.md": "d90bee39e4263a640d4aab3ab938ebab2fb2372624f026a326df936911b328e7",
+    "outputs/gdpr-01/gdpr-01_flagged_candidates.md": "e9e15ff2f9b461438b53e240d76329427a7f9c77d218d62f3a1bbb33770e8c95",
+    "outputs/gdpr-01/generation_metadata.json": "748988d8e509e9b33ecf3e559ffe0ca666ce71f42548a242267bbdbce6a3994f",
+    "outputs/gdpr-01_v2/gdpr-01_v1_vs_v2_diff.md": "93d383177b4d3860ca6a621a726fb5e18a0d00052ff28d92ed2730835fd8c17d",
+    "outputs/gdpr-01_v2/gdpr-01_verification_report_v2.md": "58a784289359e126c7579f505f3cea68ad8a5eaeceffa0c63f65d69495dba8a8",
+    "outputs/gdpr-01_v2/generation_metadata_v2.json": "8b1c6c29aa497a5d1b2914ae1bd7b7ef4ade37ba28c60509601a57c5071136f2",
+    "outputs/gdpr-01_v2/gdpr-01_candidates_v2.csv": "c8ce60e3e798f5bf93b2b28c824f0288acf2ec41b5502b8c0528b52ca43b81d8",
+    "outputs/gdpr-01_v3/gdpr-01_verification_report_v3.md": "fcda1f57f12403bfab050425ba2ac876ffd3f56215be9dc3de562818b1b64450",
+    "outputs/gdpr-01_v3/generation_metadata_v3.json": "2c5fad7dc552257705fb03c1d7e284603adf83599826a90e5fcaf06dd6c2b8a0",
+    "outputs/gdpr-01_v3/gdpr-01_candidates_v3.csv": "62fe32585eccc92a6666cb9a7682b6e2113d87aba1d9f19d0d45bd95a0639952",
+    "outputs/gdpr-01_v3/gdpr-01_q138_v2_vs_v3_diff.md": "677614e4d95d9b8797719f25aae24f5aa724665750fca14a7ce1087bb7f9a646"
+  },
+  "frozen_and_dev_sha256": {
+    "eval/questions.csv": "a998781a7eeac836b131a30b53188a184440d6a30f37ff81a872e4fef507675e",
+    "eval/candidates/gdpr_dev_q081_q100_v2/outputs/gdpr_dev_candidates_v2.csv": "6beddd9acc015b7eac0df34e0326543b2cb0caaf306aa514f054011665cb3af7",
+    "eval/candidates/ai_act_dev_q101_q120_v2/outputs/ai_act_dev_candidates_v2.csv": "24629721006055e26873cc308c6179449d654c93122307dfcf5315530be2b14d"
+  },
+  "complete_candidate_ids": [
+    "Q121",
+    "Q122",
+    "Q123",
+    "Q124",
+    "Q125",
+    "Q126",
+    "Q127",
+    "Q128",
+    "Q129",
+    "Q130",
+    "Q131",
+    "Q132",
+    "Q133",
+    "Q134",
+    "Q135",
+    "Q136",
+    "Q137",
+    "Q138"
+  ],
+  "overlap_counts": {
+    "high": 6,
+    "low": 10,
+    "na": 2
+  },
+  "exact_joint_quota": [
+    {
+      "regulation": "gdpr",
+      "split": "test",
+      "type": "conflicting_or_conditional",
+      "evidence_type": "article_only",
+      "overlap": "high",
+      "expected": 1,
+      "actual": 1
+    },
+    {
+      "regulation": "gdpr",
+      "split": "test",
+      "type": "conflicting_or_conditional",
+      "evidence_type": "article_only",
+      "overlap": "low",
+      "expected": 2,
+      "actual": 2
+    },
+    {
+      "regulation": "gdpr",
+      "split": "test",
+      "type": "conflicting_or_conditional",
+      "evidence_type": "recital_only",
+      "overlap": "low",
+      "expected": 1,
+      "actual": 1
+    },
+    {
+      "regulation": "gdpr",
+      "split": "test",
+      "type": "multi_hop",
+      "evidence_type": "article_only",
+      "overlap": "high",
+      "expected": 1,
+      "actual": 1
+    },
+    {
+      "regulation": "gdpr",
+      "split": "test",
+      "type": "multi_hop",
+      "evidence_type": "article_only",
+      "overlap": "low",
+      "expected": 2,
+      "actual": 2
+    },
+    {
+      "regulation": "gdpr",
+      "split": "test",
+      "type": "multi_hop",
+      "evidence_type": "mixed",
+      "overlap": "high",
+      "expected": 1,
+      "actual": 1
+    },
+    {
+      "regulation": "gdpr",
+      "split": "test",
+      "type": "numeric_or_table",
+      "evidence_type": "article_only",
+      "overlap": "high",
+      "expected": 1,
+      "actual": 1
+    },
+    {
+      "regulation": "gdpr",
+      "split": "test",
+      "type": "numeric_or_table",
+      "evidence_type": "article_only",
+      "overlap": "low",
+      "expected": 1,
+      "actual": 1
+    },
+    {
+      "regulation": "gdpr",
+      "split": "test",
+      "type": "numeric_or_table",
+      "evidence_type": "recital_only",
+      "overlap": "low",
+      "expected": 1,
+      "actual": 1
+    },
+    {
+      "regulation": "gdpr",
+      "split": "test",
+      "type": "single_hop",
+      "evidence_type": "article_only",
+      "overlap": "high",
+      "expected": 2,
+      "actual": 2
+    },
+    {
+      "regulation": "gdpr",
+      "split": "test",
+      "type": "single_hop",
+      "evidence_type": "article_only",
+      "overlap": "low",
+      "expected": 2,
+      "actual": 2
+    },
+    {
+      "regulation": "gdpr",
+      "split": "test",
+      "type": "single_hop",
+      "evidence_type": "recital_only",
+      "overlap": "low",
+      "expected": 1,
+      "actual": 1
+    },
+    {
+      "regulation": "gdpr",
+      "split": "test",
+      "type": "unanswerable",
+      "evidence_type": "none",
+      "overlap": "na",
+      "expected": 2,
+      "actual": 2
+    }
+  ],
+  "source_input_hashes_verified": true,
+  "semantic_review": "Independent review reported by user",
+  "v2_to_v3_changed_fields": {
+    "Q138": [
+      "question",
+      "gold_answer",
+      "notes"
+    ]
+  },
+  "v2_to_v3_byte_identical_rows": 17,
+  "gold_spans": 26,
+  "new_positive_units": [
+    "gdpr:art:13",
+    "gdpr:art:14",
+    "gdpr:art:24",
+    "gdpr:art:26",
+    "gdpr:art:40",
+    "gdpr:art:41",
+    "gdpr:art:5",
+    "gdpr:art:62",
+    "gdpr:art:72",
+    "gdpr:art:74",
+    "gdpr:art:76",
+    "gdpr:art:81",
+    "gdpr:art:85",
+    "gdpr:art:89",
+    "gdpr:art:94",
+    "gdpr:art:98",
+    "gdpr:rec:153",
+    "gdpr:rec:160",
+    "gdpr:rec:171",
+    "gdpr:rec:63"
+  ],
+  "new_exclusion_count": 146,
+  "new_exclusion_sha256": "eeb00d51afc4b964da144714f9fee84cb2fe724e28805fb045f3da983cc2523b",
+  "warning": {
+    "qid": "Q128",
+    "rule": "R-E2",
+    "quote_chars": 500,
+    "maximum_chars": 600,
+    "disposition": "Non-blocking. The full Article 26(1) sentence retains notice allocation and the statutory exception."
+  },
+  "evaluation_scope": "Annotation validation only. No retrieval evaluation."
+}

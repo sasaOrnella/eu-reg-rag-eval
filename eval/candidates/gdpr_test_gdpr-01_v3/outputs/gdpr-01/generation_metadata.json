@@ -1,0 +1,74 @@
+{
+  "batch_id": "gdpr-01",
+  "regulation": "gdpr",
+  "protocol_version": "v3.1-2026-11-27",
+  "split": "test",
+  "provider": "Google (Gemini)",
+  "model_version": "unavailable_in_runtime_environment",
+  "generated_at": "2026-11-27T12:48:01.976881+11:00",
+  "seed": "unavailable_in_runtime_environment",
+  "settings": {
+    "temperature": "unavailable_in_runtime_environment",
+    "top_p": "unavailable_in_runtime_environment",
+    "top_k": "unavailable_in_runtime_environment",
+    "blind_mode": true,
+    "dev_retrieval_or_rankings_consulted": false,
+    "test_scoring_or_retrieval_eval_run": false
+  },
+  "prompt_summary_for_hash": "Batch ID: gdpr-01 | Regulation: GDPR | Question IDs: Q121-Q138 | Total: 18 questions | Protocol: locked_test_batch_schedule_v3_1.csv & blind_generation_spec.md v3.1 | Blind generation without Dev retrieval/ranking/failure cases or Test scoring.",
+  "prompt_sha256": "54771ebcc5c34d2460af0316e0451e3a8b607b3449d9836b0aa0564a73fff6ca",
+  "input_sha256": {
+    "blind_generation_spec.md": "0026a2fdeb96f9b9446c3252f6f70d9afb24464e6744cc99b7c9a41a8f083026",
+    "question_rules.md": "7381a76b2bc6957d8b74f374f178a81d61b00a3e6f2fd44e3d30c0515b77b606",
+    "locked_test_batch_schedule_v3_1.csv": "e698303c4fbe3621c599cc1b5c936ce3a3918e43456d52f62ddc0f1c87490ad5",
+    "locked_test_quotas_v3.json": "e8f2fde72b36298e030c416bc090e86d95db1afbdde7fcf6616b1f9ba0c2cc4c",
+    "excluded_evidence_units.csv": "3fcf07f78552030cf4c30775ea6b97cd6100dda1e6d879a51051143bce059d26",
+    "data/processed/gdpr.jsonl": "e8bbb70c2be3890d8f8307ad26cf583c9b41b17b291094851913806ac3de0df6",
+    "data/raw/gdpr.html": "fde27ea4627c51465d51a45268c18f05ed772ab0163382ca34ed3e83d9f98126",
+    "SHA256SUMS.txt": "5040c043365b7eb38ce9cc242e8596d097f5be66fef8f2c99ac1a47c45ceba9c"
+  },
+  "candidate_ids": [
+    "Q121",
+    "Q122",
+    "Q123",
+    "Q124",
+    "Q125",
+    "Q126",
+    "Q127",
+    "Q128",
+    "Q129",
+    "Q130",
+    "Q131",
+    "Q132",
+    "Q133",
+    "Q134",
+    "Q135",
+    "Q136",
+    "Q137",
+    "Q138"
+  ],
+  "candidate_count": 18,
+  "output_files": {
+    "candidates_csv": {
+      "filename": "gdpr-01_candidates.csv",
+      "sha256": "f5195a8123d70a79edc435c81dfa0d798477e584a872b8aacf3fa12288851888"
+    },
+    "verification_report": {
+      "filename": "gdpr-01_verification_report.md",
+      "sha256": "d90bee39e4263a640d4aab3ab938ebab2fb2372624f026a326df936911b328e7"
+    },
+    "flagged_candidates": {
+      "filename": "gdpr-01_flagged_candidates.md",
+      "sha256": "e9e15ff2f9b461438b53e240d76329427a7f9c77d218d62f3a1bbb33770e8c95"
+    }
+  },
+  "validation_summary": {
+    "exact_joint_quota_match": true,
+    "errors_count": 0,
+    "warnings_count": 0,
+    "unique_positive_units_used": 20,
+    "max_positive_unit_reuse": 1,
+    "later_articles_ge_70_count": 8,
+    "max_pairwise_question_jaccard": 0.3333
+  }
+}
