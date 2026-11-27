@@ -1,0 +1,856 @@
+{
+  "source_hashes": {
+    "eval/questions.csv": "a998781a7eeac836b131a30b53188a184440d6a30f37ff81a872e4fef507675e",
+    "eval/candidates/gdpr_dev_q081_q100_v2/outputs/gdpr_dev_candidates_v2.csv": "6beddd9acc015b7eac0df34e0326543b2cb0caaf306aa514f054011665cb3af7",
+    "eval/candidates/ai_act_dev_q101_q120_v2/outputs/ai_act_dev_candidates_v2.csv": "24629721006055e26873cc308c6179449d654c93122307dfcf5315530be2b14d",
+    "eval/candidates/gdpr_test_gdpr-01_v3/outputs/gdpr-01_v3/gdpr-01_candidates_v3.csv": "62fe32585eccc92a6666cb9a7682b6e2113d87aba1d9f19d0d45bd95a0639952",
+    "/Users/sasa/Desktop/gemini_gdpr-02_blind_v3_1/outputs/gdpr-02_v3/gdpr-02_candidates_v3.csv": "2b5f3d3684a3296f67576c5333e04bdb866ad597163aba7f258a8b784c135820",
+    "eval/dev_pilot_p1/locked_test_excluded_evidence_units.csv": "eeb00d51afc4b964da144714f9fee84cb2fe724e28805fb045f3da983cc2523b"
+  },
+  "metadata_sha256": "07717e6a001290f029ec52ce6b72860b3dfb821f1fab5da650c4281d2d203132",
+  "delivered_originals_sha256": {
+    "outputs/gdpr-02/gdpr-02_candidates.csv": "3209ae7bd21846879e834aef58b4680f26912cd3b9d7dd2f8294227b57dfce4d",
+    "outputs/gdpr-02/gdpr-02_flagged_candidates.md": "54c3081b0ebc97b2abf422cc8463fda7ccee5fcd1bbb7c4ea6430b67abc4245f",
+    "outputs/gdpr-02/gdpr-02_verification_report.md": "856a59b9630184449954b62d86d1437e56f8e52b1d5882d07566b45cccc6ce41",
+    "outputs/gdpr-02/generation_metadata.json": "c9e9b10a0fdc6d484481edde68345a3758d6d12d3d0ab8387021e256cfd833ad",
+    "outputs/gdpr-02_v2/gdpr-02_candidates_v2.csv": "10c6a72fdb18cb066ebe43a4214978c16b523d4c950282a3928a13c2b619b194",
+    "outputs/gdpr-02_v2/gdpr-02_open_issues_and_q155_backups.md": "430fbfb5fdeb438773f58bdbfc87dc49f1312860a1a2de475eb0220627eb382c",
+    "outputs/gdpr-02_v2/gdpr-02_v1_vs_v2_diff.md": "04fcc5b5a7956986cb4aa05bbe2b31c53a30a3c45891bc6d8315105d961d7ab1",
+    "outputs/gdpr-02_v2/gdpr-02_verification_report_v2.md": "279b22a84de1206b521fca0133acd5e16c67b14775f996de24315eebd2be910e",
+    "outputs/gdpr-02_v2/generation_metadata_v2.json": "0fe05a747a5c7822c2610686408633a6b60bdba3b1195f84044748eb913281c2",
+    "outputs/gdpr-02_v3/gdpr-02_candidates_v3.csv": "2b5f3d3684a3296f67576c5333e04bdb866ad597163aba7f258a8b784c135820",
+    "outputs/gdpr-02_v3/gdpr-02_open_issues_v3.md": "512c4fa39612df5bb646b1e1a4e3c81563c7ba649230babfc9305434a0b1d418",
+    "outputs/gdpr-02_v3/gdpr-02_v2_vs_v3_diff.md": "5c27f391cb8537accbe96173e063cd01b814b221125dad78f81129703bba4467",
+    "outputs/gdpr-02_v3/gdpr-02_verification_report_v3.md": "08224704a08bc89b774ee1871a8aaae4ab439edc9bbb66b7d55f7313f140a4b2",
+    "outputs/gdpr-02_v3/generation_metadata_v3.json": "07717e6a001290f029ec52ce6b72860b3dfb821f1fab5da650c4281d2d203132"
+  },
+  "field_changes": {
+    "Q139": [],
+    "Q140": [],
+    "Q141": [],
+    "Q142": [],
+    "Q143": [],
+    "Q144": [
+      "question",
+      "gold_answer",
+      "gold_evidence",
+      "notes"
+    ],
+    "Q145": [],
+    "Q146": [],
+    "Q147": [],
+    "Q148": [],
+    "Q149": [
+      "question",
+      "gold_answer",
+      "notes"
+    ],
+    "Q150": [],
+    "Q151": [],
+    "Q152": [
+      "question",
+      "gold_answer",
+      "notes"
+    ],
+    "Q153": [],
+    "Q154": [],
+    "Q155": [
+      "question",
+      "gold_answer",
+      "notes"
+    ],
+    "Q156": []
+  },
+  "unchanged_raw_records": [
+    "Q139",
+    "Q140",
+    "Q141",
+    "Q142",
+    "Q143",
+    "Q145",
+    "Q146",
+    "Q147",
+    "Q148",
+    "Q150",
+    "Q151",
+    "Q153",
+    "Q154",
+    "Q156"
+  ],
+  "rows": 18,
+  "history_rows": 138,
+  "positive_units": [
+    "gdpr:art:25",
+    "gdpr:art:47",
+    "gdpr:art:49",
+    "gdpr:art:57",
+    "gdpr:art:63",
+    "gdpr:art:67",
+    "gdpr:art:69",
+    "gdpr:art:70",
+    "gdpr:art:71",
+    "gdpr:art:87",
+    "gdpr:art:91",
+    "gdpr:art:92",
+    "gdpr:art:93",
+    "gdpr:art:95",
+    "gdpr:art:99",
+    "gdpr:rec:162",
+    "gdpr:rec:165",
+    "gdpr:rec:172",
+    "gdpr:rec:33",
+    "gdpr:rec:48"
+  ],
+  "positive_quotes": 27,
+  "quota_cells": 13,
+  "exclusion_counts": {
+    "ai_act": 61,
+    "gdpr": 85
+  },
+  "base_exclusions": 126,
+  "prior_batch_positive_units": 20,
+  "max_unit_reuse": 1,
+  "unit_counts": {
+    "ai_act": 293,
+    "gdpr": 272
+  },
+  "maximum_opening_word_count": [
+    [
+      "under",
+      4
+    ],
+    [
+      "does",
+      3
+    ],
+    [
+      "which",
+      2
+    ],
+    [
+      "when",
+      2
+    ],
+    [
+      "how",
+      2
+    ],
+    [
+      "on",
+      2
+    ],
+    [
+      "what",
+      1
+    ],
+    [
+      "must",
+      1
+    ],
+    [
+      "for",
+      1
+    ]
+  ],
+  "cross_bank_pair_count": 2484,
+  "internal_pair_count": 153,
+  "top_cross_bank_pairs": [
+    [
+      0.42857142857142855,
+      "Q139",
+      "Q082"
+    ],
+    [
+      0.35294117647058826,
+      "Q139",
+      "Q121"
+    ],
+    [
+      0.2777777777777778,
+      "Q139",
+      "Q134"
+    ],
+    [
+      0.2631578947368421,
+      "Q139",
+      "Q122"
+    ],
+    [
+      0.25,
+      "Q139",
+      "Q118"
+    ],
+    [
+      0.25,
+      "Q139",
+      "Q099"
+    ],
+    [
+      0.25,
+      "Q139",
+      "Q097"
+    ],
+    [
+      0.2222222222222222,
+      "Q139",
+      "Q083"
+    ],
+    [
+      0.2,
+      "Q139",
+      "Q081"
+    ],
+    [
+      0.1935483870967742,
+      "Q149",
+      "Q094"
+    ],
+    [
+      0.1875,
+      "Q139",
+      "Q048"
+    ],
+    [
+      0.17647058823529413,
+      "Q139",
+      "Q049"
+    ],
+    [
+      0.17647058823529413,
+      "Q139",
+      "Q046"
+    ],
+    [
+      0.16666666666666666,
+      "Q155",
+      "Q137"
+    ],
+    [
+      0.16666666666666666,
+      "Q154",
+      "Q118"
+    ],
+    [
+      0.16666666666666666,
+      "Q144",
+      "Q123"
+    ],
+    [
+      0.16666666666666666,
+      "Q139",
+      "Q096"
+    ],
+    [
+      0.16,
+      "Q144",
+      "Q121"
+    ],
+    [
+      0.15789473684210525,
+      "Q148",
+      "Q044"
+    ],
+    [
+      0.15789473684210525,
+      "Q139",
+      "Q123"
+    ]
+  ],
+  "top_internal_pairs": [
+    [
+      0.14285714285714285,
+      "Q144",
+      "Q145"
+    ],
+    [
+      0.14285714285714285,
+      "Q140",
+      "Q151"
+    ],
+    [
+      0.13043478260869565,
+      "Q139",
+      "Q145"
+    ],
+    [
+      0.125,
+      "Q146",
+      "Q151"
+    ],
+    [
+      0.12,
+      "Q139",
+      "Q144"
+    ],
+    [
+      0.11538461538461539,
+      "Q145",
+      "Q154"
+    ],
+    [
+      0.11538461538461539,
+      "Q139",
+      "Q141"
+    ],
+    [
+      0.1111111111111111,
+      "Q153",
+      "Q154"
+    ],
+    [
+      0.1111111111111111,
+      "Q140",
+      "Q146"
+    ],
+    [
+      0.10714285714285714,
+      "Q144",
+      "Q154"
+    ]
+  ],
+  "absence_search": {
+    "Q155": {
+      "\\bAmazon\\b": [],
+      "\\bAWS\\b": [],
+      "Web Services": [],
+      "\\bcloud\\b": [
+        "ai_act:rec:55"
+      ],
+      "cloud region": [],
+      "vendor.specific": [],
+      "appropriate safeguards": [
+        "ai_act:rec:35",
+        "ai_act:rec:70",
+        "ai_act:rec:94",
+        "ai_act:rec:134",
+        "ai_act:rec:138",
+        "ai_act:rec:140",
+        "ai_act:rec:141",
+        "ai_act:art:10",
+        "ai_act:art:50",
+        "ai_act:art:58",
+        "gdpr:rec:50",
+        "gdpr:rec:56",
+        "gdpr:rec:62",
+        "gdpr:rec:102",
+        "gdpr:rec:107",
+        "gdpr:rec:108",
+        "gdpr:rec:110",
+        "gdpr:rec:156",
+        "gdpr:art:6",
+        "gdpr:art:9",
+        "gdpr:art:10",
+        "gdpr:art:15",
+        "gdpr:art:40",
+        "gdpr:art:41",
+        "gdpr:art:42",
+        "gdpr:art:46",
+        "gdpr:art:49",
+        "gdpr:art:50",
+        "gdpr:art:58",
+        "gdpr:art:87",
+        "gdpr:art:89"
+      ],
+      "derogations for specific situations": [
+        "gdpr:rec:107"
+      ],
+      "international organisation": [
+        "ai_act:rec:12",
+        "ai_act:rec:22",
+        "ai_act:art:2",
+        "ai_act:art:66",
+        "gdpr:rec:6",
+        "gdpr:rec:101",
+        "gdpr:rec:102",
+        "gdpr:rec:103",
+        "gdpr:rec:105",
+        "gdpr:rec:106",
+        "gdpr:rec:107",
+        "gdpr:rec:108",
+        "gdpr:rec:112",
+        "gdpr:rec:139",
+        "gdpr:rec:153",
+        "gdpr:rec:168",
+        "gdpr:rec:169",
+        "gdpr:art:4",
+        "gdpr:art:13",
+        "gdpr:art:14",
+        "gdpr:art:15",
+        "gdpr:art:28",
+        "gdpr:art:30",
+        "gdpr:art:40",
+        "gdpr:art:42",
+        "gdpr:art:44",
+        "gdpr:art:45",
+        "gdpr:art:46",
+        "gdpr:art:49",
+        "gdpr:art:50",
+        "gdpr:art:58",
+        "gdpr:art:70",
+        "gdpr:art:71",
+        "gdpr:art:83",
+        "gdpr:art:85",
+        "gdpr:art:96",
+        "gdpr:art:97"
+      ]
+    },
+    "Q156": {
+      "regularly test": [
+        "gdpr:art:32"
+      ],
+      "(?:test|assess|evaluat)\\w*.{0,45}effectiveness": [
+        "ai_act:rec:174",
+        "ai_act:art:57",
+        "ai_act:art:112",
+        "gdpr:art:32"
+      ],
+      "security test": [],
+      "\\bquarterly\\b": [],
+      "\\bannually\\b": [
+        "ai_act:art:74"
+      ],
+      "\\b(?:per|each|every) (?:month|year|quarter)\\b": [
+        "ai_act:art:57"
+      ],
+      "(?:test|assess|evaluat|review)\\w*.{0,70}(?:interval|frequency|schedule)": [],
+      "where necessary": [
+        "ai_act:rec:157",
+        "ai_act:rec:173",
+        "ai_act:art:11",
+        "ai_act:art:36",
+        "ai_act:art:37",
+        "ai_act:art:59",
+        "ai_act:art:73",
+        "ai_act:art:78",
+        "ai_act:art:82",
+        "ai_act:art:93",
+        "gdpr:rec:52",
+        "gdpr:rec:53",
+        "gdpr:rec:95",
+        "gdpr:rec:152",
+        "gdpr:art:5",
+        "gdpr:art:12",
+        "gdpr:art:24",
+        "gdpr:art:35",
+        "gdpr:art:43",
+        "gdpr:art:64"
+      ],
+      "level of security appropriate to the risk": [
+        "gdpr:art:32"
+      ]
+    }
+  },
+  "question_details": {
+    "Q139": {
+      "cell": [
+        "single_hop",
+        "article_only",
+        "high"
+      ],
+      "overlap": "6/11",
+      "spans": [
+        {
+          "unit_id": "gdpr:art:71",
+          "start": 3,
+          "end": 316
+        }
+      ],
+      "lengths": [
+        313
+      ]
+    },
+    "Q140": {
+      "cell": [
+        "single_hop",
+        "article_only",
+        "low"
+      ],
+      "overlap": "0",
+      "spans": [
+        {
+          "unit_id": "gdpr:art:87",
+          "start": 0,
+          "end": 382
+        }
+      ],
+      "lengths": [
+        382
+      ]
+    },
+    "Q141": {
+      "cell": [
+        "single_hop",
+        "article_only",
+        "low"
+      ],
+      "overlap": "1/6",
+      "spans": [
+        {
+          "unit_id": "gdpr:art:95",
+          "start": 0,
+          "end": 376
+        }
+      ],
+      "lengths": [
+        376
+      ]
+    },
+    "Q142": {
+      "cell": [
+        "single_hop",
+        "recital_only",
+        "high"
+      ],
+      "overlap": "6/13",
+      "spans": [
+        {
+          "unit_id": "gdpr:rec:33",
+          "start": 0,
+          "end": 327
+        }
+      ],
+      "lengths": [
+        327
+      ]
+    },
+    "Q143": {
+      "cell": [
+        "single_hop",
+        "recital_only",
+        "low"
+      ],
+      "overlap": "1/11",
+      "spans": [
+        {
+          "unit_id": "gdpr:rec:162",
+          "start": 716,
+          "end": 976
+        }
+      ],
+      "lengths": [
+        260
+      ]
+    },
+    "Q144": {
+      "cell": [
+        "multi_hop",
+        "article_only",
+        "high"
+      ],
+      "overlap": "8/17",
+      "spans": [
+        {
+          "unit_id": "gdpr:art:67",
+          "start": 0,
+          "end": 231
+        },
+        {
+          "unit_id": "gdpr:art:67",
+          "start": 298,
+          "end": 413
+        },
+        {
+          "unit_id": "gdpr:art:93",
+          "start": 139,
+          "end": 238
+        }
+      ],
+      "lengths": [
+        231,
+        115,
+        99
+      ]
+    },
+    "Q145": {
+      "cell": [
+        "multi_hop",
+        "article_only",
+        "low"
+      ],
+      "overlap": "1/15",
+      "spans": [
+        {
+          "unit_id": "gdpr:art:70",
+          "start": 5757,
+          "end": 5886
+        },
+        {
+          "unit_id": "gdpr:art:69",
+          "start": 123,
+          "end": 363
+        }
+      ],
+      "lengths": [
+        129,
+        240
+      ]
+    },
+    "Q146": {
+      "cell": [
+        "multi_hop",
+        "article_only",
+        "low"
+      ],
+      "overlap": "3/17",
+      "spans": [
+        {
+          "unit_id": "gdpr:art:47",
+          "start": 3,
+          "end": 143
+        },
+        {
+          "unit_id": "gdpr:art:63",
+          "start": 0,
+          "end": 257
+        }
+      ],
+      "lengths": [
+        140,
+        257
+      ]
+    },
+    "Q147": {
+      "cell": [
+        "multi_hop",
+        "mixed",
+        "high"
+      ],
+      "overlap": "2/5",
+      "spans": [
+        {
+          "unit_id": "gdpr:art:91",
+          "start": 3,
+          "end": 327
+        },
+        {
+          "unit_id": "gdpr:rec:165",
+          "start": 0,
+          "end": 202
+        }
+      ],
+      "lengths": [
+        324,
+        202
+      ]
+    },
+    "Q148": {
+      "cell": [
+        "conflicting_or_conditional",
+        "article_only",
+        "high"
+      ],
+      "overlap": "1/2",
+      "spans": [
+        {
+          "unit_id": "gdpr:art:57",
+          "start": 3732,
+          "end": 3891
+        },
+        {
+          "unit_id": "gdpr:art:57",
+          "start": 3895,
+          "end": 4248
+        }
+      ],
+      "lengths": [
+        159,
+        353
+      ]
+    },
+    "Q149": {
+      "cell": [
+        "conflicting_or_conditional",
+        "article_only",
+        "low"
+      ],
+      "overlap": "4/23",
+      "spans": [
+        {
+          "unit_id": "gdpr:art:49",
+          "start": 1277,
+          "end": 1674
+        },
+        {
+          "unit_id": "gdpr:art:49",
+          "start": 2733,
+          "end": 3117
+        }
+      ],
+      "lengths": [
+        397,
+        384
+      ]
+    },
+    "Q150": {
+      "cell": [
+        "conflicting_or_conditional",
+        "article_only",
+        "low"
+      ],
+      "overlap": "4/15",
+      "spans": [
+        {
+          "unit_id": "gdpr:art:25",
+          "start": 740,
+          "end": 949
+        },
+        {
+          "unit_id": "gdpr:art:25",
+          "start": 1101,
+          "end": 1278
+        }
+      ],
+      "lengths": [
+        209,
+        177
+      ]
+    },
+    "Q151": {
+      "cell": [
+        "conflicting_or_conditional",
+        "recital_only",
+        "low"
+      ],
+      "overlap": "4/19",
+      "spans": [
+        {
+          "unit_id": "gdpr:rec:48",
+          "start": 0,
+          "end": 295
+        },
+        {
+          "unit_id": "gdpr:rec:48",
+          "start": 296,
+          "end": 449
+        }
+      ],
+      "lengths": [
+        295,
+        153
+      ]
+    },
+    "Q152": {
+      "cell": [
+        "numeric_or_table",
+        "article_only",
+        "low"
+      ],
+      "overlap": "2/21",
+      "spans": [
+        {
+          "unit_id": "gdpr:art:92",
+          "start": 887,
+          "end": 1311
+        },
+        {
+          "unit_id": "gdpr:art:92",
+          "start": 1312,
+          "end": 1421
+        }
+      ],
+      "lengths": [
+        424,
+        109
+      ]
+    },
+    "Q153": {
+      "cell": [
+        "numeric_or_table",
+        "article_only",
+        "low"
+      ],
+      "overlap": "3/16",
+      "spans": [
+        {
+          "unit_id": "gdpr:art:99",
+          "start": 0,
+          "end": 143
+        },
+        {
+          "unit_id": "gdpr:art:99",
+          "start": 144,
+          "end": 179
+        }
+      ],
+      "lengths": [
+        143,
+        35
+      ]
+    },
+    "Q154": {
+      "cell": [
+        "numeric_or_table",
+        "recital_only",
+        "low"
+      ],
+      "overlap": "0",
+      "spans": [
+        {
+          "unit_id": "gdpr:rec:172",
+          "start": 0,
+          "end": 163
+        }
+      ],
+      "lengths": [
+        163
+      ]
+    },
+    "Q155": {
+      "cell": [
+        "unanswerable",
+        "none",
+        "na"
+      ],
+      "overlap": null,
+      "spans": [],
+      "lengths": []
+    },
+    "Q156": {
+      "cell": [
+        "unanswerable",
+        "none",
+        "na"
+      ],
+      "overlap": null,
+      "spans": [],
+      "lengths": []
+    }
+  },
+  "hash_checks": {
+    "full_prompt": {
+      "v1": true,
+      "v2": true,
+      "v3": true
+    },
+    "input": {
+      "blind_generation_spec.md": true,
+      "question_rules.md": true,
+      "locked_test_batch_schedule_v3_1.csv": true,
+      "locked_test_quotas_v3.json": true,
+      "excluded_evidence_units.csv": true,
+      "data/processed/gdpr.jsonl": true,
+      "data/raw/gdpr.html": true,
+      "SHA256SUMS.txt": true,
+      "outputs/gdpr-02/gdpr-02_candidates.csv": true,
+      "outputs/gdpr-02_v2/gdpr-02_candidates_v2.csv": true
+    },
+    "output": {
+      "gdpr-02_candidates_v3.csv": true,
+      "gdpr-02_v2_vs_v3_diff.md": true,
+      "gdpr-02_verification_report_v3.md": true,
+      "gdpr-02_open_issues_v3.md": true
+    },
+    "input_manifest": {
+      "blind_generation_spec.md": true,
+      "data/processed/ai_act.jsonl": true,
+      "data/processed/gdpr.jsonl": true,
+      "data/raw/ai_act.html": true,
+      "data/raw/gdpr.html": true,
+      "excluded_evidence_units.csv": true,
+      "locked_test_batch_schedule_v3_1.csv": true,
+      "locked_test_quotas_v3.json": true,
+      "question_rules.md": true
+    }
+  },
+  "partial_validator_control": "17-row control passed project partial mode and failed exact quota comparison"
+}

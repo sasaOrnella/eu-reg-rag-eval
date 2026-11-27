@@ -1,0 +1,117 @@
+{
+  "batch_id": "gdpr-02",
+  "version": "v3",
+  "supersedes_versions": [
+    "v1 (preserved untouched in outputs/gdpr-02/)",
+    "v2 (preserved untouched in outputs/gdpr-02_v2/)"
+  ],
+  "regulation": "gdpr",
+  "protocol_version": "v3.1-2026-11-27",
+  "split": "test",
+  "provider": "Google (Gemini)",
+  "model_version": "unavailable_in_runtime_environment",
+  "generated_at": "2026-11-27T17:19:47.720740+11:00",
+  "seed": "unavailable_in_runtime_environment",
+  "settings": {
+    "temperature": "unavailable_in_runtime_environment",
+    "top_p": "unavailable_in_runtime_environment",
+    "top_k": "unavailable_in_runtime_environment",
+    "blind_mode": true,
+    "dev_retrieval_or_rankings_consulted": false,
+    "test_scoring_or_retrieval_eval_run": false
+  },
+  "prompt_provenance_note": "Full verbatim user prompts for v1 (from outputs/gdpr-02/generation_metadata.json), v2 (recovered verbatim from this conversation history to remediate v2's summary-only hash), and v3 (current turn) are preserved and SHA-256 hashed below.",
+  "v1_full_prompt_sha256": "36d3b07802ea30313ad4032923b6c90daf9bf722af49e7f7589d6f10096a4c8b",
+  "v2_full_prompt_verbatim": "gdpr-02（Q139–Q156）已完成 Work 项目级预验收和独立语义复核。\n\n结构、引文定位、证据隔离及全部13个联合配额格均通过，但现有18题中有11题需要集中修订。\n\n**只修改：Q141、Q144、Q146、Q147、Q148、Q149、Q150、Q151、Q152、Q155、Q156。**\n\n其余 Q139、Q140、Q142、Q143、Q145、Q153、Q154 共7题保持所有字段不变。\n\n### 逐题修订要求\n\n**Q141**\n补齐 Article 95 的欧盟境内公共通信网络限定，并准确保留与 Directive 2002/58/EC 已有同目标具体义务的关系。\n\n**Q144**\n删除 Article 93(1) 冗余引文，仅保留回答真正需要的 Article 67 和 Article 93(2) 引文。自然改写题目，使其同时询问 Commission 如何规定电子信息交换安排，以及必须采用的审查程序。重新计算词汇重合度，必须保持 Article-only Multi-hop High，且每个证据单元均不可替代。不要通过添加无关术语或重复引文凑配额。\n\n**Q146**\n明确区分一致性机制下的一般协作方与约束性公司规则审批的具体参与者。优先保留当前 Article 47(1) 与 Article 63 的两段必要证据，准确收紧问题范围；如果要问具体审批程序，必须重新评估全部必要证据。\n\n**Q147**\n答案明确包含全面数据保护规则在 GDPR 生效时已经适用的时间条件。\n\n**Q148**\n准确保留 data subject 免费服务的一般规则、DPO 的 where applicable 限定，以及 manifestly unfounded or excessive 请求的费用或拒绝条件。\n\n**Q149**\n优先将问题限定为 Article 49(1)(g) 登记册传输例外已经适用时的限制，不额外主张未由 Gold Evidence 支持的许可前提。将 outside Europe 对齐至 third country / international organisation，并核实每段引文都必要。\n\n**Q150**\n删除个人介入足以授权无限扩大公开范围的错误判断。准确说明 Article 25(2) 中默认数据最小化与不经个人介入不得向不特定数量的人开放的条件。两段引文必须分别必要。\n\n**Q151**\n把 internal administrative convenience 改为更准确的内部行政处理目的。答案只能说相关控制者 may have a legitimate interest，不能暗示这一目的自动满足全部合法处理条件。第三国传输规则仍然适用。保持 Recital-only Conditional Low。\n\n**Q152**\n保留必要的完整引文。说明初始三个月异议期、由议会或理事会提出可延长三个月，以及双方提前通知不反对时可提前满足生效条件。不能暗示所有委托法案必须等满三个月才生效，也不能扩大至 GDPR 未规定的其他委托法案。\n\n**Q155**\n当前考点与历史题库中爱尔兰 GDPR 监管机构具名问题语义重复。必须完全换成独立缺失事实，保留 `unanswerable`、`absence_kind:c`。不要继续考爱尔兰监管机构的名称、法定职责或同一缺失前提。\n\n请提出三个彼此不同的备选缺失事实，选择其中自然性和证据核查最充分的一项进入18题最终 CSV，另外两项放在独立候选说明中，供协调者在发现跨库重复时选择。每个候选都不得虚构 GDPR 已实际规定的事实，并需提供全语料缺失核查。\n\n**Q156**\n将题目明确限定为 GDPR 是否规定测试安全措施的时间间隔，避免原来的 How often 被 regularly 直接回答。保留法规要求 regularly testing, assessing and evaluating 的事实；缺失的是数值或固定间隔。避免使用 exact、specific、precise 等提示不可回答类别的词。同步收紧 search 记录的 missing 字段。\n\n### 完整验收要求\n\n1. 输出 Q139–Q156 完整18题 v2 CSV。\n2. 未指定的7题保持逐字段不变。\n3. 重新检查全部13个精确联合配额格，保持 High 5、Low 11、N/A 2。\n4. 重新核对引文逐字唯一性、最小必要性、146个禁止复用的正证据单元及不同题目考查事实的独立性。\n5. 确保 Q144 仍为 High、Q151 仍为 Low。\n6. 对两道不可回答题完成全语料缺失复核，Q155 不得重复既有缺失事实。\n7. 输出完整 v2 CSV、元数据、修改前后对照报告、全批校验报告和未解决问题清单。\n8. 保留所有 `human_review:pending`，保留 v1 原始文件。\n\n不运行任何 Locked Test 检索或评分，不修改研究协议，不启动 gdpr-03。\n\n如果任何修订无法同时满足法律准确性、最小必要证据和配额，不得强行凑数，明确报告冲突。\n\n本轮完成后立即停止。",
+  "v2_full_prompt_sha256": "7e29bd002beb23b9241a9eb5312aa1fa30b2ece4331dd8ca52ba1b9e2e2af671",
+  "v3_full_prompt_verbatim": "gdpr-02 v2 已经过项目级复验与独立审阅。\n\n本次只剩 4 道题及生成元数据需要修订。请严格进行**最后一次定向修订**，不要重新生成整批题目。\n\n**仅允许修改 Q144、Q149、Q152、Q155。其余14道题所有字段与 v2 保持逐字节一致。**\n\n### Q144：真实多跳与最小证据\n\n现有 Article 67 和 Article 93(2) 构成真实的程序依据链，但题目仅询问外部法规名称，没有明确询问其中的具体程序条款。\n\n请修改题目，确保：\n\n- Article 67 负责说明委员会通过何种措施安排监管机关与 Board 的电子信息交换，以及适用审查程序的转引。\n- Article 93(2) 负责说明审查程序所依据的外部法规及其具体条款，即 Regulation (EU) No 182/2011 的 Article 5。\n- 删除 Article 67 第一段中不必要的标准化格式举例，保留逐字且唯一匹配的最小引文。\n- 读者删除任一证据单元后都无法完整回答问题。\n- 保持 `multi_hop × article_only × high`，词汇重合度须重新按精简后的实际证据计算。\n- 题面不要直接泄露条文编号，也不要机械重复法条措辞。\n\n可以参考这一自然问法，但请独立核验最终证据和重合度：\n\n“How can the Commission establish digital exchange arrangements among privacy regulators and the Board under the GDPR, and which provision of the cited EU regulation supplies the examination procedure?”\n\n### Q149：让两段证据真正不可替代\n\n当前问题已假定登记册例外适用，所以 Article 49(2) 单独就能回答全部问题，Article 49(1)(g) 因此是冗余证据。\n\n请改成一个自然、相关的条件问题，实际询问：\n\n1. 登记册依据欧盟或成员国法律的开放查阅条件，以及特定情况下必须满足的查阅条件。\n2. 依该登记册途径向第三国或国际组织传输时，全部数据、整类数据及有合法利益者作为接收方的限制。\n\n第一部分必须依靠 Article 49(1)(g)，第二部分必须依靠 Article 49(2)。\n\n不得将这些条件写成无条件授权。若新增一般许可前提，须核查 Article 49(1) 导语是否也成为必要证据。\n\n保持 `conflicting_or_conditional × article_only × low`。\n\n### Q152：准确表达生效的必要条件\n\n原答案将 Article 92(5) 的 “shall enter into force only if” 改写为 “enters into force if”，误把必要条件写成自动生效保证。\n\n请修正问题和答案，准确说明：\n\n- 此规则适用于 GDPR Article 12(8) 和 Article 43(8) 所涉及的授权法案，不是所有授权法案。\n- 通知欧洲议会和理事会后，通常有三个月异议期。\n- 欧洲议会或理事会任一方均可发起再延长三个月。\n- 法案生效必须满足：在适用期限内双方均未提出异议，或者双方在期限届满前均已通知委员会不会反对。\n- 双方提前通知不反对，并不意味着法条直接指定了一个自动提前生效的具体日期。\n\n题目不能含条文编号。可以通过所适用的授权法案类别或其特定异议程序来限定范围。\n\n保留现有完整的424字符及109字符证据，除非发现真正必要的更优引文。424字符低于600字符硬上限，不属于阻断错误。\n\n保持 `numeric_or_table × article_only × low`。\n\n### Q155：明确不可回答的靶点\n\n当前 AWS 具名事实在 GDPR 文本中确实不存在，但 “European cloud regions” 可能指欧盟内部跨境处理，使问题被一般规定回答。\n\n请明确：\n\n- 场景是把个人数据传输给位于**第三国**的 Amazon Web Services 设施或服务。\n- 所问的是 GDPR 是否为 **Amazon Web Services 这一具名供应商单独规定豁免或特别安排**。\n- 不得将一般第三国传输例外误写成 AWS 专属豁免。\n- 重新核查 GDPR Articles 44、45、46、49，说明这些一般规定为什么不能回答 AWS 专属问题。\n- 保留 `unanswerable`、`absence_kind:c`、空 Gold Evidence，以及合规的 hard negative、搜索变体和检视记录。\n\n不要改用 FTC 或 ISO/IEC 27001 备选题，也不要重复旧题考点。\n\n### 生成元数据修复\n\n`generation_metadata_v2.json` 目前只有提示词摘要及其哈希。\n\n请从本 Gemini 对话的实际历史中读取上轮完整 v2 修订 Prompt，保存原文及 SHA-256，并在 v3 元数据中引用。\n\n本次 v3 修订 Prompt 也须完整保存并计算 SHA-256。\n\n不能用摘要冒充完整提示词，不能重新编造历史 Prompt。如果系统确实无法读取完整原文，请如实报告具体缺失，不能声称复现记录完整。\n\n### 最终交付和验收\n\n1. 输出完整18题 `gdpr-02_candidates_v3.csv`。\n2. 仅四道指定题发生变更，其余14题与 v2 逐字段一致。\n3. 全部13个联合配额格精确匹配，High 5、Low 11、N/A 2。\n4. Q144 的每个 Gold Evidence 单元必须必要，且实际 overlap 保持 High。\n5. Q149 的两段引文必须各自不可替代，保持 Low。\n6. Q152 不得再把必要条件表述为自动生效保证。\n7. Q155 不得出现欧盟内部传输与第三国传输的歧义。\n8. 重新核对146个排除单元、逐字唯一性、跨历史题语义重复、完整生成元数据及全部文件哈希。\n9. 交付完整 v3 CSV、更新元数据、v2→v3 差异记录、最终校验报告及未解决问题清单。\n10. 保留 v1、v2 原件和全部 `human_review:pending`。\n\n**完成 gdpr-02 v3 后立即停止。不得启动 gdpr-03，不得运行任何 Locked Test 检索或评分。**\n\n如果发现无法同时满足法律准确性、最小必要证据和精确配额的冲突，请明确报告，禁止强行凑数。",
+  "v3_full_prompt_sha256": "553c3639ea5fff201e7a29e3bd38f42c23cf7777c0ef7e23541745d3b7780a8c",
+  "input_sha256": {
+    "blind_generation_spec.md": "5845463bd36637c4ecdbf35a8bca3feab422fdde6878f5ef8a736cd32b56c869",
+    "question_rules.md": "7381a76b2bc6957d8b74f374f178a81d61b00a3e6f2fd44e3d30c0515b77b606",
+    "locked_test_batch_schedule_v3_1.csv": "e698303c4fbe3621c599cc1b5c936ce3a3918e43456d52f62ddc0f1c87490ad5",
+    "locked_test_quotas_v3.json": "e8f2fde72b36298e030c416bc090e86d95db1afbdde7fcf6616b1f9ba0c2cc4c",
+    "excluded_evidence_units.csv": "eeb00d51afc4b964da144714f9fee84cb2fe724e28805fb045f3da983cc2523b",
+    "data/processed/gdpr.jsonl": "e8bbb70c2be3890d8f8307ad26cf583c9b41b17b291094851913806ac3de0df6",
+    "data/raw/gdpr.html": "fde27ea4627c51465d51a45268c18f05ed772ab0163382ca34ed3e83d9f98126",
+    "SHA256SUMS.txt": "3533ac99d18595bfd5cf7877cba040d369a68b1c5b9ad35aa40417648d75e93e",
+    "outputs/gdpr-02/gdpr-02_candidates.csv": "3209ae7bd21846879e834aef58b4680f26912cd3b9d7dd2f8294227b57dfce4d",
+    "outputs/gdpr-02_v2/gdpr-02_candidates_v2.csv": "10c6a72fdb18cb066ebe43a4214978c16b523d4c950282a3928a13c2b619b194"
+  },
+  "candidate_ids": [
+    "Q139",
+    "Q140",
+    "Q141",
+    "Q142",
+    "Q143",
+    "Q144",
+    "Q145",
+    "Q146",
+    "Q147",
+    "Q148",
+    "Q149",
+    "Q150",
+    "Q151",
+    "Q152",
+    "Q153",
+    "Q154",
+    "Q155",
+    "Q156"
+  ],
+  "modified_candidate_ids_from_v2": [
+    "Q144",
+    "Q149",
+    "Q152",
+    "Q155"
+  ],
+  "unchanged_candidate_ids_from_v2": [
+    "Q139",
+    "Q140",
+    "Q141",
+    "Q142",
+    "Q143",
+    "Q145",
+    "Q146",
+    "Q147",
+    "Q148",
+    "Q150",
+    "Q151",
+    "Q153",
+    "Q154",
+    "Q156"
+  ],
+  "candidate_count": 18,
+  "output_files": {
+    "candidates_csv_v3": {
+      "filename": "gdpr-02_candidates_v3.csv",
+      "sha256": "2b5f3d3684a3296f67576c5333e04bdb866ad597163aba7f258a8b784c135820"
+    },
+    "v2_vs_v3_diff": {
+      "filename": "gdpr-02_v2_vs_v3_diff.md",
+      "sha256": "5c27f391cb8537accbe96173e063cd01b814b221125dad78f81129703bba4467"
+    },
+    "verification_report_v3": {
+      "filename": "gdpr-02_verification_report_v3.md",
+      "sha256": "08224704a08bc89b774ee1871a8aaae4ab439edc9bbb66b7d55f7313f140a4b2"
+    },
+    "open_issues_v3": {
+      "filename": "gdpr-02_open_issues_v3.md",
+      "sha256": "512c4fa39612df5bb646b1e1a4e3c81563c7ba649230babfc9305434a0b1d418"
+    }
+  },
+  "validation_summary": {
+    "exact_joint_quota_match": true,
+    "unchanged_14_rows_byte_identical_to_v2": true,
+    "errors_count": 0,
+    "warnings_count": 1,
+    "warnings": [
+      "Q152: Quote len 424 in gdpr:art:92 outside [25, 400] (hard cap 600)"
+    ],
+    "excluded_units_list_size": 146,
+    "excluded_units_violated": 0,
+    "unique_positive_units_used": 20,
+    "max_positive_unit_reuse": 1,
+    "later_articles_ge_70_count": 8,
+    "max_pairwise_question_jaccard": 0.1429
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "batch_id": "gdpr-02",
+  "regulation": "gdpr",
+  "protocol_version": "v3.1-2026-11-27",
+  "split": "test",
+  "provider": "Google (Gemini)",
+  "model_version": "unavailable_in_runtime_environment",
+  "generated_at": "2026-11-27T15:37:50.642669+11:00",
+  "seed": "unavailable_in_runtime_environment",
+  "settings": {
+    "temperature": "unavailable_in_runtime_environment",
+    "top_p": "unavailable_in_runtime_environment",
+    "top_k": "unavailable_in_runtime_environment",
+    "blind_mode": true,
+    "dev_retrieval_or_rankings_consulted": false,
+    "test_scoring_or_retrieval_eval_run": false
+  },
+  "full_prompt_verbatim": "现在开始 Locked Test 第二批盲生成：`gdpr-02`。\n\n请以本次上传的最新版 `gemini_gdpr-02_blind_v3_1.zip` 为唯一规范包，生成 Q139–Q156，共18道 GDPR 题。\n\n严格满足包内 `gdpr-02` 的题型 × 证据类型 × High/Low 精确联合配额，总体为 High 5、Low 11、不可回答 2。\n\n特别注意：\n- 新排除清单含146个已使用证据单元，禁止复用。\n- 不得重复 gdpr-01 已覆盖的事实、法律结论或不可回答题的缺失前提。\n- Multi-hop 的每段证据必须真正必要；不可回答题必须核实完整法规中的真实缺失。\n- 不得使用任何 Dev/Test 检索评分或错误案例。\n- 对全部18题进行完整自检，将问题与不确定性一次性集中报告。\n\n交付完整 CSV、生成元数据、校验报告和需独立审阅的候选题清单。\n\n保持 `human_review:pending`，完成后立即停止。不要生成下一批，不要运行检索评估。",
+  "prompt_sha256": "36d3b07802ea30313ad4032923b6c90daf9bf722af49e7f7589d6f10096a4c8b",
+  "input_sha256": {
+    "blind_generation_spec.md": "5845463bd36637c4ecdbf35a8bca3feab422fdde6878f5ef8a736cd32b56c869",
+    "question_rules.md": "7381a76b2bc6957d8b74f374f178a81d61b00a3e6f2fd44e3d30c0515b77b606",
+    "locked_test_batch_schedule_v3_1.csv": "e698303c4fbe3621c599cc1b5c936ce3a3918e43456d52f62ddc0f1c87490ad5",
+    "locked_test_quotas_v3.json": "e8f2fde72b36298e030c416bc090e86d95db1afbdde7fcf6616b1f9ba0c2cc4c",
+    "excluded_evidence_units.csv": "eeb00d51afc4b964da144714f9fee84cb2fe724e28805fb045f3da983cc2523b",
+    "data/processed/gdpr.jsonl": "e8bbb70c2be3890d8f8307ad26cf583c9b41b17b291094851913806ac3de0df6",
+    "data/raw/gdpr.html": "fde27ea4627c51465d51a45268c18f05ed772ab0163382ca34ed3e83d9f98126",
+    "SHA256SUMS.txt": "3533ac99d18595bfd5cf7877cba040d369a68b1c5b9ad35aa40417648d75e93e"
+  },
+  "candidate_ids": [
+    "Q139",
+    "Q140",
+    "Q141",
+    "Q142",
+    "Q143",
+    "Q144",
+    "Q145",
+    "Q146",
+    "Q147",
+    "Q148",
+    "Q149",
+    "Q150",
+    "Q151",
+    "Q152",
+    "Q153",
+    "Q154",
+    "Q155",
+    "Q156"
+  ],
+  "candidate_count": 18,
+  "output_files": {
+    "candidates_csv": {
+      "filename": "gdpr-02_candidates.csv",
+      "sha256": "3209ae7bd21846879e834aef58b4680f26912cd3b9d7dd2f8294227b57dfce4d"
+    },
+    "verification_report": {
+      "filename": "gdpr-02_verification_report.md",
+      "sha256": "856a59b9630184449954b62d86d1437e56f8e52b1d5882d07566b45cccc6ce41"
+    },
+    "flagged_candidates": {
+      "filename": "gdpr-02_flagged_candidates.md",
+      "sha256": "54c3081b0ebc97b2abf422cc8463fda7ccee5fcd1bbb7c4ea6430b67abc4245f"
+    }
+  },
+  "validation_summary": {
+    "exact_joint_quota_match": true,
+    "errors_count": 0,
+    "warnings_count": 1,
+    "warnings": [
+      "Q152: Quote len 424 in gdpr:art:92 outside [25, 400] (hard cap 600)"
+    ],
+    "excluded_units_list_size": 146,
+    "excluded_units_violated": 0,
+    "unique_positive_units_used": 20,
+    "max_positive_unit_reuse": 1,
+    "later_articles_ge_70_count": 8,
+    "max_pairwise_question_jaccard": 0.1667
+  }
+}
