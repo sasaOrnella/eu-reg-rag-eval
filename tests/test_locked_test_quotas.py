@@ -92,3 +92,30 @@ def test_full_cohort_catches_kind_d_cap_and_missing_kind(scaffolding):
             row["notes"] = row["notes"].replace("absence_kind:a","absence_kind:d").replace("absence_kind:b","absence_kind:d")
     _, errors = validate(spec,old,dev,new[:90],units,("gdpr",))
     assert any("at most four" in e for e in errors) and any("all four" in e for e in errors)
+
+
+def test_positive_unit_reuse_is_counted_per_question_across_batches(scaffolding):
+    spec, old, dev, new, units = scaffolding
+
+    def low_article_conditional(batch):
+        return next(
+            row for row in batch
+            if row["type"] == "conflicting_or_conditional"
+            and row["gold_evidence"].startswith("gdpr:art:")
+            and "unrelated placeholder" in row["gold_evidence"]
+        )
+
+    first = low_article_conditional(new[:18])
+    second = low_article_conditional(new[18:36])
+    third = low_article_conditional(new[36:54])
+    # The first question has two distinct quotes from one unit.
+    unit = first["gold_evidence"].split("::", 1)[0]
+    second["gold_evidence"] = third["gold_evidence"] = first["gold_evidence"]
+
+    _, errors = validate(spec, old, dev, [second], units, ("gdpr",),
+                         batch_id="gdpr-02", previous=new[:18])
+    assert not errors
+
+    _, errors = validate(spec, old, dev, [third], units, ("gdpr",),
+                         batch_id="gdpr-03", previous=new[:36])
+    assert errors == [f"{unit} used by 3 new Test questions"]
